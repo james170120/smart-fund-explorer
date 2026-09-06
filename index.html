@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智慧基金篩選</title>
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.3.0/css/fixedColumns.dataTables.min.css">
+    
+    <style>
+        :root {
+            --primary-bg: #f4f7fb;
+            --card-bg: #ffffff;
+            --text-main: #2c3e50;
+            --text-muted: #7f8c8d;
+            --accent-blue: #3a86ff;
+            --accent-hover: #2a6bcc;
+            --border-light: #eef2f7;
+            --color-up: #e74c3c;
+            --color-up-bg: #fdf2f0;
+            --color-down: #2ecc71;
+            --color-down-bg: #effaf4;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            background-color: var(--primary-bg);
+            color: var(--text-main);
+            font-size: 14px;
+            overflow: hidden; 
+        }
+
+        header {
+            background-color: #fff;
+            padding: 15px 30px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between; 
+            border-bottom: 1px solid var(--border-light);
+            position: relative;
+            z-index: 100;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: 0.5px;
+            cursor: pointer;
+        }
+
+        /* =========================================================
+           🍔 漢堡選單與下拉清單樣式
+           ========================================================= */
+        .header-menu-container {
+            position: relative;
+        }
+
+        .hamburger-btn {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hamburger-btn:hover {
+            background-color: #f1f5f9;
+            color: var(--accent-blue);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            background: #fff;
+            width: 200px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-light);
+            display: none; 
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 9999;
+            animation: fadeInDown 0.2s ease-out;
+        }
+
+        .dropdown-menu.show { display: flex; }
+
+        .dropdown-item {
+            padding: 15px 20px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .dropdown-item:last-child { border-bottom: none; }
+        .dropdown-item:hover { background-color: #f8fafc; }
+        .dropdown-item.active {
+            color: var(--accent-blue);
+            background-color: #f0f6ff;
+            border-left: 4px solid var(--accent-blue);
+            padding-left: 16px; 
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 基金篩選容器 */
+        .dashboard-container {
+            display: flex;
+            height: calc(100vh - 60px);
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 320px;
+            background-color: var(--primary-bg);
+            padding: 20px;
+            overflow-y: auto;
+            flex-shrink: 0;
+            border-right: 1px solid var(--border-light);
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            overflow: hidden; 
+        }
+
+        .table-wrapper {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border: 1px solid rgba(0,0,0,0.02);
+            height: calc(100% - 40px); 
+        }
+
+        /* 各種原有的 CSS 元件 */
+        .policy-switcher { display: flex; background: #e2e8f0; padding: 4px; border-radius: 12px; margin-bottom: 20px; position: relative; }
+        .policy-option { flex: 1; text-align: center; padding: 8px 0; font-size: 0.9rem; font-weight: 600; z-index: 1; cursor: pointer; transition: color 0.3s; color: #64748b; }
+        .policy-option.active { color: var(--text-main); }
+        .switcher-slide { position: absolute; top: 4px; left: 4px; width: calc(33.333% - 4px); height: calc(100% - 8px); background: #fff; border-radius: 9px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 0; }
+        
+        .filter-card { background: var(--card-bg); padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.03); margin-bottom: 15px; border: 1px solid rgba(0,0,0,0.02); }
+        .filter-title { font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 15px; display: flex; align-items: center; }
+        .filter-title::before { content: ''; display: inline-block; width: 4px; height: 14px; background-color: var(--accent-blue); margin-right: 8px; border-radius: 4px; }
+        
+        label { display: block; margin-bottom: 6px; font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+        select, input[type="number"], input[type="text"] { width: 100%; padding: 10px 12px; margin-bottom: 15px; border: 1px solid #dce4ec; border-radius: 8px; background-color: #fafbfc; font-size: 0.9rem; color: var(--text-main); transition: all 0.2s; box-sizing: border-box; }
+        select:focus, input[type="number"]:focus, input[type="text"]:focus { outline: none; border-color: var(--accent-blue); background-color: #fff; box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.15); }
+        .input-group-compact { margin-bottom: 6px; display: flex; align-items: center; }
+        
+        .btn-group { display: flex; gap: 10px; margin-top: 10px; }
+        button { flex: 1; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s; }
+        .btn-reset { background-color: #eef2f7; color: #475569; }
+        .btn-reset:hover { background-color: #cbd5e1; transform: translateY(-1px); }
+
+        .val-up { color: var(--color-up); font-weight: 600; }
+        .val-down { color: var(--color-down); }
+        .badge { display: inline-block; padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; text-align: center; }
+        .badge-rr12 { background-color: #d1fae5; color: #065f46; } 
+        .badge-rr3 { background-color: #fef3c7; color: #92400e; }  
+        .badge-rr45 { background-color: #fee2e2; color: #991b1b; } 
+
+        table.dataTable { border-collapse: collapse !important; }
+        table.dataTable thead th { background-color: #f8fafc; color: #64748b; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; border-bottom: 2px solid #e2e8f0 !important; padding: 12px 10px; }
+        table.dataTable tbody td { padding: 12px 10px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+        
+        .name-container { max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+        .name-clickable { color: var(--accent-blue); cursor: pointer; transition: all 0.2s; font-weight: 500; }
+        .name-clickable:hover { color: var(--accent-hover); text-decoration: underline; }
+
+        /* Modal & Tooltip */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(3px); animation: fadeIn 0.2s ease-out; }
+        .modal-card { background: #fff; width: 90%; max-width: 650px; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.15); overflow: hidden; display: flex; flex-direction: column; max-height: 85vh; animation: slideUp 0.3s ease-out; }
+        .modal-header { background: var(--primary-bg); padding: 18px 24px; border-bottom: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: flex-start; }
+        .modal-title-group { display: flex; flex-direction: column; gap: 4px; }
+        .modal-title { font-size: 1.25rem; font-weight: 700; color: var(--text-main); margin: 0; }
+        .modal-subtitle { font-size: 0.85rem; color: var(--text-muted); }
+        .btn-close-modal { background: none; border: none; font-size: 1.8rem; color: #94a3b8; cursor: pointer; padding: 0; }
+        .modal-body { padding: 24px; overflow-y: auto; background: #fff; }
+        .data-section-title { font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin: 0 0 12px 0; }
+        .data-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px; }
+        .data-box { background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px; border-radius: 10px; }
+        .data-label { font-size: 0.75rem; color: #64748b; margin-bottom: 4px; }
+        .data-value { font-size: 1.05rem; font-weight: 600; color: var(--text-main); }
+        
+        .global-tooltip { position: fixed; visibility: hidden; width: 220px; background-color: #334155; color: #fff; border-radius: 6px; padding: 8px 12px; z-index: 999999; opacity: 0; transition: opacity 0.2s; font-size: 0.75rem; line-height: 1.4; }
+        .help-icon { display: inline-flex; justify-content: center; align-items: center; width: 14px; height: 14px; background-color: #cbd5e1; color: #fff; border-radius: 50%; font-size: 10px; cursor: help; margin-left: 6px; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        /* =========================================================
+           💰 退休試算全新專屬 UI 設計
+           ========================================================= */
+        #calculatorContainer {
+            display: none; 
+            height: calc(100vh - 60px); 
+            overflow-y: auto; /* 保證可以滑動 */
+            padding: 30px 20px 100px 20px; /* 底部留白100px，確保能滑到底部 */
+            box-sizing: border-box; 
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        /* 共用卡片結構 */
+        .step-container {
+            width: 100%;
+            max-width: 550px;
+            margin: 0 auto;
+            display: none;
+            animation: slideUp 0.3s ease-out;
+        }
+        .step-container.active { display: block; }
+        
+        /* 🔥 階段一：年齡 (藍色圓潤風) */
+        .card-step1 { background: #ffffff; border: 2px solid #e0f2fe; border-radius: 24px; padding: 30px; box-shadow: 0 10px 25px rgba(14, 165, 233, 0.1); }
+        .card-step1 .step-title { color: #0284c7; font-size: 1.3rem; font-weight: 700; margin-bottom: 25px; text-align: center; }
+        .card-step1 .input-wrap { background: #f0f9ff; padding: 15px 20px; border-radius: 16px; margin-bottom: 15px; }
+        .card-step1 .calc-label { color: #0369a1; font-weight: 700; margin-bottom: 10px; font-size: 1rem; }
+        .card-step1 input { border: none; background: #fff; border-radius: 10px; padding: 15px; font-size: 1.2rem; font-weight: bold; color: #0f172a; text-align: center; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); }
+        .card-step1 input:focus { box-shadow: 0 0 0 3px #bae6fd; }
+        .btn-blue { background: #0ea5e9; color: #fff; padding: 16px; border-radius: 16px; width: 100%; font-size: 1.1rem; font-weight: bold; border: none; cursor: pointer; transition: 0.2s; margin-top: 10px; box-shadow: 0 4px 10px rgba(14, 165, 233, 0.3); }
+        .btn-blue:hover { background: #0284c7; transform: translateY(-2px); }
+
+        /* 🔥 階段二：資產 (綠色財富風) */
+        .card-step2 { background: #ffffff; border-top: 6px solid #10b981; border-radius: 16px; padding: 30px; box-shadow: 0 10px 25px rgba(16, 185, 129, 0.1); }
+        .card-step2 .step-title { color: #047857; font-size: 1.3rem; font-weight: 700; margin-bottom: 25px; border-bottom: 2px dashed #a7f3d0; padding-bottom: 15px; }
+        .card-step2 .calc-label { color: #374151; font-weight: 600; margin-bottom: 8px; font-size: 0.95rem; }
+        .card-step2 input { border: 1px solid #d1fae5; background: #f0fdf4; border-radius: 8px; padding: 12px 15px; font-size: 1.1rem; font-weight: 600; color: #065f46; margin-bottom: 20px; }
+        .card-step2 input:focus { border-color: #34d399; background: #fff; box-shadow: 0 0 0 3px #d1fae5; }
+        .btn-green { background: #10b981; color: #fff; padding: 14px; border-radius: 10px; flex: 2; font-size: 1.1rem; font-weight: bold; border: none; cursor: pointer; transition: 0.2s; }
+        .btn-green:hover { background: #059669; }
+        .btn-back { background: #f1f5f9; color: #64748b; padding: 14px; border-radius: 10px; flex: 1; font-weight: bold; border: none; cursor: pointer; }
+        .btn-back:hover { background: #e2e8f0; }
+
+        /* 🔥 階段三：儀表板 (分層排版與新顏色) */
+        .card-step3 { max-width: 900px; width: 100%; margin: 0 auto; }
+        
+        /* 🌟 區塊化排版主容器 */
+        .dashboard-header { display: flex; flex-direction: column; gap: 15px; background: #fff; padding: 20px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 20px; border: 1px solid #f1f5f9; }
+        
+        /* 🌟 單一區塊 (Row) 的設定 */
+        .dash-row { display: flex; gap: 15px; align-items: center; border-bottom: 1px dashed #e2e8f0; padding-bottom: 15px; }
+        .dash-row:last-child { border-bottom: none; padding-bottom: 0; }
+        
+        /* 🌟 區塊標籤 (如：階段一) */
+        .dash-row-tag { flex-shrink: 0; background: #f1f5f9; color: #475569; font-size: 0.75rem; font-weight: 700; padding: 6px 12px; border-radius: 20px; width: 65px; text-align: center; }
+        .dash-row-inputs { flex-grow: 1; display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
+        
+        .dash-input-group { background: #f8fafc; padding: 10px; border-radius: 10px; text-align: center; border: 1px solid transparent; transition: 0.2s; }
+        .dash-input-group:hover { border-color: #cbd5e1; }
+        .dash-input-group label { display: block; font-size: 0.75rem; color: #64748b; margin-bottom: 5px; font-weight: 600; }
+        .dash-input-group input { width: 100%; border: 1px solid #e2e8f0; background: #fff; padding: 8px 5px; text-align: center; font-size: 1.05rem; font-weight: bold; border-radius: 6px; color: #0f172a; margin: 0; box-sizing: border-box; transition: 0.2s; }
+        .dash-input-group input:focus { border-color: #3b82f6; outline: none; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+
+        /* 🌟 新增：動態白話文解析區塊 */
+        .result-summary {
+            background-color: #f8fafc;
+            border-left: 4px solid #3b82f6;
+            padding: 12px 18px;
+            border-radius: 0 10px 10px 0;
+            color: #475569;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .summary-highlight {
+            font-weight: 700;
+            color: #0f172a;
+            background: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 6px;
+            margin: 0 2px;
+        }
+        
+        .result-highlight-box { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
+        .highlight-card { padding: 25px 20px; border-radius: 20px; color: #fff; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.1); position: relative; overflow: hidden; }
+        .highlight-card::after { content: ''; position: absolute; top: -50%; right: -20%; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%; }
+        
+        /* 🌟 全新專業 Fintech 配色 */
+        .card-blue { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); } /* 深海藍 */
+        .card-teal { background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%); } /* 碧玉綠 */
+        
+        .hl-title { font-size: 0.9rem; opacity: 0.9; margin-bottom: 10px; font-weight: 600; }
+        .hl-value { font-size: 1.8rem; font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+
+        /* 🌟 新增：圖表並排容器 */
+        .charts-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* 🌟 這是解決破圖的關鍵：給圖表專屬的安全容器 */
+        .chart-safe-zone {
+            flex: 1; /* 讓兩個圖表平分一半的寬度 */
+            min-width: 0; /* 🚨 Chart.js 放在 Flex 裡面必加的防爆框神句 */
+            background: #fff;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            margin-bottom: 20px;
+            border: 1px solid #f1f5f9;
+            box-sizing: border-box;
+        }
+        .chart-title { font-weight: 700; color: #334155; margin-bottom: 15px; border-left: 4px solid #3b82f6; padding-left: 10px; }
+        .canvas-wrapper {
+            position: relative;
+            height: 260px; /* 🚨 必須要有固定高度，Chart.js 才不會無限長大 */
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            body { overflow: auto !important; }
+            .dashboard-container { flex-direction: column; height: auto; }
+            .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border-light); padding: 15px; }
+            .main-content { padding: 10px; height: auto; }
+            .table-wrapper { height: 75vh; }
+            header { flex-direction: column; align-items: flex-start; gap: 5px; padding: 12px 15px; }
+            .header-menu-container { position: absolute; right: 15px; top: 12px; }
+            .global-tooltip { display: none !important; }
+
+            /* 🌟 手機版區塊排列調整 */
+            .dash-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .dash-row-tag { width: auto; font-size: 0.8rem; }
+            .dash-row-inputs { width: 100%; grid-template-columns: 1fr 1fr; }
+            
+            /* 手機版試算表調整 */
+            .result-highlight-box { grid-template-columns: 1fr; }
+            .dashboard-header { flex-direction: column; }
+            #calculatorContainer { padding: 15px 10px 80px 10px; }
+            
+            /* 🌟 手機版圖表變回上下排列 */
+            .charts-container { flex-direction: column; gap: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <!-- 🌟 給標題加上 ID，讓 JS 可以控制它 -->
+        <h1 id="headerTitle">📈 智慧基金篩選 </h1>
+        
+        <!-- 🍔 漢堡選單容器 -->
+        <div class="header-menu-container">
+            <button id="hamburgerBtn" class="hamburger-btn">☰</button>
+            <div id="dropdownMenu" class="dropdown-menu">
+                <a href="#" id="navFund" class="dropdown-item active">🔍 基金篩選</a>
+                <a href="#" id="navCalc" class="dropdown-item">💰 退休試算</a>
+            </div>
+        </div>
+    </header>
+
+    <div id="lastUpdateTag" style="font-size: 0.8rem; color: #2ecc71; margin-top: 5px; font-weight: 600; padding: 0 15px;">
+        ⌛ 正在確認最新數據時間...
+    </div>
+    
+    <!-- 原本的基金表格容器 -->
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <label style="font-weight: 700; color: var(--text-main); margin-bottom: 0;">保險公司：</label>
+                <a id="officialLink" href="https://kgilife.moneydj.com/main.asp?sUrl=$W$HTML$SELECT]DJHTM{P}SBR1" target="_blank" style="font-size: 0.8rem; color: var(--accent-blue); text-decoration: none; font-weight: 600;">
+                    🌐 官方網站
+                </a>
+            </div>
+            <div class="policy-switcher" id="companySwitcher">
+                <div class="switcher-slide" id="companySwitcherSlide" style="width: calc(33.333% - 2.66px);"></div>
+                <div class="policy-option active" onclick="switchCompany(0, 'kgi')">凱基人壽</div>
+                <div class="policy-option" onclick="switchCompany(1, 'chubb')">安達人壽</div>
+                <div class="policy-option" onclick="switchCompany(2, 'cardif')">法巴人壽</div>
+            </div>
+
+            <div id="kgiPolicyContainer" style="display: block; margin-bottom: 20px;">
+                <div class="policy-switcher" id="kgiSwitcher" style="background: #eef2f7; padding: 3px; border-radius: 10px; margin-bottom: 0;">
+                    <div class="switcher-slide" id="kgiSwitcherSlide" style="top: 3px; left: 3px; width: calc(50% - 3px); height: calc(100% - 6px); border-radius: 8px;"></div>
+                    <div class="policy-option active" style="font-size: 0.85rem; padding: 6px 0;" onclick="switchKgiPolicy(0, 'latest_zhaocai.csv')">招財進保</div>
+                    <div class="policy-option" style="font-size: 0.85rem; padding: 6px 0;" onclick="switchKgiPolicy(1, 'latest_yisheng.csv')">一生傳富</div>
+                </div>
+            </div>
+
+            <div class="filter-card">
+                <div class="filter-title">核心過濾條件</div>
+                <label class="input-group-compact" for="filterReturnPeriod">報酬率檢視期間</label>
+                <select id="filterReturnPeriod">
+                    <option value="三個月(%)">近三個月 (%)</option>
+                    <option value="六個月(%)">近六個月 (%)</option>
+                    <option value="一年(%)" selected>近一年 (%)</option>
+                    <option value="三年(%)">近三年 (%)</option>
+                    <option value="成立以來(%)">成立以來總報酬 (%)</option>
+                    <option value="成立以來平均報酬(%)">成立以來平均年報酬 (%)</option>
+                </select>
+                <label class="input-group-compact" for="filterReturnValue">要求最低報酬率 (%)</label>
+                <input type="number" id="filterReturnValue" placeholder="例如: 15" step="0.1">
+                <label class="input-group-compact" for="filterInceptionYear">成立年份 (含以前)</label>
+                <input type="number" id="filterInceptionYear" placeholder="例如: 2018 (尋找老字號標的)">
+                <label class="input-group-compact" for="filterCurrency">計價幣別</label>
+                <select id="filterCurrency"><option value="">全部幣別</option></select>
+                <label class="input-group-compact" for="filterDividend">配息頻率</label>
+                <select id="filterDividend"><option value="">全部頻率</option></select>
+            </div>
+
+            <div class="filter-card">
+                <div class="filter-title">進階風險指標</div>
+                <label class="input-group-compact" for="filterNav">最新淨值 (≦)</label>
+                <input type="number" id="filterNav" placeholder="例如: 20" step="0.01">
+                <label class="input-group-compact" for="filterStdDev">年化標準差 (波動風險 ≦)<span class="help-icon" data-tooltip="衡量基金的波動大小。數值越大，代表漲跌起伏越劇烈（風險越高）。">?</span></label>
+                <input type="number" id="filterStdDev" placeholder="建議 < 15" step="0.1">
+                <label class="input-group-compact" for="filterSharpe">夏普值 (CP值 ≧)<span class="help-icon" data-tooltip="衡量承受每1%風險能帶來的超額報酬。數值越大越好，代表承擔相同風險下賺得比較多。">?</span></label>
+                <input type="number" id="filterSharpe" placeholder="建議 > 0.5" step="0.01">
+                <label class="input-group-compact" for="filterBeta">Beta值 (大盤連動度 ≦)<span class="help-icon" data-tooltip="大盤漲跌1%時，基金跟著漲跌的幅度。大於1代表比大盤活潑，小於1代表比大盤抗跌。">?</span></label>
+                <input type="number" id="filterBeta" placeholder="建議 < 1" step="0.01">
+                <div class="btn-group">
+                    <button class="btn-reset" id="btnReset">清除所有條件</button>
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="table-wrapper">
+                <table id="fundTable" class="display nowrap" style="width:100%;"></table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 與 Tooltip -->
+    <div class="modal-overlay" id="fundModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <h2 class="modal-title" id="modalFundName">基金名稱</h2>
+                    <span class="modal-subtitle" id="modalFundCode">基金代碼</span>
+                </div>
+                <button class="btn-close-modal" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalContentArea"></div>
+        </div>
+    </div>
+    <div id="globalTooltip" class="global-tooltip"></div>
+
+
+    <!-- ==========================================
+         💰 退休試算器容器 (全新樣式，防破圖設計)
+         ========================================== -->
+    <div id="calculatorContainer">
+        
+        <!-- Step 1：藍色時間軸風 -->
+        <div id="calcStep1" class="step-container active">
+            <div class="card-step1">
+                <div class="step-title">⏳ 階段一：規劃時間軸</div>
+                <div class="input-wrap">
+                    <label class="calc-label">👦 1. 現在的年齡（歲）</label>
+                    <input type="number" id="inpCurrentAge" value="30">
+                </div>
+                <div class="input-wrap">
+                    <label class="calc-label">👴 2. 預計退休的年齡（歲）</label>
+                    <input type="number" id="inpRetireAge" value="65">
+                </div>
+                <button class="btn-blue" onclick="goToStep(2)">設定完成，下一步 ➔</button>
+            </div>
+        </div>
+
+<!-- Step 2：綠色財富風 -->
+        <div id="calcStep2" class="step-container">
+            <div class="card-step2">
+                <div class="step-title">💼 階段二：資產與金流檢視</div>
+                <!-- 🌟 替換為 text 屬性，並加上 oninput 即時格式化逗號 -->
+                <label class="calc-label">🏖️ 1. 退休生活每年要多少錢（元）</label>
+                <input type="text" inputmode="numeric" id="inpAnnualExp" value="600,000" oninput="this.value=formatNumber(this.value)">
+                
+                <label class="calc-label">🏦 2. 目前的理財到退休時有多少錢（元）</label>
+                <input type="text" inputmode="numeric" id="inpCurrentSavings" value="1,000,000" oninput="this.value=formatNumber(this.value)">
+                
+                <label class="calc-label">🛡️ 3. 退休時可固定領回多少錢（元/年）</label>
+                <input type="text" inputmode="numeric" id="inpFixedIncome" value="240,000" oninput="this.value=formatNumber(this.value)">
+                
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <button class="btn-back" onclick="goToStep(1)">上一步</button>
+                    <!-- 🌟 這裡改成呼叫 startCalculation -->
+                    <button class="btn-green" onclick="startCalculation()">開始精算系統 ⚡</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3：儀表板風 -->
+        <div id="calcStep3" class="step-container card-step3">
+            
+            <!-- 🌟 整合所有 8 個參數，並綁定 oninput 即時重算 -->
+            <!-- 🌟 重新設計的分區塊參數列 -->
+            <div class="dashboard-header">
+                <!-- 區塊 1：階段一輸入 -->
+                <div class="dash-row">
+                    <div class="dash-row-tag">階段一</div>
+                    <div class="dash-row-inputs">
+                        <div class="dash-input-group"><label>👦 現在年齡</label><input type="number" id="inpCurrentAge3" oninput="calculateResult()"></div>
+                        <div class="dash-input-group"><label>👴 退休年齡</label><input type="number" id="inpRetireAge3" oninput="calculateResult()"></div>
+                    </div>
+                </div>
+                
+                <!-- 區塊 2：階段二輸入 -->
+                <div class="dash-row">
+                    <div class="dash-row-tag">階段二</div>
+                    <div class="dash-row-inputs">
+                        <div class="dash-input-group"><label>🏖️ 每年花費</label><input type="text" inputmode="numeric" id="inpAnnualExp3" oninput="this.value=formatNumber(this.value); calculateResult()"></div>
+                        <div class="dash-input-group"><label>🏦 目前已準備</label><input type="text" inputmode="numeric" id="inpCurrentSavings3" oninput="this.value=formatNumber(this.value); calculateResult()"></div>
+                        <div class="dash-input-group"><label>🛡️ 每年固定領</label><input type="text" inputmode="numeric" id="inpFixedIncome3" oninput="this.value=formatNumber(this.value); calculateResult()"></div>
+                    </div>
+                </div>
+
+                <!-- 區塊 3：目標參數設定 -->
+                <div class="dash-row">
+                    <div class="dash-row-tag">目標設定</div>
+                    <div class="dash-row-inputs">
+                        <div class="dash-input-group"><label>🎯 準備到幾歲</label><input type="number" id="inpTargetAge3" value="90" oninput="calculateResult()"></div>
+                        <div class="dash-input-group"><label>📈 退休前報酬(%)</label><input type="number" id="inpPreReturn3" value="6" oninput="calculateResult()"></div>
+                        <div class="dash-input-group"><label>📈 退休後報酬(%)</label><input type="number" id="inpPostReturn3" value="4" oninput="calculateResult()"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 🌟 新增這行：動態白話文解析容器 -->
+            <div id="resultSummary" class="result-summary"></div>
+            
+            <!-- 核心結果數字卡片 (更換為新的顏色 Class) -->
+            <div class="result-highlight-box">
+                <div class="highlight-card card-blue">
+                    <div class="hl-title">⚡ 現在一筆投入需</div>
+                    <div id="resLumpSum" class="hl-value">0</div>
+                </div>
+                    <div class="highlight-card card-teal">
+                    <div class="hl-title">🔄 或 持續投入需</div>
+                    <div id="resAnnual" class="hl-value" style="font-size: 1.45rem;">0</div>
+                </div>
+            </div>
+
+            <!-- 圖表安全區 -->
+            <div class="charts-container">
+                <div class="chart-safe-zone">
+                    <div class="chart-title">📈 資金成長與消耗軌跡</div>
+                    <div class="canvas-wrapper"><canvas id="barChart"></canvas></div>
+                </div>
+                
+                <div class="chart-safe-zone">
+                    <div class="chart-title">🥧 退休資金結構分析</div>
+                    <div class="canvas-wrapper"><canvas id="pieChart"></canvas></div>
+                </div>
+            </div>
+            <!-- 🌟 重新調整基礎數值按鈕已刪除 -->
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        // ==========================================
+        // 原始基金表格的所有 JavaScript 功能
+        // ==========================================
+        async function fetchLastUpdateTime(fileName) {
+            const owner = 'james170120'; 
+            const repo = 'kgilife-aadgsil'; 
+            const cleanFileName = fileName.split('?')[0];
+            const encodedFileName = encodeURIComponent(cleanFileName);
+            const url = `https://api.github.com/repos/${owner}/${repo}/commits?path=${encodedFileName}&page=1&per_page=1`;
+            
+            const timeTag = document.getElementById('lastUpdateTag');
+            timeTag.innerText = '⌛ 正在確認最新數據時間...';
+            timeTag.style.color = '#7f8c8d'; 
+            
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`GitHub API 錯誤: ${response.status}`);
+                const data = await response.json();
+                
+                if (data && data.length > 0 && data[0].commit && data[0].commit.committer) {
+                    const date = new Date(data[0].commit.committer.date);
+                    const timeStr = date.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                    timeTag.innerText = `🟢 最新資料庫更新時間：${timeStr}`;
+                    timeTag.style.color = '#2ecc71'; 
+                } else {
+                    timeTag.innerText = `⚠️ 尚未有更新紀錄`;
+                    timeTag.style.color = '#e67e22'; 
+                }
+            } catch (e) {
+                console.error("抓取更新時間失敗：", e);
+                timeTag.innerText = `🔴 無法取得資料庫更新時間`;
+                timeTag.style.color = '#e74c3c'; 
+            }
+        }
+
+        let currentCompany = 'kgi';
+        let currentKgiFile = 'latest_zhaocai.csv'; 
+        let currentFile = currentKgiFile;
+        let table;
+
+        function switchCompany(index, companyId) {
+            const options = document.querySelectorAll('#companySwitcher .policy-option');
+            options.forEach(opt => opt.classList.remove('active'));
+            options[index].classList.add('active');
+            
+            document.getElementById('companySwitcherSlide').style.transform = `translateX(${index * 100}%)`;
+            document.getElementById('btnReset').click();
+
+            const kgiContainer = document.getElementById('kgiPolicyContainer');
+            const linkElement = document.getElementById('officialLink');
+            currentCompany = companyId;
+
+            if (companyId === 'kgi') {
+                kgiContainer.style.display = 'block'; 
+                currentFile = currentKgiFile;         
+                loadCsvData(currentFile);
+                fetchLastUpdateTime(currentFile);
+                if (currentKgiFile === 'latest_zhaocai.csv') {
+                    linkElement.href = 'https://kgilife.moneydj.com/main.asp?sUrl=$W$HTML$SELECT]DJHTM{P}SBR1';
+                } else {
+                    linkElement.href = 'https://kgilife.moneydj.com/main.asp?sUrl=$W$HTML$SELECT]DJHTM{P}SJF1';
+                }
+                linkElement.innerHTML = '🌐 凱基官方網站';
+                linkElement.style.display = 'inline-block';
+            } else if (companyId === 'chubb') {
+                kgiContainer.style.display = 'none';  
+                currentFile = 'latest_chubb.csv';     
+                loadCsvData(currentFile);
+                fetchLastUpdateTime(currentFile);
+                linkElement.href = 'https://chubb.moneydj.com/fund-page.html?sUrl=$W$HTML$SELECT]DJHTM{A}1';
+                linkElement.innerHTML = '🌐 安達官方網站';
+                linkElement.style.display = 'inline-block';
+            } else if (companyId === 'cardif') {
+                kgiContainer.style.display = 'none';  
+                currentFile = 'latest_cardif.csv';    
+                loadCsvData(currentFile);
+                fetchLastUpdateTime(currentFile);
+                linkElement.href = 'https://cardif.moneydj.com/main.asp?sUrl=$W$HTML$SELECT]DJHTM';
+                linkElement.innerHTML = '🌐 法巴官方網站';
+                linkElement.style.display = 'inline-block';
+            }
+        }
+
+        function switchKgiPolicy(index, fileName) {
+            const options = document.querySelectorAll('#kgiSwitcher .policy-option');
+            options.forEach(opt => opt.classList.remove('active'));
+            options[index].classList.add('active');
+            
+            document.getElementById('kgiSwitcherSlide').style.transform = `translateX(${index * 100}%)`;
+            document.getElementById('btnReset').click(); 
+
+            currentKgiFile = fileName; 
+            currentFile = fileName;
+            loadCsvData(currentFile);
+            fetchLastUpdateTime(currentFile);
+            
+            const linkElement = document.getElementById('officialLink');
+            if (fileName === 'latest_zhaocai.csv') {
+                linkElement.href = 'https://kgilife.moneydj.com/main.asp?sUrl=$W$HTML$SELECT]DJHTM{P}SBR1';
+            } else if (fileName === 'latest_yisheng.csv') {
+                linkElement.href = 'https://kgilife.moneydj.com/main.asp?sUrl=$W$HTML$SELECT]DJHTM{P}SJF1';
+            }
+            linkElement.innerHTML = '🌐 凱基官方網站';
+        }
+
+        const filterInputs = ['filterReturnPeriod', 'filterReturnValue', 'filterInceptionYear', 'filterCurrency', 'filterDividend', 'filterNav', 'filterStdDev', 'filterSharpe', 'filterBeta'];
+        filterInputs.forEach(id => {
+            const element = document.getElementById(id);
+            if(element) {
+                element.addEventListener('input', () => { 
+                    if(table) {
+                        table.draw(); 
+                        let fReturnPeriod = document.getElementById('filterReturnPeriod').value;
+                        let colIndex = table.columns().indexes().filter((idx) => {
+                            return table.column(idx).header().innerText.replace(/<[^>]*>?/gm, '').trim() === fReturnPeriod.trim();
+                        });
+                        if (colIndex.length > 0) {
+                            table.order([colIndex[0], 'desc']).draw();
+                        }
+                    }
+                });
+            }
+        });
+
+        document.getElementById('btnReset').addEventListener('click', () => {
+            document.getElementById('filterReturnPeriod').value = '一年(%)';
+            document.getElementById('filterReturnValue').value = '';
+            document.getElementById('filterInceptionYear').value = ''; 
+            document.getElementById('filterCurrency').value = '';
+            document.getElementById('filterDividend').value = '';
+            document.getElementById('filterNav').value = '';
+            document.getElementById('filterStdDev').value = '';
+            document.getElementById('filterSharpe').value = '';
+            document.getElementById('filterBeta').value = '';
+            if(table) table.draw();
+        });
+
+        $.fn.dataTable.ext.search.push(
+            function( settings, data, dataIndex ) {
+                let fReturnPeriod = document.getElementById('filterReturnPeriod').value;
+                let fReturnValue = parseFloat(document.getElementById('filterReturnValue').value);
+                let fInceptionYear = document.getElementById('filterInceptionYear').value; 
+                let fCurrency = document.getElementById('filterCurrency').value;
+                let fDividend = document.getElementById('filterDividend').value;
+                let fNav = parseFloat(document.getElementById('filterNav').value) || null;
+                let fStdDev = parseFloat(document.getElementById('filterStdDev').value) || null;
+                let fSharpe = parseFloat(document.getElementById('filterSharpe').value) || null;
+                let fBeta = parseFloat(document.getElementById('filterBeta').value) || null;
+
+                let cInceptionDate = settings.aoColumns.findIndex(c => c.sTitle.includes('成立日期')); 
+                let cCurrency = settings.aoColumns.findIndex(c => c.sTitle.includes('幣別'));
+                let cDividend = settings.aoColumns.findIndex(c => c.sTitle.includes('配息頻率'));
+                let cNav = settings.aoColumns.findIndex(c => c.sTitle.includes('淨值') && !c.sTitle.includes('日期'));
+                let cStdDev = settings.aoColumns.findIndex(c => c.sTitle.includes('年化標準差'));
+                let cSharpe = settings.aoColumns.findIndex(c => c.sTitle.includes('年化Sharpe'));
+                let cBeta = settings.aoColumns.findIndex(c => c.sTitle.includes('年化Beta'));
+                let cTargetReturn = settings.aoColumns.findIndex(c => c.sTitle.includes(fReturnPeriod));
+
+                let rowInceptionDate = cInceptionDate >= 0 ? String(data[cInceptionDate]) : ''; 
+                let rowCurrency = cCurrency >= 0 ? data[cCurrency] : '';
+                let rowDividend = cDividend >= 0 ? data[cDividend] : '';
+                let rowNav = cNav >= 0 ? parseFloat(data[cNav]) : null;
+                let rowStdDev = cStdDev >= 0 ? parseFloat(data[cStdDev]) : null;
+                let rowSharpe = cSharpe >= 0 ? parseFloat(data[cSharpe]) : null;
+                let rowBeta = cBeta >= 0 ? parseFloat(data[cBeta]) : null;
+                let rowTargetReturn = cTargetReturn >= 0 ? parseFloat(data[cTargetReturn]) : null;
+
+                if (fInceptionYear && cInceptionDate >= 0) {
+                    let targetYear = parseInt(fInceptionYear, 10);
+                    let match = rowInceptionDate.match(/\d{4}/); 
+                    if (!isNaN(targetYear)) {
+                        if (!match) return false; 
+                        let fundYear = parseInt(match[0], 10);
+                        if (fundYear > targetYear) return false;
+                    }
+                }
+                
+                if (fCurrency && rowCurrency !== fCurrency) return false;
+                if (fDividend && rowDividend !== fDividend) return false;
+                if (!isNaN(fReturnValue) && (isNaN(rowTargetReturn) || rowTargetReturn < fReturnValue)) return false;
+                if (fNav !== null && (isNaN(rowNav) || rowNav > fNav)) return false; 
+                if (fStdDev !== null && (isNaN(rowStdDev) || rowStdDev > fStdDev)) return false; 
+                if (fSharpe !== null && (isNaN(rowSharpe) || rowSharpe < fSharpe)) return false; 
+                if (fBeta !== null && (isNaN(rowBeta) || rowBeta > fBeta)) return false; 
+
+                return true; 
+            }
+        );
+
+        function loadCsvData(fileName) {
+            fetch(fileName + '?t=' + new Date().getTime())
+                .then(response => {
+                    if (!response.ok) { throw new Error("找不到檔案：" + fileName); }
+                    return response.blob(); 
+                })
+                .then(blob => {
+                    Papa.parse(blob, {
+                        header: true,
+                        skipEmptyLines: true,
+                        encoding: "UTF-8", 
+                        complete: function(results) {
+                            let data = results.data;
+                            if(data.length > 0) {
+                                if ($.fn.DataTable.isDataTable('#fundTable')) {
+                                    table.destroy();
+                                    $('#fundTable').empty(); 
+                                }
+
+                                data.forEach(function(row) {
+                                    let totalReturn = parseFloat(row['成立以來(%)']);
+                                    let inceptionStr = row['成立日期'];
+                                    let navStr = row['淨值日期'];
+
+                                    if (!isNaN(totalReturn) && inceptionStr && navStr) {
+                                        let incDate = new Date(inceptionStr);
+                                        let navDate = new Date(navStr);
+                                        
+                                        if (!isNaN(incDate) && !isNaN(navDate)) {
+                                            let diffTime = Math.abs(navDate - incDate);
+                                            let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                                            let years = diffDays / 365.25; 
+                                            
+                                            if (years > 0) {
+                                                let avgReturn = totalReturn / years;
+                                                row['成立以來平均報酬(%)'] = avgReturn.toFixed(2);
+                                            } else {
+                                                row['成立以來平均報酬(%)'] = '0.00';
+                                            }
+                                        } else {
+                                            row['成立以來平均報酬(%)'] = '-';
+                                        }
+                                    } else {
+                                        row['成立以來平均報酬(%)'] = '-';
+                                    }
+                                });
+                                
+                                const columns = Object.keys(data[0]).map(function(key) {
+                                    let cleanKey = key.replace(/^\uFEFF/, '');
+                                    let columnConfig = { title: cleanKey, data: key };
+                                    
+                                    if (cleanKey === '嘉實基金評等') {
+                                        columnConfig.title = '嘉實基金評等 <span class="help-icon" data-tooltip="嘉實資訊(Moneydj)針對績效與風險的綜合評分。最高5顆星，星數越多代表在同類基金中表現越佳。">?</span>';
+                                    }
+
+                                    if (cleanKey === '標的名稱') {
+                                        columnConfig.render = function (data, type, row, meta) {
+                                            if (type === 'display' && data) {
+                                                return `<span class="name-container name-clickable" data-row-idx="${meta.row}">
+                                                            <span class="info-icon">ℹ️</span>${data}
+                                                        </span>`;
+                                            }
+                                            return data;
+                                        };
+                                        columnConfig.width = "200px";
+                                    }
+
+                                    const numericColumns = ['淨值', '三個月(%)', '六個月(%)', '一年(%)', '三年(%)', '成立以來(%)', '成立以來平均報酬(%)', '年化標準差', '年化Sharpe', '年化Beta'];
+                                    
+                                    if (numericColumns.includes(cleanKey)) {
+                                        columnConfig.render = function (data, type, row) {
+                                            let val = parseFloat(data);
+                                            if (type === 'sort' || type === 'type') {
+                                                return isNaN(val) ? -999999 : val; 
+                                            }
+                                            if (type === 'display') {
+                                                if (cleanKey.includes('(%)') || cleanKey === '年化Sharpe' || cleanKey === '年化Beta') {
+                                                    if (!isNaN(val)) {
+                                                        if (val > 0) return `<span class="val-up">${data}</span>`;
+                                                        if (val < 0) return `<span class="val-down">${data}</span>`;
+                                                    }
+                                                }
+                                                return data; 
+                                            }
+                                            return data;
+                                        };
+                                    }
+                                    
+                                    if (cleanKey === '風險收益等級') {
+                                        columnConfig.render = function ( data, type, row ) {
+                                            if (type === 'display') {
+                                                if (data === 'RR1' || data === 'RR2') return `<span class="badge badge-rr12">${data}</span>`;
+                                                if (data === 'RR3') return `<span class="badge badge-rr3">${data}</span>`;
+                                                if (data === 'RR4' || data === 'RR5') return `<span class="badge badge-rr45">${data}</span>`;
+                                            }
+                                            return data;
+                                        };
+                                    }
+                                    return columnConfig;
+                                });
+
+                                let uniqueCurrencies = [...new Set(data.map(item => item['幣別']))].filter(Boolean);
+                                let currencySelect = document.getElementById('filterCurrency');
+                                currencySelect.innerHTML = '<option value="">全部幣別</option>'; 
+                                uniqueCurrencies.forEach(curr => {
+                                    let option = document.createElement('option');
+                                    option.value = curr;
+                                    option.text = curr;
+                                    currencySelect.appendChild(option);
+                                });
+
+                                let uniqueDividends = [...new Set(data.map(item => item['配息頻率']))].filter(Boolean);
+                                let dividendSelect = document.getElementById('filterDividend');
+                                dividendSelect.innerHTML = '<option value="">全部頻率</option>';
+                                uniqueDividends.forEach(freq => {
+                                    let option = document.createElement('option');
+                                    option.value = freq;
+                                    option.text = freq;
+                                    dividendSelect.appendChild(option);
+                                });
+
+                                table = $('#fundTable').DataTable({
+                                    data: data,
+                                    columns: columns,
+                                    scrollX: true,         
+                                    scrollY: 'calc(100vh - 290px)', 
+                                    scrollCollapse: true,  
+                                    fixedColumns: { left: 1 },
+                                    pageLength: 50,
+                                    language: { url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/zh-HANT.json" },
+                                    className: 'row-border'
+                                });
+                            }
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error("載入失敗：", error);
+                    alert("載入保單資料失敗！請確認檔案 " + fileName + " 是否存在。");
+                });
+        }
+
+        $(document).on('click', '.name-clickable', function() {
+            let rowIdx = $(this).attr('data-row-idx');
+            let rowData = table.row(rowIdx).data();
+            if(rowData) { openModal(rowData); }
+        });
+
+        function formatVal(val) {
+            let num = parseFloat(val);
+            if (isNaN(num)) return val || '-';
+            if (num > 0) return `<span class="val-up">${val}</span>`;
+            if (num < 0) return `<span class="val-down">${val}</span>`;
+            return val;
+        }
+
+        function formatBadge(val) {
+            if (!val) return '-';
+            if (val === 'RR1' || val === 'RR2') return `<span class="badge badge-rr12">${val}</span>`;
+            if (val === 'RR3') return `<span class="badge badge-rr3">${val}</span>`;
+            if (val === 'RR4' || val === 'RR5') return `<span class="badge badge-rr45">${val}</span>`;
+            return val;
+        }
+
+        function openModal(data) {
+            document.getElementById('modalFundName').innerText = data['標的名稱'];
+            document.getElementById('modalFundCode').innerText = data['代碼'] ? `代碼：${data['代碼']}` : '';
+
+            let contentHtml = `
+                <div class="data-section-title">📊 基礎資訊</div>
+                <div class="data-grid">
+                    <div class="data-box"><div class="data-label">最新淨值</div><div class="data-value large">${data['淨值'] || '-'}</div></div>
+                    <div class="data-box"><div class="data-label">計價幣別</div><div class="data-value">${data['幣別'] || '-'}</div></div>
+                    <div class="data-box"><div class="data-label">風險等級</div><div class="data-value">${formatBadge(data['風險收益等級'])}</div></div>
+                    <div class="data-box">
+                        <div class="data-label">嘉實評等<span class="help-icon" data-tooltip="嘉實(Moneydj)針對績效與風險的綜合評分。最高5顆星，星數越多代表在同類基金中表現越佳。">?</span></div>
+                        <div class="data-value" style="color:#eab308; font-weight:700;">${data['嘉實基金評等'] ? data['嘉實基金評等'] + ' ⭐' : '-'}</div>
+                    </div>
+                    <div class="data-box"><div class="data-label">配息頻率</div><div class="data-value">${data['配息頻率'] || '-'}</div></div>
+                    <div class="data-box"><div class="data-label">成立日期</div><div class="data-value">${data['成立日期'] || '-'}</div></div>
+                </div>
+
+                <div class="data-section-title">📈 績效表現</div>
+                <div class="data-grid">
+                    <div class="data-box"><div class="data-label">近三個月</div><div class="data-value">${formatVal(data['三個月(%)'])}</div></div>
+                    <div class="data-box"><div class="data-label">近六個月</div><div class="data-value">${formatVal(data['六個月(%)'])}</div></div>
+                    <div class="data-box"><div class="data-label">近一年</div><div class="data-value">${formatVal(data['一年(%)'])}</div></div>
+                    <div class="data-box"><div class="data-label">近三年</div><div class="data-value">${formatVal(data['三年(%)'])}</div></div>
+                    <div class="data-box"><div class="data-label">成立以來總報酬</div><div class="data-value">${formatVal(data['成立以來(%)'])}</div></div>
+                    <div class="data-box" style="background: #eff6ff; border-color: #bfdbfe;"><div class="data-label" style="color: #1e40af; font-weight:600;">✨ 成立以來平均年報酬</div><div class="data-value">${formatVal(data['成立以來平均報酬(%)'])}</div></div>
+                </div>
+
+                <div class="data-section-title">🛡️ 風險與波動指標</div>
+                <div class="data-grid">
+                    <div class="data-box"><div class="data-label">年化標準差<span class="help-icon" data-tooltip="衡量基金的波動大小。數值越大，代表漲跌起伏越劇烈（風險越高）。">?</span></div><div class="data-value">${data['年化標準差'] || '-'}</div></div>
+                    <div class="data-box"><div class="data-label">夏普值 (CP值)<span class="help-icon" data-tooltip="衡量承受每1%風險能帶來的超額報酬。數值越大越好，代表承擔相同風險下賺得比較多。">?</span></div><div class="data-value">${formatVal(data['年化Sharpe'])}</div></div>
+                    <div class="data-box"><div class="data-label">Beta值 (連動性)<span class="help-icon" data-tooltip="大盤漲跌1%時，基金跟著漲跌的幅度。大於1代表比大盤活潑，小於1代表比大盤抗跌。">?</span></div><div class="data-value">${formatVal(data['年化Beta'])}</div></div>
+                </div>
+            `;
+
+            document.getElementById('modalContentArea').innerHTML = contentHtml;
+            document.getElementById('fundModal').style.display = 'flex';
+        }
+
+        function closeModal() { document.getElementById('fundModal').style.display = 'none'; }
+        window.onclick = function(event) {
+            let modal = document.getElementById('fundModal');
+            if (event.target == modal) { closeModal(); }
+        }
+
+        $(document).on('mouseenter', '.help-icon', function() {
+            let text = $(this).attr('data-tooltip');
+            let tooltip = document.getElementById('globalTooltip');
+            tooltip.innerHTML = text;
+            tooltip.style.visibility = 'visible';
+            tooltip.style.opacity = '1';
+            let rect = this.getBoundingClientRect();
+            let top = rect.top - tooltip.offsetHeight - 8;
+            let left = rect.left + (rect.width / 2) - (tooltip.offsetWidth / 2);
+            tooltip.style.top = top + 'px';
+            tooltip.style.left = left + 'px';
+        }).on('mouseleave', '.help-icon', function() {
+            let tooltip = document.getElementById('globalTooltip');
+            tooltip.style.opacity = '0';
+            tooltip.style.visibility = 'hidden';
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            loadCsvData(currentFile);
+            fetchLastUpdateTime(currentFile);
+            logVisit();
+        });
+
+
+        // ==========================================
+        // 🍔 漢堡選單與視圖切換邏輯
+        // ==========================================
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        const navFund = document.getElementById('navFund');
+        const navCalc = document.getElementById('navCalc');
+        const headerTitle = document.getElementById('headerTitle'); // 🌟 抓取標題元素
+        const lastUpdateTag = document.getElementById('lastUpdateTag'); // 🌟 抓取更新時間元素
+
+        hamburgerBtn.addEventListener('click', function(e) {
+            e.stopPropagation(); 
+            dropdownMenu.classList.toggle('show');
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!dropdownMenu.contains(e.target) && e.target !== hamburgerBtn) {
+                dropdownMenu.classList.remove('show');
+            }
+        });
+
+        // 點擊「基金篩選」
+        navFund.addEventListener('click', function(e) {
+            e.preventDefault();
+            this.classList.add('active');
+            navCalc.classList.remove('active');
+            
+            document.querySelector('.dashboard-container').style.display = 'flex';
+            document.getElementById('calculatorContainer').style.display = 'none';
+            if(table) table.columns.adjust(); 
+            dropdownMenu.classList.remove('show'); 
+            
+            // 🌟 切換回基金模式：改回原標題，並「顯示」更新時間
+            headerTitle.innerText = '📈 智慧基金篩選';
+            lastUpdateTag.style.display = 'block';
+        });
+
+        // 點擊「退休試算」
+        navCalc.addEventListener('click', function(e) {
+            e.preventDefault();
+            this.classList.add('active');
+            navFund.classList.remove('active');
+            
+            document.querySelector('.dashboard-container').style.display = 'none';
+            document.getElementById('calculatorContainer').style.display = 'block'; 
+            dropdownMenu.classList.remove('show'); 
+            
+            // 🌟 切換到試算模式：更改標題，並「隱藏」更新時間
+            headerTitle.innerText = '💰 退休試算';
+            lastUpdateTag.style.display = 'none';
+        });
+
+
+        // ==========================================
+        // 💰 退休試算核心運算 (防破圖版)
+        // ==========================================
+        let myBarChart = null;
+        let myPieChart = null;
+
+        // 🌟 新增：數字加上千分位逗號
+        function formatNumber(val) {
+            if (!val) return '';
+            let raw = val.toString().replace(/\D/g, ''); // 拔除所有非數字字元
+            return raw ? parseInt(raw, 10).toLocaleString('en-US') : '';
+        }
+
+        // 🌟 新增：將帶有逗號的字串還原成純數字來計算
+        function getRawNumber(val) {
+            if (!val) return 0;
+            return parseFloat(val.toString().replace(/,/g, '')) || 0;
+        }
+
+        function goToStep(step) {
+            document.querySelectorAll('.step-container').forEach(c => c.classList.remove('active'));
+            document.getElementById('calcStep' + step).classList.add('active');
+            document.getElementById('calculatorContainer').scrollTop = 0;
+        }
+
+        // 🌟 新增：從 Step 2 進入 Step 3 時，把填寫好的資料「複製」到儀表板上
+        function startCalculation() {
+            document.getElementById('inpCurrentAge3').value = document.getElementById('inpCurrentAge').value;
+            document.getElementById('inpRetireAge3').value = document.getElementById('inpRetireAge').value;
+            document.getElementById('inpAnnualExp3').value = document.getElementById('inpAnnualExp').value;
+            document.getElementById('inpCurrentSavings3').value = document.getElementById('inpCurrentSavings').value;
+            document.getElementById('inpFixedIncome3').value = document.getElementById('inpFixedIncome').value;
+            
+            calculateResult();
+        }
+
+// 🌟 修改：加入動態白話文拆解邏輯
+        function calculateResult() {
+            goToStep(3); 
+            
+            let currentAge = parseFloat(document.getElementById('inpCurrentAge3').value) || 0;
+            let retireAge = parseFloat(document.getElementById('inpRetireAge3').value) || 0;
+            let targetAge = parseFloat(document.getElementById('inpTargetAge3').value) || 0;
+            
+            let annualExp = getRawNumber(document.getElementById('inpAnnualExp3').value);
+            let currentSavings = getRawNumber(document.getElementById('inpCurrentSavings3').value);
+            let fixedIncome = getRawNumber(document.getElementById('inpFixedIncome3').value);
+            
+            let preReturn = (parseFloat(document.getElementById('inpPreReturn3').value) || 0) / 100;
+            let postReturn = (parseFloat(document.getElementById('inpPostReturn3').value) || 0) / 100;
+
+            let yearsToRetire = retireAge - currentAge;
+            let yearsInRetire = targetAge - retireAge;
+            
+            if(yearsToRetire <= 0 || yearsInRetire <= 0) {
+                document.getElementById('resLumpSum').innerText = "0 元";
+                document.getElementById('resAnnual').innerText = "0 元";
+                return;
+            }
+
+            // 1. 每年總缺口
+            let annualGap = annualExp - fixedIncome;
+            if(annualGap < 0) annualGap = 0;
+
+            // 2. 總需準備與新資金缺口
+            let totalNeededAtRetire = annualGap * ((1 - Math.pow(1 + postReturn, -yearsInRetire)) / postReturn) * (1 + postReturn);
+            let gapAtRetire = totalNeededAtRetire - currentSavings;
+            if(gapAtRetire < 0) gapAtRetire = 0;
+
+            // 🌟 3. 計算「新資金」實際每年要分攤的額度
+            let pmtGap = 0;
+            if (gapAtRetire > 0 && yearsInRetire > 0) {
+                if (postReturn === 0) {
+                    pmtGap = gapAtRetire / yearsInRetire;
+                } else {
+                    pmtGap = gapAtRetire / ( ((1 - Math.pow(1 + postReturn, -yearsInRetire)) / postReturn) * (1 + postReturn) );
+                }
+            }
+            
+            // 🌟 4. 計算「舊有理財金」每年幫忙分攤的額度
+            let savingsCover = annualGap - pmtGap;
+            if (savingsCover < 0) savingsCover = 0;
+
+            let lumpSumNeeded = gapAtRetire / Math.pow(1 + preReturn, yearsToRetire);
+            let fvFactor = ((Math.pow(1 + preReturn, yearsToRetire) - 1) / preReturn) * (1 + preReturn);
+            let annualNeeded = gapAtRetire / fvFactor;
+            let monthlyNeeded = annualNeeded / 12;
+
+            // 🌟 5. 動態產生白話文解析，拆解給使用者看
+            let postPct = document.getElementById('inpPostReturn3').value || 0;
+            let summaryHTML = `
+                💡 <b>試算解析：</b>為了在 <span class="summary-highlight">${retireAge} 歲</span> 退休生活至 <span class="summary-highlight">${targetAge} 歲</span>，扣除固定領回後，每年仍有 <b>${Math.round(annualGap).toLocaleString()} 元</b> 的資金缺口。<br>
+            `;
+            
+            // 如果有填寫目前已準備的理財金，就多秀出這段拆解說明
+            if (currentSavings > 0) {
+                summaryHTML += `
+                <div style="margin-top: 8px; font-size: 0.9rem; background: #fff; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                    ✨ 您填寫的「目前已準備理財」，在 ${postPct}% 的利息滾動下，每年可幫您分攤約 <b style="color:#0ea5e9;">${Math.round(savingsCover).toLocaleString()} 元</b>。<br>
+                    ✨ 因此，下方軌跡圖中的新資金，每年實際只需扣除剩餘的 <b style="color:#e74c3c;">${Math.round(pmtGap).toLocaleString()} 元</b>！
+                </div>
+                `;
+            }
+
+            document.getElementById('resultSummary').innerHTML = summaryHTML;
+
+            // 更新畫面數字
+            document.getElementById('resLumpSum').innerText = Math.round(lumpSumNeeded).toLocaleString() + " 元";
+            document.getElementById('resAnnual').innerHTML = `每年 ${Math.round(annualNeeded).toLocaleString()} 元<br>
+                <span style="font-size: 1.05rem; font-weight: 600; opacity: 0.85;">每月 ${Math.round(monthlyNeeded).toLocaleString()} 元</span>`;
+
+            renderCharts(lumpSumNeeded, annualNeeded, fixedIncome * yearsInRetire, currentSavings, gapAtRetire, {
+                currentAge, retireAge, targetAge, preReturn, postReturn, annualGap
+            });
+        }
+
+        function renderCharts(lumpSum, annual, totalSocial, totalSavings, gapAtRetire, params) {
+            Chart.defaults.font.family = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+
+            let labels = [];
+            let dataLump = [];
+            let dataAnn = [];
+
+            // 🌟 核心邏輯：只畫出為了解決資金缺口而投入的新資金軌跡
+            let balLump = lumpSum;
+            let balAnn = 0;
+            let pmtGap = 0;
+
+            // 計算只看新資金時，退休後每年需消耗的額度
+            if (gapAtRetire > 0 && params.targetAge > params.retireAge) {
+                let n = params.targetAge - params.retireAge;
+                let r = params.postReturn;
+                if (r === 0) {
+                    pmtGap = gapAtRetire / n;
+                } else {
+                    pmtGap = gapAtRetire / ( ((1 - Math.pow(1 + r, -n)) / r) * (1 + r) );
+                }
+            }
+
+            for (let age = params.currentAge; age <= params.targetAge; age++) {
+                labels.push(age + '歲');
+                
+                if (age === params.targetAge) {
+                    dataLump.push(0);
+                    dataAnn.push(0);
+                } else if (age < params.retireAge) {
+                    // 退休前：單純累積新資金
+                    dataLump.push(Math.round(Math.max(0, balLump)));
+                    balAnn += annual; 
+                    dataAnn.push(Math.round(Math.max(0, balAnn)));
+                    
+                    balLump *= (1 + params.preReturn);
+                    balAnn *= (1 + params.preReturn);
+                } else {
+                    // 退休後：消耗期 (每年提領我們算出來的 pmtGap)
+                    dataLump.push(Math.round(Math.max(0, balLump)));
+                    dataAnn.push(Math.round(Math.max(0, balAnn)));
+                    
+                    balLump -= pmtGap;
+                    balAnn -= pmtGap;
+                    
+                    balLump *= (1 + params.postReturn);
+                    balAnn *= (1 + params.postReturn);
+                }
+            }
+
+            // 📈 資金成長與消耗軌跡 (曲線圖)
+            let barCtx = document.getElementById('barChart').getContext('2d');
+            if (myBarChart) myBarChart.destroy();
+            myBarChart = new Chart(barCtx, {
+                type: 'line', 
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: '現在一筆投入',
+                            data: dataLump,
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.12)', 
+                            borderWidth: 2,
+                            fill: true,
+                            pointRadius: 0, 
+                            pointHitRadius: 10,
+                            tension: 0.4 
+                        },
+                        {
+                            label: '每年持續投入',
+                            data: dataAnn,
+                            borderColor: '#14b8a6',
+                            backgroundColor: 'transparent',
+                            borderWidth: 2.5,
+                            borderDash: [6, 4], 
+                            fill: false,
+                            pointRadius: 0,
+                            pointHitRadius: 10,
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: { 
+                    maintainAspectRatio: false, 
+                    plugins: { 
+                        legend: { display: true, position: 'top', labels: { usePointStyle: true, boxWidth: 8 } },
+                        tooltip: {
+                            mode: 'index', 
+                            intersect: false,
+                            callbacks: {
+                                label: function(context) {
+                                    return ' ' + context.dataset.label + '：' + context.raw.toLocaleString() + ' 元';
+                                }
+                            }
+                        }
+                    },
+                    scales: { 
+                        y: { 
+                            beginAtZero: true, 
+                            grid: { borderDash: [5, 5] },
+                            ticks: { callback: function(value) { return value.toLocaleString(); } }
+                        }, 
+                        x: { 
+                            grid: { display: false },
+                            ticks: { maxTicksLimit: 8 } 
+                        } 
+                    }
+                }
+            });
+
+            // 🥧 退休資金結構分析 (圓餅圖) 
+            let pieCtx = document.getElementById('pieChart').getContext('2d');
+            if (myPieChart) myPieChart.destroy();
+            myPieChart = new Chart(pieCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['社會保險基本盤', '目前已準備理財', '最終資金缺口'],
+                    datasets: [{
+                        data: [Math.round(totalSocial), Math.round(totalSavings), Math.round(gapAtRetire)],
+                        backgroundColor: ['#f59e0b', '#14b8a6', '#3b82f6'],
+                        borderWidth: 3,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: { 
+                    maintainAspectRatio: false,
+                    cutout: '65%',
+                    plugins: { 
+                        legend: { position: 'bottom' },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ' ' + context.label + ' : ' + context.raw.toLocaleString() + ' 元';
+                                }
+                            } 
+                        }
+                    } 
+                }
+            });
+        }
+
+
+        // ==========================================
+        // 🔒 開發者後門與資料追蹤
+        // ==========================================
+        let clickCount = 0;
+        let clickTimer = null;
+
+        document.querySelector('header h1').addEventListener('click', function() {
+            clickCount++;
+            if (clickCount === 1) {
+                clickTimer = setTimeout(() => { clickCount = 0; }, 2000); 
+            }
+            if (clickCount >= 5) {
+                clearTimeout(clickTimer);
+                clickCount = 0;
+                let pwd = prompt("🕵️‍♂️ 進入開發者模式：\n請輸入強制更新密碼：");
+                if (pwd === "1521") { 
+                    triggerN8nUpdate();
+                } else if (pwd !== null) {
+                    alert("❌ 密碼錯誤，存取拒絕！");
+                }
+            }
+        });
+
+        function triggerN8nUpdate() {
+            const webhookUrl = "https://james15211521.zeabur.app/webhook/force-update";
+            const timeTag = document.getElementById('lastUpdateTag');
+            timeTag.innerText = '🚀 正在向 n8n 發送強制更新指令...';
+            timeTag.style.color = '#3a86ff';
+
+            fetch(webhookUrl, { method: 'GET' })
+                .then(response => {
+                    if (response.ok) {
+                        alert("✅ 成功觸發 n8n 強制更新！\n\n機器人已經在背景努力抓取最新資料並上傳 GitHub。\n請大約等待 1~2 分鐘後，再重新整理此網頁查看最新時間。");
+                        timeTag.innerText = '⏳ n8n 背景更新中，請稍後重新整理...';
+                    } else { throw new Error('伺服器無回應'); }
+                })
+                .catch(error => {
+                    console.error("觸發失敗:", error);
+                    alert("❌ 觸發 n8n 失敗，請確認 Webhook 網址是否正確且已啟用 (Active)。");
+                    timeTag.innerText = `🔴 強制更新失敗`;
+                    timeTag.style.color = '#e74c3c'; 
+                });
+        }
+
+        function logVisit() {
+            const trackerWebhookUrl = "https://james15211521.zeabur.app/webhook/track-visit";
+            fetch(trackerWebhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: "page_view" })
+            }).catch(err => { console.log("Tracker skipped."); });
+        }
+    </script>
+</body>
+</html>
