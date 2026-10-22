@@ -1338,7 +1338,7 @@
         });
 
         function triggerN8nUpdate() {
-            const webhookUrl = "https://orthodox-oarfish.pikapod.net//webhook/force-update";
+            const webhookUrl = "https://orthodox-oarfish.pikapod.net/webhook/force-update";
             const timeTag = document.getElementById('lastUpdateTag');
             timeTag.innerText = '🚀 正在向 n8n 發送強制更新指令...';
             timeTag.style.color = '#3a86ff';
@@ -1359,7 +1359,7 @@
         }
 
         function logVisit() {
-            const trackerWebhookUrl = "https://orthodox-oarfish.pikapod.net//webhook/track-visit";
+            const trackerWebhookUrl = "https://orthodox-oarfish.pikapod.net/webhook/track-visit";
             fetch(trackerWebhookUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
