@@ -221,6 +221,24 @@
         .pwd-actions { display: flex; gap: 10px; }
         .pwd-actions button { padding: 10px; }
         .pwd-ok { background: var(--accent-blue); color: #fff; }
+        .cc-card { background: #fff; width: 92%; max-width: 480px; max-height: 90vh; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); display: flex; flex-direction: column; overflow: hidden; animation: slideUp 0.3s ease-out; }
+        .cc-head { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; background: var(--primary-bg); border-bottom: 1px solid var(--border-light); }
+        .cc-head h3 { margin: 0; font-size: 1.1rem; }
+        .cc-close { flex: none; width: 36px; padding: 0 0 4px; background: none; font-size: 1.8rem; line-height: 1; color: #94a3b8; }
+        .cc-close:hover { color: var(--color-up); }
+        .cc-body { padding: 18px 20px 22px; overflow-y: auto; }
+        .cc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
+        .cc-grid label { margin-bottom: 4px; }
+        .cc-grid input, .cc-grid select { margin-bottom: 12px; }
+        .cc-result { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 4px 0 14px; }
+        .cc-result .data-box.main { grid-column: 1 / -1; background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); border: none; color: #fff; text-align: center; }
+        .cc-result .main .data-label { color: rgba(255,255,255,0.85); }
+        .cc-result .main .data-value { color: #fff; font-size: 1.5rem; }
+        .cc-table-wrap { max-height: 200px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 10px; }
+        .cc-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+        .cc-table th, .cc-table td { padding: 6px 8px; text-align: right; border-bottom: 1px solid #f1f5f9; }
+        .cc-table th { position: sticky; top: 0; background: #f8fafc; color: #64748b; }
+        .cc-table th:first-child, .cc-table td:first-child { text-align: center; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
@@ -382,6 +400,7 @@
             <div id="dropdownMenu" class="dropdown-menu">
                 <a href="#" id="navFund" class="dropdown-item active">基金篩選🔍 </a>
                 <a href="#" id="navCalc" class="dropdown-item">退休試算💰 </a>
+                <a href="#" id="navCompound" class="dropdown-item">複利計算機🧮 </a>
                 <a href="https://edesk.bli.gov.tw/me/#/na/login" target="_blank" class="dropdown-item">勞保局e化服務系統💼 </a>
                 <a href="https://james170120.github.io/video-downloader/" class="dropdown-item">影音下載神器🎬 </a>
                 <a href="https://james170120.github.io/創建中" target="_blank" class="dropdown-item">創建中🕹️ </a>
@@ -474,6 +493,33 @@
         </div>
     </div>
     <div id="globalTooltip" class="global-tooltip"></div>
+
+    <div class="modal-overlay" id="compoundModal">
+        <div class="cc-card" role="dialog" aria-label="複利計算機">
+            <div class="cc-head">
+                <h3>🧮 複利計算機</h3>
+                <button type="button" class="cc-close" id="ccClose" aria-label="關閉">&times;</button>
+            </div>
+            <div class="cc-body">
+                <div class="cc-grid">
+                    <div><label for="ccPrincipal">初始本金（元）</label><input type="text" inputmode="numeric" id="ccPrincipal" value="100,000"></div>
+                    <div><label for="ccContrib">定期投入（元）</label><input type="text" inputmode="numeric" id="ccContrib" value="10,000"></div>
+                    <div><label for="ccContribFreq">投入頻率</label><select id="ccContribFreq"><option value="12">每月投入</option><option value="1">每年投入</option></select></div>
+                    <div><label for="ccRate">年報酬率 (%)</label><input type="number" id="ccRate" value="6" step="0.1" min="0"></div>
+                    <div><label for="ccYears">投資年數</label><input type="number" id="ccYears" value="20" min="1" max="100" step="1"></div>
+                    <div><label for="ccCompFreq">複利頻率</label><select id="ccCompFreq"><option value="12">每月複利</option><option value="1">每年複利</option></select></div>
+                </div>
+                <div class="cc-result">
+                    <div class="data-box main"><div class="data-label">期末總資產</div><div class="data-value" id="ccTotal">-</div></div>
+                    <div class="data-box"><div class="data-label">總投入本金</div><div class="data-value" id="ccInvested">-</div></div>
+                    <div class="data-box"><div class="data-label">利息收益</div><div class="data-value" id="ccInterest">-</div></div>
+                </div>
+                <div class="cc-table-wrap">
+                    <table class="cc-table"><thead><tr><th>年</th><th>累計投入</th><th>資產</th></tr></thead><tbody id="ccRows"></tbody></table>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal-overlay" id="pwdModal">
         <form class="pwd-card" id="pwdForm" autocomplete="off">
@@ -1384,6 +1430,40 @@
                 openPwdModal();
             }
         });
+
+        // 複利計算機：只能按 X 關閉，點背景不會關閉
+        const compoundModal = document.getElementById('compoundModal');
+        function calcCompound() {
+            const principal = getRawNumber(document.getElementById('ccPrincipal').value);
+            const contrib = getRawNumber(document.getElementById('ccContrib').value);
+            const contribPerYear = parseInt(document.getElementById('ccContribFreq').value, 10);
+            const compPerYear = parseInt(document.getElementById('ccCompFreq').value, 10);
+            const rate = (parseFloat(document.getElementById('ccRate').value) || 0) / 100;
+            const years = Math.min(100, Math.max(0, Math.floor(parseFloat(document.getElementById('ccYears').value) || 0)));
+            // 以「月」為單位模擬；每月利率依複利頻率換算（月複利 r/12；年複利取等效月利率）
+            const monthRate = compPerYear === 12 ? rate / 12 : Math.pow(1 + rate, 1 / 12) - 1;
+            let bal = principal, invested = principal;
+            const rows = [];
+            for (let m = 1; m <= years * 12; m++) {
+                bal *= (1 + monthRate);
+                if (contribPerYear === 12 || m % 12 === 0) { bal += contrib; invested += contrib; }
+                if (m % 12 === 0) rows.push([m / 12, invested, bal]);
+            }
+            const fmt = n => Math.round(n).toLocaleString('en-US');
+            document.getElementById('ccTotal').innerText = fmt(bal) + ' 元';
+            document.getElementById('ccInvested').innerText = fmt(invested) + ' 元';
+            document.getElementById('ccInterest').innerText = fmt(bal - invested) + ' 元';
+            document.getElementById('ccRows').innerHTML = rows.map(r => `<tr><td>${r[0]}</td><td>${fmt(r[1])}</td><td>${fmt(r[2])}</td></tr>`).join('');
+        }
+        ['ccPrincipal', 'ccContrib'].forEach(id => document.getElementById(id).addEventListener('input', function () { this.value = formatNumber(this.value); calcCompound(); }));
+        ['ccContribFreq', 'ccRate', 'ccYears', 'ccCompFreq'].forEach(id => document.getElementById(id).addEventListener('input', calcCompound));
+        document.getElementById('navCompound').addEventListener('click', function (e) {
+            e.preventDefault();
+            dropdownMenu.classList.remove('show');
+            compoundModal.style.display = 'flex';
+            calcCompound();
+        });
+        document.getElementById('ccClose').addEventListener('click', () => { compoundModal.style.display = 'none'; });
 
         // 密碼視窗：預設遮蔽，按眼睛可切換顯示
         const pwdModal = document.getElementById('pwdModal');
