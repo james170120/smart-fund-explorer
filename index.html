@@ -1426,6 +1426,12 @@
                         timeTag.style.color = '#e74c3c';
                         return;
                     }
+                    if (response.status === 429) {
+                        response.text().then(t => alert("⏳ " + (t || "冷卻中，請稍後再試")));
+                        timeTag.innerText = '⏳ 冷卻中，近期已更新過，請稍後再試';
+                        timeTag.style.color = '#e67e22';
+                        return;
+                    }
                     if (response.ok) {
                         alert("✅ 成功觸發 n8n 強制更新！\n\n機器人已經在背景努力抓取最新資料並上傳 GitHub。\n請大約等待 1~2 分鐘後，再重新整理此網頁查看最新時間。");
                         timeTag.innerText = '⏳ n8n 背景更新中，請稍後重新整理...';
