@@ -239,6 +239,11 @@
         .cc-table th, .cc-table td { padding: 6px 8px; text-align: right; border-bottom: 1px solid #f1f5f9; }
         .cc-table th { position: sticky; top: 0; background: #f8fafc; color: #64748b; }
         .cc-table th:first-child, .cc-table td:first-child { text-align: center; }
+        .cc-help { margin-top: 14px; border: 1px solid #dbeafe; background: #f0f6ff; border-radius: 10px; padding: 10px 14px; font-size: 0.82rem; line-height: 1.7; color: #334155; }
+        .cc-help summary { cursor: pointer; font-weight: 700; color: #1e40af; }
+        .cc-help ul { margin: 8px 0 0; padding-left: 18px; }
+        .cc-help code { background: #fff; border: 1px solid #dbeafe; border-radius: 4px; padding: 0 5px; font-size: 0.8rem; }
+        .cc-help .cc-warn { margin-top: 8px; color: #92400e; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
@@ -518,6 +523,19 @@
                 <div class="cc-table-wrap">
                     <table class="cc-table"><thead><tr><th>年</th><th>累計投入</th><th>資產</th></tr></thead><tbody id="ccRows"></tbody></table>
                 </div>
+                <details class="cc-help" open>
+                    <summary>📖 這是怎麼算的？</summary>
+                    <ul>
+                        <li><b>什麼是複利：</b>賺到的利息會再一起生利息，時間越長，滾雪球效果越明顯。</li>
+                        <li><b>每月利率：</b>選「每月複利」時，每月利率＝年報酬率 ÷ 12；選「每年複利」時，每月利率＝<code>(1＋年報酬率)<sup>1/12</sup>－1</code>，這樣滿 12 個月剛好成長一整年的報酬率。</li>
+                        <li><b>逐月計算：</b>每個月先讓目前資產乘上 <code>(1＋每月利率)</code>，再把當月的投入金額加進去，重複到投資年數結束。</li>
+                        <li><b>投入時間：</b>「每月投入」在每月月底加入；「每年投入」在每年第 12 個月底加入。投入的那一期當月不會計息。</li>
+                        <li><b>一次性投入：</b>只在一開始投入一筆、之後不再追加，公式為 <code>期末資產＝投入金額 × (1＋每月利率)<sup>年數×12</sup></code>。</li>
+                        <li><b>總投入本金：</b>初始本金＋之後每次投入的金額總和。<b>利息收益：</b>期末總資產－總投入本金。</li>
+                        <li><b>範例：</b>一次性投入 10 萬元、年報酬 6%、每月複利、20 年，期末約為 100,000 × (1.005)<sup>240</sup> ≈ 331,020 元。</li>
+                    </ul>
+                    <div class="cc-warn">⚠️ 假設報酬率每年固定不變，且未扣除手續費、稅金與通貨膨脹。實際投資報酬會波動，結果僅供參考，不代表未來績效。</div>
+                </details>
             </div>
         </div>
     </div>
