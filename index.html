@@ -8,7 +8,7 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.3.0/css/fixedColumns.dataTables.min.css">
 
@@ -396,146 +396,151 @@
         }
 
         /* =========================================================
-           溫暖手帳風主題（覆蓋上方舊樣式）
+           現代理財 App 風主題（覆蓋上方舊樣式）
            ========================================================= */
         *, *::before, *::after { box-sizing: border-box; }
         :root {
-            --primary-bg: #f5efe6;
-            --card-bg: #fffaf2;
-            --text-main: #3b3a36;
-            --text-muted: #8a8174;
-            --accent-blue: #2f5d50;
-            --accent-hover: #24493f;
-            --border-light: #e6dccb;
-            --color-up: #c0603a;
-            --color-up-bg: #f6e4da;
-            --color-down: #4f7d5c;
-            --color-down-bg: #e3ebe5;
-            --ink-soft: #5c574e;
-            --green-soft: #e3ebe5;
-            --paper-deep: #efe6d8;
-            --hand: "LXGW WenKai TC", "Noto Serif TC", serif;
+            --primary-bg: #f6f7f9;
+            --card-bg: #ffffff;
+            --text-main: #111827;
+            --text-muted: #6b7280;
+            --accent-blue: #111827;
+            --accent-hover: #000000;
+            --border-light: #e5e7eb;
+            --color-up: #dc2626;
+            --color-up-bg: #fef2f2;
+            --color-down: #059669;
+            --color-down-bg: #ecfdf5;
+            --rose: #e11d48;
+            --soft: #f3f4f6;
+            --field: #f9fafb;
         }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
             background-color: var(--primary-bg);
             color: var(--text-main);
+            -webkit-font-smoothing: antialiased;
         }
 
         /* 標題列 */
-        header { background-color: var(--primary-bg); box-shadow: none; border-bottom: 1px dashed #d8ccb8; }
+        header { background-color: #fff; box-shadow: none; border-bottom: 1px solid var(--border-light); }
         header h1 { cursor: default; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
-        header h1 { font-family: var(--hand); font-weight: 700; font-size: 1.55rem; color: var(--accent-blue); letter-spacing: 1px; }
-        #lastUpdateTag { font-weight: 500 !important; padding: 6px 30px 0 !important; margin-top: 0 !important; }
-        .hamburger-btn:hover { background-color: var(--paper-deep); color: var(--accent-blue); }
-        .dropdown-menu { background: var(--card-bg); border: 1px solid var(--border-light); box-shadow: 0 8px 24px rgba(80, 60, 30, 0.12); border-radius: 10px; }
-        .dropdown-item { border-bottom: 1px dashed var(--border-light); font-weight: 500; }
-        .dropdown-item:hover { background-color: var(--paper-deep); }
-        .dropdown-item.active { color: var(--accent-blue); background-color: var(--green-soft); border-left: 3px solid var(--accent-blue); padding-left: 17px; }
+        header h1 { font-weight: 800; font-size: 1.35rem; color: var(--text-main); letter-spacing: -0.2px; }
+        #lastUpdateTag { font-weight: 500 !important; padding: 8px 30px 0 !important; margin-top: 0 !important; font-size: 0.78rem !important; }
+        .hamburger-btn { color: var(--text-main); }
+        .hamburger-btn:hover { background-color: var(--soft); color: var(--text-main); }
+        .dropdown-menu { background: #fff; border: 1px solid var(--border-light); box-shadow: 0 12px 32px rgba(17, 24, 39, 0.12); border-radius: 14px; }
+        .dropdown-item { border-bottom: 1px solid var(--soft); font-weight: 500; }
+        .dropdown-item:hover { background-color: var(--field); }
+        .dropdown-item.active { color: var(--text-main); font-weight: 700; background-color: var(--soft); border-left: 3px solid var(--rose); padding-left: 17px; }
 
-        /* 側欄與切換膠囊 */
-        .sidebar { background-color: var(--primary-bg); border-right: 1px dashed #d8ccb8; }
-        .policy-switcher, #kgiSwitcher { background: var(--paper-deep) !important; border-radius: 999px !important; }
-        .switcher-slide { background: var(--accent-blue); border-radius: 999px !important; box-shadow: none; }
-        .policy-option { color: var(--ink-soft); }
-        .policy-option.active { color: #fffaf2; }
+        /* 側欄與切換按鈕 */
+        .sidebar { background-color: var(--primary-bg); border-right: 1px solid var(--border-light); }
+        #officialLink { color: var(--text-muted) !important; font-weight: 500 !important; }
+        #officialLink:hover { color: var(--text-main) !important; }
+        .policy-switcher, #kgiSwitcher { background: #e9ebef !important; border-radius: 12px !important; }
+        .switcher-slide { background: var(--text-main); border-radius: 9px !important; box-shadow: 0 2px 6px rgba(17, 24, 39, 0.18); }
+        .policy-option { color: var(--text-muted); font-weight: 600; }
+        .policy-option.active { color: #fff; }
 
-        /* 篩選卡片：像手帳內頁 */
-        .filter-card { background: var(--card-bg); border: 1px solid var(--border-light); box-shadow: none; border-radius: 14px; }
-        .filter-title { font-family: var(--hand); font-size: 1.05rem; color: var(--accent-blue); }
-        .filter-title::before { width: 10px; height: 10px; border-radius: 50%; background-color: var(--color-up); }
-        label { color: var(--ink-soft); }
-        select, input[type="number"], input[type="text"], input[type="password"] { border: 1px solid #ddd2c0; background-color: #fffdf8; color: var(--text-main); border-radius: 10px; }
-        select:focus, input[type="number"]:focus, input[type="text"]:focus, input[type="password"]:focus { border-color: var(--accent-blue); background-color: #fff; box-shadow: 0 0 0 3px rgba(47, 93, 80, 0.15); outline: none; }
-        .btn-reset { background-color: var(--paper-deep); color: var(--ink-soft); }
-        .btn-reset:hover { background-color: #e4d8c5; transform: none; }
+        /* 篩選卡片 */
+        .filter-card { background: #fff; border: 1px solid var(--border-light); box-shadow: none; border-radius: 16px; }
+        .filter-title { font-size: 0.95rem; font-weight: 800; color: var(--text-main); }
+        .filter-title::before { width: 4px; height: 16px; border-radius: 2px; background-color: var(--rose); }
+        label { color: var(--text-muted); font-weight: 500; }
+        select, input[type="number"], input[type="text"], input[type="password"] { border: 1px solid var(--border-light); background-color: var(--field); color: var(--text-main); border-radius: 10px; }
+        select:focus, input[type="number"]:focus, input[type="text"]:focus, input[type="password"]:focus { border-color: var(--text-main); background-color: #fff; box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.08); outline: none; }
+        .btn-reset { background-color: var(--soft); color: var(--text-main); }
+        .btn-reset:hover { background-color: #e5e7eb; transform: none; }
 
         /* 表格 */
-        .table-wrapper { background: var(--card-bg); border: 1px solid var(--border-light); box-shadow: none; border-radius: 14px; }
-        table.dataTable, table.dataTable tbody tr { background-color: var(--card-bg); }
-        table.dataTable thead th { background-color: var(--paper-deep) !important; color: var(--ink-soft); text-transform: none; border-bottom: 1px solid #d8ccb8 !important; }
-        table.dataTable tbody td { border-bottom: 1px dashed var(--border-light); font-variant-numeric: tabular-nums; }
-        table.dataTable tbody tr:hover > * { background-color: #f8f1e6 !important; }
-        table.dataTable thead tr > .dtfc-fixed-left, table.dataTable tbody tr > .dtfc-fixed-left { background-color: var(--card-bg); }
-        table.dataTable thead tr > th.dtfc-fixed-left { background-color: var(--paper-deep); }
-        .dataTables_wrapper .dataTables_filter input, .dataTables_wrapper .dataTables_length select { border: 1px solid #ddd2c0; background: #fffdf8; border-radius: 8px; padding: 4px 8px; margin-bottom: 8px; }
-        .dataTables_wrapper .dataTables_paginate .paginate_button { border-radius: 8px !important; }
-        .dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover { background: var(--accent-blue) !important; border-color: var(--accent-blue) !important; color: #fffaf2 !important; }
-        .dataTables_wrapper .dataTables_paginate .paginate_button:hover { background: var(--paper-deep) !important; border-color: var(--border-light) !important; color: var(--text-main) !important; }
-        .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter { color: var(--ink-soft) !important; }
-        .val-up { color: var(--color-up); }
-        .val-down { color: var(--color-down); font-weight: 600; }
-        .badge { border-radius: 999px; font-weight: 600; }
-        .badge-rr12 { background-color: var(--green-soft); color: #2f5d50; }
-        .badge-rr3 { background-color: #f6ead0; color: #8a6418; }
-        .badge-rr45 { background-color: var(--color-up-bg); color: #9a4528; }
-        .name-clickable { color: var(--accent-blue); text-decoration: underline dotted #b9ab93; text-underline-offset: 3px; }
-        .info-icon { display: none; }
+        .table-wrapper { background: #fff; border: 1px solid var(--border-light); box-shadow: none; border-radius: 16px; height: 100%; display: flex; flex-direction: column; }
+        table.dataTable, table.dataTable tbody tr { background-color: #fff; }
+        table.dataTable thead th { background-color: var(--field) !important; color: var(--text-muted); font-weight: 600; text-transform: none; border-bottom: 1px solid var(--border-light) !important; }
+        table.dataTable tbody td { border-bottom: 1px solid var(--soft); font-variant-numeric: tabular-nums; }
         table.dataTable.display tbody tr > *, table.dataTable.stripe tbody tr > * { box-shadow: none !important; }
-        table.dataTable.display tbody tr:nth-child(odd) > * { background-color: #fdf7ec; }
-        .name-clickable:hover { color: var(--color-up); }
+        table.dataTable tbody tr:hover > * { background-color: var(--field) !important; }
+        table.dataTable thead tr > .dtfc-fixed-left, table.dataTable tbody tr > .dtfc-fixed-left { background-color: #fff; }
+        table.dataTable thead tr > th.dtfc-fixed-left { background-color: var(--field); }
+        .dataTables_wrapper .dataTables_length label, .dataTables_wrapper .dataTables_filter label { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 8px; white-space: nowrap; }
+        .dataTables_wrapper .dataTables_length select, .dataTables_wrapper .dataTables_filter input { width: auto; margin: 0 !important; }
+        .dataTables_wrapper .dataTables_filter input, .dataTables_wrapper .dataTables_length select { border: 1px solid var(--border-light); background: var(--field); border-radius: 10px; padding: 5px 10px; margin-bottom: 8px; }
+        .dataTables_wrapper .dataTables_paginate .paginate_button { border-radius: 8px !important; border: none !important; }
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover { background: var(--text-main) !important; color: #fff !important; }
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover { background: var(--soft) !important; color: var(--text-main) !important; }
+        .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter { color: var(--text-muted) !important; }
+        .val-up { color: var(--color-up); font-weight: 700; }
+        .val-down { color: var(--color-down); font-weight: 700; }
+        .badge { border-radius: 6px; font-weight: 700; }
+        .badge-rr12 { background-color: var(--color-down-bg); color: #047857; }
+        .badge-rr3 { background-color: #fffbeb; color: #b45309; }
+        .badge-rr45 { background-color: var(--color-up-bg); color: #b91c1c; }
+        .info-icon { display: none; }
+        .name-clickable { color: var(--text-main); font-weight: 600; }
+        .name-clickable:hover { color: var(--rose); text-decoration: none; }
 
         /* 彈出視窗 */
-        .modal-overlay { background: rgba(59, 50, 38, 0.35); backdrop-filter: blur(2px); }
-        .modal-card, .cc-card, .pwd-card { background: var(--card-bg); border: 1px solid var(--border-light); box-shadow: 0 16px 40px rgba(80, 60, 30, 0.18); }
-        .modal-header, .cc-head { background: var(--paper-deep); border-bottom: 1px dashed #d8ccb8; }
-        .modal-title, .cc-head h3, .pwd-title { font-family: var(--hand); color: var(--accent-blue); }
-        .modal-body { background: var(--card-bg); }
-        .data-section-title { font-family: var(--hand); font-size: 1.05rem; color: var(--accent-blue); }
-        .data-box { background: #fffdf8; border: 1px dashed #ddd2c0; }
+        .modal-overlay { background: rgba(17, 24, 39, 0.45); backdrop-filter: blur(4px); }
+        .modal-card, .cc-card, .pwd-card { background: #fff; border: none; box-shadow: 0 24px 48px rgba(17, 24, 39, 0.22); border-radius: 20px; }
+        .modal-header, .cc-head { background: #fff; border-bottom: 1px solid var(--border-light); }
+        .modal-title, .cc-head h3, .pwd-title { color: var(--text-main); font-weight: 800; }
+        .modal-body { background: #fff; }
+        .data-section-title { font-weight: 800; color: var(--text-main); }
+        .data-box { background: var(--field); border: 1px solid var(--soft); border-radius: 12px; }
         .data-label { color: var(--text-muted); }
-        .data-value { color: var(--text-main); font-variant-numeric: tabular-nums; }
-        .global-tooltip { background-color: #4a443b; color: #fffaf2; }
-        .help-icon { background-color: #c9bca6; }
-        .pwd-ok { background: var(--accent-blue); color: #fffaf2; }
-        .pwd-ok:hover { background: var(--accent-hover); }
+        .data-value { color: var(--text-main); font-weight: 700; font-variant-numeric: tabular-nums; }
+        .global-tooltip { background-color: var(--text-main); color: #fff; border-radius: 8px; }
+        .help-icon { background-color: #d1d5db; }
+        .pwd-ok { background: var(--text-main); color: #fff; }
+        .pwd-ok:hover { background: #000; }
 
         /* 複利計算機 */
-        .cc-result .data-box.main { background: var(--accent-blue); }
+        .cc-result .data-box.main { background: var(--text-main); border-radius: 14px; }
+        .cc-result .main .data-value { font-size: 1.7rem; font-weight: 800; }
         .cc-table-wrap { border: 1px solid var(--border-light); }
-        .cc-table th { background: var(--paper-deep); color: var(--ink-soft); }
-        .cc-table td { border-bottom: 1px dashed var(--border-light); font-variant-numeric: tabular-nums; }
-        .cc-help { background: #fffdf8; border: 1px dashed #d8ccb8; color: var(--ink-soft); }
-        .cc-help summary { color: var(--accent-blue); font-family: var(--hand); font-size: 0.95rem; }
-        .cc-help code { background: var(--paper-deep); border-color: var(--border-light); }
-        .cc-help .cc-warn { color: #9a4528; }
+        .cc-table th { background: var(--field); color: var(--text-muted); }
+        .cc-table td { border-bottom: 1px solid var(--soft); font-variant-numeric: tabular-nums; }
+        .cc-help { background: var(--field); border: 1px solid var(--border-light); color: #374151; }
+        .cc-help summary { color: var(--text-main); font-weight: 700; }
+        .cc-help code { background: #fff; border-color: var(--border-light); }
+        .cc-help .cc-warn { color: #b45309; }
 
         /* 退休試算 */
-        .card-step1, .card-step2 { background: var(--card-bg); border: 1px solid var(--border-light); border-radius: 16px; box-shadow: none; }
-        .card-step1 .step-title, .card-step2 .step-title { font-family: var(--hand); color: var(--accent-blue); font-size: 1.4rem; }
-        .card-step2 .step-title { border-bottom: 1px dashed #d8ccb8; }
-        .card-step1 .input-wrap { background: var(--paper-deep); }
-        .card-step1 .calc-label, .card-step2 .calc-label { color: var(--ink-soft); }
-        .card-step1 input, .card-step2 input { background: #fffdf8; border: 1px solid #ddd2c0; color: var(--text-main); }
-        .card-step1 input:focus, .card-step2 input:focus { box-shadow: 0 0 0 3px rgba(47, 93, 80, 0.15); border-color: var(--accent-blue); }
-        .btn-blue, .btn-green { background: var(--accent-blue); color: #fffaf2; box-shadow: none; border-radius: 12px; }
-        .btn-blue:hover, .btn-green:hover { background: var(--accent-hover); transform: none; }
-        .btn-back { background: var(--paper-deep); color: var(--ink-soft); }
-        .btn-back:hover { background: #e4d8c5; }
-        .dashboard-header, .chart-safe-zone { background: var(--card-bg); border: 1px solid var(--border-light); box-shadow: none; }
-        .dash-row { border-bottom: 1px dashed #d8ccb8; }
-        .dash-row-tag { background: var(--green-soft); color: var(--accent-blue); width: auto; min-width: 72px; white-space: nowrap; }
-        .dash-input-group { background: #fffdf8; }
-        .dash-input-group:hover { border-color: #ddd2c0; }
+        .card-step1, .card-step2 { background: #fff; border: 1px solid var(--border-light); border-top: 1px solid var(--border-light); border-radius: 20px; box-shadow: none; }
+        .card-step1 .step-title, .card-step2 .step-title { color: var(--text-main); font-weight: 800; }
+        .card-step2 .step-title { border-bottom: 1px solid var(--border-light); }
+        .card-step1 .input-wrap { background: var(--field); }
+        .card-step1 .calc-label, .card-step2 .calc-label { color: #374151; }
+        .card-step1 input, .card-step2 input { background: #fff; border: 1px solid var(--border-light); color: var(--text-main); }
+        .card-step1 input:focus, .card-step2 input:focus { box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.08); border-color: var(--text-main); }
+        .btn-blue, .btn-green { background: var(--text-main); color: #fff; box-shadow: none; border-radius: 12px; }
+        .btn-blue:hover, .btn-green:hover { background: #000; transform: none; }
+        .btn-back { background: var(--soft); color: var(--text-main); }
+        .btn-back:hover { background: #e5e7eb; }
+        .dashboard-header, .chart-safe-zone { background: #fff; border: 1px solid var(--border-light); box-shadow: none; border-radius: 16px; }
+        .dash-row { border-bottom: 1px solid var(--soft); }
+        .dash-row-tag { background: var(--soft); color: var(--text-main); width: auto; min-width: 72px; white-space: nowrap; }
+        .dash-input-group { background: var(--field); }
+        .dash-input-group:hover { border-color: var(--border-light); }
         .dash-input-group label { color: var(--text-muted); }
-        .dash-input-group input { border: 1px solid #ddd2c0; color: var(--text-main); }
-        .dash-input-group input:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(47, 93, 80, 0.12); }
-        .result-summary { background-color: #fffdf8; border-left: 3px solid var(--color-up); color: var(--ink-soft); }
-        .summary-highlight { background: var(--green-soft); color: var(--accent-blue); }
-        .highlight-card { box-shadow: none; border-radius: 16px; }
+        .dash-input-group input { border: 1px solid var(--border-light); color: var(--text-main); }
+        .dash-input-group input:focus { border-color: var(--text-main); box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.08); }
+        .result-summary { background-color: #fff; border: 1px solid var(--border-light); border-left: 3px solid var(--rose); border-radius: 0 12px 12px 0; color: #374151; }
+        .summary-highlight { background: var(--soft); color: var(--text-main); }
+        .highlight-card { box-shadow: none; border-radius: 18px; }
         .highlight-card::after { display: none; }
-        .card-blue { background: var(--accent-blue); }
-        .card-teal { background: var(--color-up); }
-        .hl-title { font-family: var(--hand); font-size: 1rem; }
-        .hl-value { text-shadow: none; font-variant-numeric: tabular-nums; }
-        .chart-title { font-family: var(--hand); color: var(--accent-blue); border-left: 3px solid var(--color-up); }
+        .card-blue { background: var(--text-main); }
+        .card-teal { background: var(--rose); }
+        .hl-value { text-shadow: none; font-weight: 800; font-variant-numeric: tabular-nums; }
+        .chart-title { color: var(--text-main); font-weight: 800; border-left: 3px solid var(--rose); }
 
         @media (max-width: 768px) {
-            header h1 { font-size: 1.35rem; }
+            header h1 { font-size: 1.25rem; }
+            #lastUpdateTag { padding: 8px 15px 0 !important; }
             .header-menu-container { top: 50% !important; transform: translateY(-50%); }
             .hamburger-btn { font-size: 1.5rem; }
-            #lastUpdateTag { padding: 6px 15px 0 !important; }
-            .sidebar { border-right: none; border-bottom: 1px dashed #d8ccb8; }
+            .sidebar { border-right: none; border-bottom: 1px solid var(--border-light); }
+            .table-wrapper { height: auto; display: block; }
         }
     </style>
 </head>
@@ -559,7 +564,7 @@
         </div>
     </header>
 
-    <div id="lastUpdateTag" style="font-size: 0.8rem; color: #2f5d50; margin-top: 5px; font-weight: 600; padding: 0 15px;">
+    <div id="lastUpdateTag" style="font-size: 0.8rem; color: #059669; margin-top: 5px; font-weight: 600; padding: 0 15px;">
         ⌛ 正在確認最新數據時間...
     </div>
 
@@ -837,14 +842,14 @@
 
             const timeTag = document.getElementById('lastUpdateTag');
             timeTag.innerText = '⌛ 正在確認最新數據時間...';
-            timeTag.style.color = '#8a8174';
+            timeTag.style.color = '#6b7280';
             const reqId = ++updateReqId;
             const showTime = (iso) => {
                 if (reqId !== updateReqId) return;
                 const date = new Date(iso);
                 const timeStr = date.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' });
                 timeTag.innerText = `🟢 最新資料庫更新時間：${timeStr}`;
-                timeTag.style.color = '#2f5d50';
+                timeTag.style.color = '#059669';
             };
             // 快取 30 分鐘，避免超出 GitHub API 未登入每小時 60 次的限制
             const cacheKey = 'updTime:' + cleanFileName;
@@ -865,13 +870,13 @@
                     showTime(iso);
                 } else {
                     timeTag.innerText = `⚠️ 尚未有更新紀錄`;
-                    timeTag.style.color = '#b7791f';
+                    timeTag.style.color = '#d97706';
                 }
             } catch (e) {
                 if (reqId !== updateReqId) return;
                 console.error("抓取更新時間失敗：", e);
                 timeTag.innerText = `🔴 無法取得資料庫更新時間`;
-                timeTag.style.color = '#b4472c';
+                timeTag.style.color = '#dc2626';
             }
         }
 
@@ -1161,8 +1166,10 @@
                                     fixedColumns: { left: 1 },
                                     pageLength: 50,
                                     language: { url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/zh-HANT.json" },
-                                    className: 'row-border'
+                                    className: 'row-border',
+                                    initComplete: function () { setTimeout(fitTableHeight, 0); }
                                 });
+                                table.on('draw', fitTableHeight);
                             }
                         }
                     });
@@ -1172,6 +1179,24 @@
                     alert("載入保單資料失敗！請確認檔案 " + fileName + " 是否存在。");
                 });
         }
+
+        // 讓表格捲動區自動貼合卡片高度，避免底部「上一頁／下一頁」被切掉
+        function fitTableHeight() {
+            if (!table || window.innerWidth <= 768) return;
+            const wrap = document.querySelector('.table-wrapper');
+            const body = wrap && wrap.querySelector('.dataTables_scrollBody');
+            const dtw = wrap && wrap.querySelector('.dataTables_wrapper');
+            if (!body || !dtw || wrap.offsetParent === null) return;
+            const padBottom = parseFloat(getComputedStyle(wrap).paddingBottom) || 0;
+            // 捲動區下方（筆數資訊、分頁）實際佔用的高度
+            const bodyBottom = body.getBoundingClientRect().bottom;
+            let lowest = bodyBottom;
+            Array.from(dtw.children).forEach(el => { const b = el.getBoundingClientRect().bottom; if (b > lowest) lowest = b; });
+            const below = lowest - bodyBottom;
+            const h = Math.floor(wrap.getBoundingClientRect().bottom - padBottom - below - body.getBoundingClientRect().top);
+            if (h > 120) { body.style.maxHeight = h + 'px'; body.style.height = h + 'px'; }
+        }
+        window.addEventListener('resize', () => { fitTableHeight(); if (table) table.columns.adjust(); });
 
         $(document).on('click', '.name-clickable', function() {
             let rowIdx = $(this).attr('data-row-idx');
@@ -1207,7 +1232,7 @@
                     <div class="data-box"><div class="data-label">風險等級</div><div class="data-value">${formatBadge(data['風險收益等級'])}</div></div>
                     <div class="data-box">
                         <div class="data-label">嘉實評等<span class="help-icon" data-tooltip="嘉實(Moneydj)針對績效與風險的綜合評分。最高5顆星，星數越多代表在同類基金中表現越佳。">?</span></div>
-                        <div class="data-value" style="color:#b7791f; font-weight:700;">${data['嘉實基金評等'] ? escapeHtml(data['嘉實基金評等']) + ' ⭐' : '-'}</div>
+                        <div class="data-value" style="color:#d97706; font-weight:700;">${data['嘉實基金評等'] ? escapeHtml(data['嘉實基金評等']) + ' ⭐' : '-'}</div>
                     </div>
                     <div class="data-box"><div class="data-label">配息頻率</div><div class="data-value">${escapeHtml(data['配息頻率']) || '-'}</div></div>
                     <div class="data-box"><div class="data-label">成立日期</div><div class="data-value">${escapeHtml(data['成立日期']) || '-'}</div></div>
@@ -1220,7 +1245,7 @@
                     <div class="data-box"><div class="data-label">近一年</div><div class="data-value">${formatVal(data['一年(%)'])}</div></div>
                     <div class="data-box"><div class="data-label">近三年</div><div class="data-value">${formatVal(data['三年(%)'])}</div></div>
                     <div class="data-box"><div class="data-label">成立以來總報酬</div><div class="data-value">${formatVal(data['成立以來(%)'])}</div></div>
-                    <div class="data-box" style="background: #f3ece0; border-color: #d8ccb8;"><div class="data-label" style="color: #2f5d50; font-weight:600;">✨ 成立以來平均年報酬</div><div class="data-value">${formatVal(data['成立以來平均報酬(%)'])}</div></div>
+                    <div class="data-box" style="background: #f9fafb; border-color: #e5e7eb;"><div class="data-label" style="color: #111827; font-weight:600;">✨ 成立以來平均年報酬</div><div class="data-value">${formatVal(data['成立以來平均報酬(%)'])}</div></div>
                 </div>
 
                 <div class="data-section-title">🛡️ 風險與波動指標</div>
@@ -1294,7 +1319,7 @@
 
             document.querySelector('.dashboard-container').style.display = 'flex';
             document.getElementById('calculatorContainer').style.display = 'none';
-            if(table) table.columns.adjust();
+            if(table) { table.columns.adjust(); setTimeout(fitTableHeight, 0); }
             dropdownMenu.classList.remove('show');
 
             // 🌟 切換回基金模式：改回原標題，並「顯示」更新時間
@@ -1416,9 +1441,9 @@
             // 如果有填寫目前已準備的理財金，就多秀出這段拆解說明
             if (currentSavings > 0) {
                 summaryHTML += `
-                <div style="margin-top: 8px; font-size: 0.9rem; background: #fffaf2; padding: 10px; border-radius: 8px; border: 1px dashed #d8ccb8;">
-                    ✨ 您填寫的「目前已準備理財」，在 ${postPct}% 的利息滾動下，每年可幫您分攤約 <b style="color:#2f5d50;">${Math.round(savingsCover).toLocaleString()} 元</b>。<br>
-                    ✨ 因此，下方軌跡圖中的新資金，每年實際只需扣除剩餘的 <b style="color:#c0603a;">${Math.round(pmtGap).toLocaleString()} 元</b>！
+                <div style="margin-top: 8px; font-size: 0.9rem; background: #f9fafb; padding: 10px; border-radius: 10px; border: 1px solid #e5e7eb;">
+                    ✨ 您填寫的「目前已準備理財」，在 ${postPct}% 的利息滾動下，每年可幫您分攤約 <b style="color:#111827;">${Math.round(savingsCover).toLocaleString()} 元</b>。<br>
+                    ✨ 因此，下方軌跡圖中的新資金，每年實際只需扣除剩餘的 <b style="color:#e11d48;">${Math.round(pmtGap).toLocaleString()} 元</b>！
                 </div>
                 `;
             }
@@ -1496,8 +1521,8 @@
                         {
                             label: '現在一筆投入',
                             data: dataLump,
-                            borderColor: '#2f5d50',
-                            backgroundColor: 'rgba(47, 93, 80, 0.10)',
+                            borderColor: '#111827',
+                            backgroundColor: 'rgba(17, 24, 39, 0.06)',
                             borderWidth: 2,
                             fill: true,
                             pointRadius: 0,
@@ -1507,7 +1532,7 @@
                         {
                             label: '每年持續投入',
                             data: dataAnn,
-                            borderColor: '#c0603a',
+                            borderColor: '#e11d48',
                             backgroundColor: 'transparent',
                             borderWidth: 2.5,
                             borderDash: [6, 4],
@@ -1555,9 +1580,9 @@
                     labels: ['社會保險基本盤', '目前已準備理財', '最終資金缺口'],
                     datasets: [{
                         data: [Math.round(totalSocial), Math.round(totalSavings), Math.round(gapAtRetire)],
-                        backgroundColor: ['#d9a441', '#c0603a', '#2f5d50'],
+                        backgroundColor: ['#f59e0b', '#e11d48', '#111827'],
                         borderWidth: 3,
-                        borderColor: '#fffaf2'
+                        borderColor: '#ffffff'
                     }]
                 },
                 options: {
@@ -1664,20 +1689,20 @@
             const webhookUrl = "https://orthodox-oarfish.pikapod.net/webhook/force-update";
             const timeTag = document.getElementById('lastUpdateTag');
             timeTag.innerText = '🚀 正在向 n8n 發送強制更新指令...';
-            timeTag.style.color = '#2f5d50';
+            timeTag.style.color = '#111827';
 
             fetch(webhookUrl, { method: 'GET', headers: { 'X-Api-Key': apiKey } })
                 .then(response => {
                     if (response.status === 401 || response.status === 403) {
                         alert("❌ 密碼錯誤，存取拒絕！");
                         timeTag.innerText = '🔴 密碼錯誤，未執行更新';
-                        timeTag.style.color = '#b4472c';
+                        timeTag.style.color = '#dc2626';
                         return;
                     }
                     if (response.status === 429) {
                         response.text().then(t => alert("⏳ " + (t || "冷卻中，請稍後再試")));
                         timeTag.innerText = '⏳ 冷卻中，近期已更新過，請稍後再試';
-                        timeTag.style.color = '#b7791f';
+                        timeTag.style.color = '#d97706';
                         return;
                     }
                     if (response.ok) {
@@ -1689,7 +1714,7 @@
                     console.error("觸發失敗:", error);
                     alert("❌ 觸發 n8n 失敗，請確認 Webhook 網址是否正確且已啟用 (Active)。");
                     timeTag.innerText = `🔴 強制更新失敗`;
-                    timeTag.style.color = '#b4472c';
+                    timeTag.style.color = '#dc2626';
                 });
         }
 
