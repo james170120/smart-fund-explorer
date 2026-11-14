@@ -1359,22 +1359,25 @@
                 clearTimeout(clickTimer);
                 clickCount = 0;
                 let pwd = prompt("🕵️‍♂️ 進入開發者模式：\n請輸入強制更新密碼：");
-                if (pwd === "1521") {
-                    triggerN8nUpdate();
-                } else if (pwd !== null) {
-                    alert("❌ 密碼錯誤，存取拒絕！");
-                }
+                // 密碼不存在網頁裡：輸入的內容直接當作 API 金鑰，由 n8n 的 Header Auth 驗證
+                if (pwd) triggerN8nUpdate(pwd.trim());
             }
         });
 
-        function triggerN8nUpdate() {
+        function triggerN8nUpdate(apiKey) {
             const webhookUrl = "https://orthodox-oarfish.pikapod.net/webhook/force-update";
             const timeTag = document.getElementById('lastUpdateTag');
             timeTag.innerText = '🚀 正在向 n8n 發送強制更新指令...';
             timeTag.style.color = '#3a86ff';
 
-            fetch(webhookUrl, { method: 'GET' })
+            fetch(webhookUrl, { method: 'GET', headers: { 'X-Api-Key': apiKey } })
                 .then(response => {
+                    if (response.status === 401 || response.status === 403) {
+                        alert("❌ 密碼錯誤，存取拒絕！");
+                        timeTag.innerText = '🔴 密碼錯誤，未執行更新';
+                        timeTag.style.color = '#e74c3c';
+                        return;
+                    }
                     if (response.ok) {
                         alert("✅ 成功觸發 n8n 強制更新！\n\n機器人已經在背景努力抓取最新資料並上傳 GitHub。\n請大約等待 1~2 分鐘後，再重新整理此網頁查看最新時間。");
                         timeTag.innerText = '⏳ n8n 背景更新中，請稍後重新整理...';
