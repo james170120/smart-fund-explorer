@@ -1051,7 +1051,6 @@
         document.addEventListener("DOMContentLoaded", function() {
             loadCsvData(currentFile);
             fetchLastUpdateTime(currentFile);
-            logVisit();
         });
 
 
@@ -1445,14 +1444,6 @@
                 });
         }
 
-        function logVisit() {
-            const trackerWebhookUrl = "https://orthodox-oarfish.pikapod.net/webhook/track-visit";
-            fetch(trackerWebhookUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action: "page_view" })
-            }).catch(err => { console.log("Tracker skipped."); });
-        }
     </script>
 </body>
 </html>
