@@ -6,6 +6,9 @@
     <title>智慧基金篩選</title>
 
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.3.0/css/fixedColumns.dataTables.min.css">
 
@@ -391,13 +394,155 @@
             /* 🌟 手機版圖表變回上下排列 */
             .charts-container { flex-direction: column; gap: 0; }
         }
+
+        /* =========================================================
+           溫暖手帳風主題（覆蓋上方舊樣式）
+           ========================================================= */
+        *, *::before, *::after { box-sizing: border-box; }
+        :root {
+            --primary-bg: #f5efe6;
+            --card-bg: #fffaf2;
+            --text-main: #3b3a36;
+            --text-muted: #8a8174;
+            --accent-blue: #2f5d50;
+            --accent-hover: #24493f;
+            --border-light: #e6dccb;
+            --color-up: #c0603a;
+            --color-up-bg: #f6e4da;
+            --color-down: #4f7d5c;
+            --color-down-bg: #e3ebe5;
+            --ink-soft: #5c574e;
+            --green-soft: #e3ebe5;
+            --paper-deep: #efe6d8;
+            --hand: "LXGW WenKai TC", "Noto Serif TC", serif;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-main);
+        }
+
+        /* 標題列 */
+        header { background-color: var(--primary-bg); box-shadow: none; border-bottom: 1px dashed #d8ccb8; }
+        header h1 { font-family: var(--hand); font-weight: 700; font-size: 1.55rem; color: var(--accent-blue); letter-spacing: 1px; }
+        #lastUpdateTag { font-weight: 500 !important; padding: 6px 30px 0 !important; margin-top: 0 !important; }
+        .hamburger-btn:hover { background-color: var(--paper-deep); color: var(--accent-blue); }
+        .dropdown-menu { background: var(--card-bg); border: 1px solid var(--border-light); box-shadow: 0 8px 24px rgba(80, 60, 30, 0.12); border-radius: 10px; }
+        .dropdown-item { border-bottom: 1px dashed var(--border-light); font-weight: 500; }
+        .dropdown-item:hover { background-color: var(--paper-deep); }
+        .dropdown-item.active { color: var(--accent-blue); background-color: var(--green-soft); border-left: 3px solid var(--accent-blue); padding-left: 17px; }
+
+        /* 側欄與切換膠囊 */
+        .sidebar { background-color: var(--primary-bg); border-right: 1px dashed #d8ccb8; }
+        .policy-switcher, #kgiSwitcher { background: var(--paper-deep) !important; border-radius: 999px !important; }
+        .switcher-slide { background: var(--accent-blue); border-radius: 999px !important; box-shadow: none; }
+        .policy-option { color: var(--ink-soft); }
+        .policy-option.active { color: #fffaf2; }
+
+        /* 篩選卡片：像手帳內頁 */
+        .filter-card { background: var(--card-bg); border: 1px solid var(--border-light); box-shadow: none; border-radius: 14px; }
+        .filter-title { font-family: var(--hand); font-size: 1.05rem; color: var(--accent-blue); }
+        .filter-title::before { width: 10px; height: 10px; border-radius: 50%; background-color: var(--color-up); }
+        label { color: var(--ink-soft); }
+        select, input[type="number"], input[type="text"], input[type="password"] { border: 1px solid #ddd2c0; background-color: #fffdf8; color: var(--text-main); border-radius: 10px; }
+        select:focus, input[type="number"]:focus, input[type="text"]:focus, input[type="password"]:focus { border-color: var(--accent-blue); background-color: #fff; box-shadow: 0 0 0 3px rgba(47, 93, 80, 0.15); outline: none; }
+        .btn-reset { background-color: var(--paper-deep); color: var(--ink-soft); }
+        .btn-reset:hover { background-color: #e4d8c5; transform: none; }
+
+        /* 表格 */
+        .table-wrapper { background: var(--card-bg); border: 1px solid var(--border-light); box-shadow: none; border-radius: 14px; }
+        table.dataTable, table.dataTable tbody tr { background-color: var(--card-bg); }
+        table.dataTable thead th { background-color: var(--paper-deep) !important; color: var(--ink-soft); text-transform: none; border-bottom: 1px solid #d8ccb8 !important; }
+        table.dataTable tbody td { border-bottom: 1px dashed var(--border-light); font-variant-numeric: tabular-nums; }
+        table.dataTable tbody tr:hover > * { background-color: #f8f1e6 !important; }
+        table.dataTable thead tr > .dtfc-fixed-left, table.dataTable tbody tr > .dtfc-fixed-left { background-color: var(--card-bg); }
+        table.dataTable thead tr > th.dtfc-fixed-left { background-color: var(--paper-deep); }
+        .dataTables_wrapper .dataTables_filter input, .dataTables_wrapper .dataTables_length select { border: 1px solid #ddd2c0; background: #fffdf8; border-radius: 8px; padding: 4px 8px; margin-bottom: 8px; }
+        .dataTables_wrapper .dataTables_paginate .paginate_button { border-radius: 8px !important; }
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover { background: var(--accent-blue) !important; border-color: var(--accent-blue) !important; color: #fffaf2 !important; }
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover { background: var(--paper-deep) !important; border-color: var(--border-light) !important; color: var(--text-main) !important; }
+        .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter { color: var(--ink-soft) !important; }
+        .val-up { color: var(--color-up); }
+        .val-down { color: var(--color-down); font-weight: 600; }
+        .badge { border-radius: 999px; font-weight: 600; }
+        .badge-rr12 { background-color: var(--green-soft); color: #2f5d50; }
+        .badge-rr3 { background-color: #f6ead0; color: #8a6418; }
+        .badge-rr45 { background-color: var(--color-up-bg); color: #9a4528; }
+        .name-clickable { color: var(--accent-blue); text-decoration: underline dotted #b9ab93; text-underline-offset: 3px; }
+        .info-icon { display: none; }
+        table.dataTable.display tbody tr > *, table.dataTable.stripe tbody tr > * { box-shadow: none !important; }
+        table.dataTable.display tbody tr:nth-child(odd) > * { background-color: #fdf7ec; }
+        .name-clickable:hover { color: var(--color-up); }
+
+        /* 彈出視窗 */
+        .modal-overlay { background: rgba(59, 50, 38, 0.35); backdrop-filter: blur(2px); }
+        .modal-card, .cc-card, .pwd-card { background: var(--card-bg); border: 1px solid var(--border-light); box-shadow: 0 16px 40px rgba(80, 60, 30, 0.18); }
+        .modal-header, .cc-head { background: var(--paper-deep); border-bottom: 1px dashed #d8ccb8; }
+        .modal-title, .cc-head h3, .pwd-title { font-family: var(--hand); color: var(--accent-blue); }
+        .modal-body { background: var(--card-bg); }
+        .data-section-title { font-family: var(--hand); font-size: 1.05rem; color: var(--accent-blue); }
+        .data-box { background: #fffdf8; border: 1px dashed #ddd2c0; }
+        .data-label { color: var(--text-muted); }
+        .data-value { color: var(--text-main); font-variant-numeric: tabular-nums; }
+        .global-tooltip { background-color: #4a443b; color: #fffaf2; }
+        .help-icon { background-color: #c9bca6; }
+        .pwd-ok { background: var(--accent-blue); color: #fffaf2; }
+        .pwd-ok:hover { background: var(--accent-hover); }
+
+        /* 複利計算機 */
+        .cc-result .data-box.main { background: var(--accent-blue); }
+        .cc-table-wrap { border: 1px solid var(--border-light); }
+        .cc-table th { background: var(--paper-deep); color: var(--ink-soft); }
+        .cc-table td { border-bottom: 1px dashed var(--border-light); font-variant-numeric: tabular-nums; }
+        .cc-help { background: #fffdf8; border: 1px dashed #d8ccb8; color: var(--ink-soft); }
+        .cc-help summary { color: var(--accent-blue); font-family: var(--hand); font-size: 0.95rem; }
+        .cc-help code { background: var(--paper-deep); border-color: var(--border-light); }
+        .cc-help .cc-warn { color: #9a4528; }
+
+        /* 退休試算 */
+        .card-step1, .card-step2 { background: var(--card-bg); border: 1px solid var(--border-light); border-radius: 16px; box-shadow: none; }
+        .card-step1 .step-title, .card-step2 .step-title { font-family: var(--hand); color: var(--accent-blue); font-size: 1.4rem; }
+        .card-step2 .step-title { border-bottom: 1px dashed #d8ccb8; }
+        .card-step1 .input-wrap { background: var(--paper-deep); }
+        .card-step1 .calc-label, .card-step2 .calc-label { color: var(--ink-soft); }
+        .card-step1 input, .card-step2 input { background: #fffdf8; border: 1px solid #ddd2c0; color: var(--text-main); }
+        .card-step1 input:focus, .card-step2 input:focus { box-shadow: 0 0 0 3px rgba(47, 93, 80, 0.15); border-color: var(--accent-blue); }
+        .btn-blue, .btn-green { background: var(--accent-blue); color: #fffaf2; box-shadow: none; border-radius: 12px; }
+        .btn-blue:hover, .btn-green:hover { background: var(--accent-hover); transform: none; }
+        .btn-back { background: var(--paper-deep); color: var(--ink-soft); }
+        .btn-back:hover { background: #e4d8c5; }
+        .dashboard-header, .chart-safe-zone { background: var(--card-bg); border: 1px solid var(--border-light); box-shadow: none; }
+        .dash-row { border-bottom: 1px dashed #d8ccb8; }
+        .dash-row-tag { background: var(--green-soft); color: var(--accent-blue); width: auto; min-width: 72px; white-space: nowrap; }
+        .dash-input-group { background: #fffdf8; }
+        .dash-input-group:hover { border-color: #ddd2c0; }
+        .dash-input-group label { color: var(--text-muted); }
+        .dash-input-group input { border: 1px solid #ddd2c0; color: var(--text-main); }
+        .dash-input-group input:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(47, 93, 80, 0.12); }
+        .result-summary { background-color: #fffdf8; border-left: 3px solid var(--color-up); color: var(--ink-soft); }
+        .summary-highlight { background: var(--green-soft); color: var(--accent-blue); }
+        .highlight-card { box-shadow: none; border-radius: 16px; }
+        .highlight-card::after { display: none; }
+        .card-blue { background: var(--accent-blue); }
+        .card-teal { background: var(--color-up); }
+        .hl-title { font-family: var(--hand); font-size: 1rem; }
+        .hl-value { text-shadow: none; font-variant-numeric: tabular-nums; }
+        .chart-title { font-family: var(--hand); color: var(--accent-blue); border-left: 3px solid var(--color-up); }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 1.35rem; }
+            .header-menu-container { top: 50% !important; transform: translateY(-50%); }
+            .hamburger-btn { font-size: 1.5rem; }
+            #lastUpdateTag { padding: 6px 15px 0 !important; }
+            .sidebar { border-right: none; border-bottom: 1px dashed #d8ccb8; }
+        }
     </style>
 </head>
 <body>
 
     <header>
         <!-- 🌟 給標題加上 ID，讓 JS 可以控制它 -->
-        <h1 id="headerTitle">📈 智慧基金篩選 </h1>
+        <h1 id="headerTitle">智慧基金篩選</h1>
 
         <!-- 🍔 漢堡選單容器 -->
         <div class="header-menu-container">
@@ -413,7 +558,7 @@
         </div>
     </header>
 
-    <div id="lastUpdateTag" style="font-size: 0.8rem; color: #2ecc71; margin-top: 5px; font-weight: 600; padding: 0 15px;">
+    <div id="lastUpdateTag" style="font-size: 0.8rem; color: #2f5d50; margin-top: 5px; font-weight: 600; padding: 0 15px;">
         ⌛ 正在確認最新數據時間...
     </div>
 
@@ -691,14 +836,14 @@
 
             const timeTag = document.getElementById('lastUpdateTag');
             timeTag.innerText = '⌛ 正在確認最新數據時間...';
-            timeTag.style.color = '#7f8c8d';
+            timeTag.style.color = '#8a8174';
             const reqId = ++updateReqId;
             const showTime = (iso) => {
                 if (reqId !== updateReqId) return;
                 const date = new Date(iso);
                 const timeStr = date.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' });
                 timeTag.innerText = `🟢 最新資料庫更新時間：${timeStr}`;
-                timeTag.style.color = '#2ecc71';
+                timeTag.style.color = '#2f5d50';
             };
             // 快取 30 分鐘，避免超出 GitHub API 未登入每小時 60 次的限制
             const cacheKey = 'updTime:' + cleanFileName;
@@ -719,13 +864,13 @@
                     showTime(iso);
                 } else {
                     timeTag.innerText = `⚠️ 尚未有更新紀錄`;
-                    timeTag.style.color = '#e67e22';
+                    timeTag.style.color = '#b7791f';
                 }
             } catch (e) {
                 if (reqId !== updateReqId) return;
                 console.error("抓取更新時間失敗：", e);
                 timeTag.innerText = `🔴 無法取得資料庫更新時間`;
-                timeTag.style.color = '#e74c3c';
+                timeTag.style.color = '#b4472c';
             }
         }
 
@@ -1061,7 +1206,7 @@
                     <div class="data-box"><div class="data-label">風險等級</div><div class="data-value">${formatBadge(data['風險收益等級'])}</div></div>
                     <div class="data-box">
                         <div class="data-label">嘉實評等<span class="help-icon" data-tooltip="嘉實(Moneydj)針對績效與風險的綜合評分。最高5顆星，星數越多代表在同類基金中表現越佳。">?</span></div>
-                        <div class="data-value" style="color:#eab308; font-weight:700;">${data['嘉實基金評等'] ? escapeHtml(data['嘉實基金評等']) + ' ⭐' : '-'}</div>
+                        <div class="data-value" style="color:#b7791f; font-weight:700;">${data['嘉實基金評等'] ? escapeHtml(data['嘉實基金評等']) + ' ⭐' : '-'}</div>
                     </div>
                     <div class="data-box"><div class="data-label">配息頻率</div><div class="data-value">${escapeHtml(data['配息頻率']) || '-'}</div></div>
                     <div class="data-box"><div class="data-label">成立日期</div><div class="data-value">${escapeHtml(data['成立日期']) || '-'}</div></div>
@@ -1074,7 +1219,7 @@
                     <div class="data-box"><div class="data-label">近一年</div><div class="data-value">${formatVal(data['一年(%)'])}</div></div>
                     <div class="data-box"><div class="data-label">近三年</div><div class="data-value">${formatVal(data['三年(%)'])}</div></div>
                     <div class="data-box"><div class="data-label">成立以來總報酬</div><div class="data-value">${formatVal(data['成立以來(%)'])}</div></div>
-                    <div class="data-box" style="background: #eff6ff; border-color: #bfdbfe;"><div class="data-label" style="color: #1e40af; font-weight:600;">✨ 成立以來平均年報酬</div><div class="data-value">${formatVal(data['成立以來平均報酬(%)'])}</div></div>
+                    <div class="data-box" style="background: #f3ece0; border-color: #d8ccb8;"><div class="data-label" style="color: #2f5d50; font-weight:600;">✨ 成立以來平均年報酬</div><div class="data-value">${formatVal(data['成立以來平均報酬(%)'])}</div></div>
                 </div>
 
                 <div class="data-section-title">🛡️ 風險與波動指標</div>
@@ -1152,7 +1297,7 @@
             dropdownMenu.classList.remove('show');
 
             // 🌟 切換回基金模式：改回原標題，並「顯示」更新時間
-            headerTitle.innerText = '📈 智慧基金篩選';
+            headerTitle.innerText = '智慧基金篩選';
             lastUpdateTag.style.display = 'block';
         });
 
@@ -1167,7 +1312,7 @@
             dropdownMenu.classList.remove('show');
 
             // 🌟 切換到試算模式：更改標題，並「隱藏」更新時間
-            headerTitle.innerText = '💰 退休試算';
+            headerTitle.innerText = '退休試算';
             lastUpdateTag.style.display = 'none';
         });
 
@@ -1270,9 +1415,9 @@
             // 如果有填寫目前已準備的理財金，就多秀出這段拆解說明
             if (currentSavings > 0) {
                 summaryHTML += `
-                <div style="margin-top: 8px; font-size: 0.9rem; background: #fff; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0;">
-                    ✨ 您填寫的「目前已準備理財」，在 ${postPct}% 的利息滾動下，每年可幫您分攤約 <b style="color:#0ea5e9;">${Math.round(savingsCover).toLocaleString()} 元</b>。<br>
-                    ✨ 因此，下方軌跡圖中的新資金，每年實際只需扣除剩餘的 <b style="color:#e74c3c;">${Math.round(pmtGap).toLocaleString()} 元</b>！
+                <div style="margin-top: 8px; font-size: 0.9rem; background: #fffaf2; padding: 10px; border-radius: 8px; border: 1px dashed #d8ccb8;">
+                    ✨ 您填寫的「目前已準備理財」，在 ${postPct}% 的利息滾動下，每年可幫您分攤約 <b style="color:#2f5d50;">${Math.round(savingsCover).toLocaleString()} 元</b>。<br>
+                    ✨ 因此，下方軌跡圖中的新資金，每年實際只需扣除剩餘的 <b style="color:#c0603a;">${Math.round(pmtGap).toLocaleString()} 元</b>！
                 </div>
                 `;
             }
@@ -1350,8 +1495,8 @@
                         {
                             label: '現在一筆投入',
                             data: dataLump,
-                            borderColor: '#3b82f6',
-                            backgroundColor: 'rgba(59, 130, 246, 0.12)',
+                            borderColor: '#2f5d50',
+                            backgroundColor: 'rgba(47, 93, 80, 0.10)',
                             borderWidth: 2,
                             fill: true,
                             pointRadius: 0,
@@ -1361,7 +1506,7 @@
                         {
                             label: '每年持續投入',
                             data: dataAnn,
-                            borderColor: '#14b8a6',
+                            borderColor: '#c0603a',
                             backgroundColor: 'transparent',
                             borderWidth: 2.5,
                             borderDash: [6, 4],
@@ -1409,9 +1554,9 @@
                     labels: ['社會保險基本盤', '目前已準備理財', '最終資金缺口'],
                     datasets: [{
                         data: [Math.round(totalSocial), Math.round(totalSavings), Math.round(gapAtRetire)],
-                        backgroundColor: ['#f59e0b', '#14b8a6', '#3b82f6'],
+                        backgroundColor: ['#d9a441', '#c0603a', '#2f5d50'],
                         borderWidth: 3,
-                        borderColor: '#fff'
+                        borderColor: '#fffaf2'
                     }]
                 },
                 options: {
@@ -1518,20 +1663,20 @@
             const webhookUrl = "https://orthodox-oarfish.pikapod.net/webhook/force-update";
             const timeTag = document.getElementById('lastUpdateTag');
             timeTag.innerText = '🚀 正在向 n8n 發送強制更新指令...';
-            timeTag.style.color = '#3a86ff';
+            timeTag.style.color = '#2f5d50';
 
             fetch(webhookUrl, { method: 'GET', headers: { 'X-Api-Key': apiKey } })
                 .then(response => {
                     if (response.status === 401 || response.status === 403) {
                         alert("❌ 密碼錯誤，存取拒絕！");
                         timeTag.innerText = '🔴 密碼錯誤，未執行更新';
-                        timeTag.style.color = '#e74c3c';
+                        timeTag.style.color = '#b4472c';
                         return;
                     }
                     if (response.status === 429) {
                         response.text().then(t => alert("⏳ " + (t || "冷卻中，請稍後再試")));
                         timeTag.innerText = '⏳ 冷卻中，近期已更新過，請稍後再試';
-                        timeTag.style.color = '#e67e22';
+                        timeTag.style.color = '#b7791f';
                         return;
                     }
                     if (response.ok) {
@@ -1543,7 +1688,7 @@
                     console.error("觸發失敗:", error);
                     alert("❌ 觸發 n8n 失敗，請確認 Webhook 網址是否正確且已啟用 (Active)。");
                     timeTag.innerText = `🔴 強制更新失敗`;
-                    timeTag.style.color = '#e74c3c';
+                    timeTag.style.color = '#b4472c';
                 });
         }
 
