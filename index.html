@@ -212,6 +212,15 @@
         .global-tooltip { position: fixed; visibility: hidden; width: 220px; background-color: #334155; color: #fff; border-radius: 6px; padding: 8px 12px; z-index: 999999; opacity: 0; transition: opacity 0.2s; font-size: 0.75rem; line-height: 1.4; }
         .help-icon { display: inline-flex; justify-content: center; align-items: center; width: 14px; height: 14px; background-color: #cbd5e1; color: #fff; border-radius: 50%; font-size: 10px; cursor: help; margin-left: 6px; }
 
+        .pwd-card { background: #fff; width: 90%; max-width: 360px; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.15); padding: 24px; animation: slideUp 0.3s ease-out; }
+        .pwd-title { font-size: 1.1rem; font-weight: 700; margin: 0 0 6px 0; }
+        .pwd-sub { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 14px; }
+        .pwd-row { position: relative; margin-bottom: 14px; }
+        .pwd-row input { margin-bottom: 0; padding-right: 44px; letter-spacing: 2px; }
+        .pwd-eye { position: absolute; right: 4px; top: 50%; transform: translateY(-50%); flex: none; width: 36px; padding: 6px; background: none; font-size: 1.1rem; }
+        .pwd-actions { display: flex; gap: 10px; }
+        .pwd-actions button { padding: 10px; }
+        .pwd-ok { background: var(--accent-blue); color: #fff; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
@@ -465,6 +474,21 @@
         </div>
     </div>
     <div id="globalTooltip" class="global-tooltip"></div>
+
+    <div class="modal-overlay" id="pwdModal">
+        <form class="pwd-card" id="pwdForm" autocomplete="off">
+            <h3 class="pwd-title">🕵️‍♂️ 開發者模式</h3>
+            <div class="pwd-sub">請輸入強制更新密碼</div>
+            <div class="pwd-row">
+                <input type="password" id="pwdInput" autocomplete="off" placeholder="*****">
+                <button type="button" class="pwd-eye" id="pwdEye" aria-label="顯示或隱藏密碼">👁️</button>
+            </div>
+            <div class="pwd-actions">
+                <button type="button" class="btn-reset" id="pwdCancel">取消</button>
+                <button type="submit" class="pwd-ok">確定</button>
+            </div>
+        </form>
+    </div>
 
 
     <!-- ==========================================
@@ -1000,7 +1024,7 @@
             document.getElementById('fundModal').style.display = 'flex';
         }
 
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closePwdModal(); } });
         function closeModal() { document.getElementById('fundModal').style.display = 'none'; }
         window.onclick = function(event) {
             let modal = document.getElementById('fundModal');
@@ -1358,10 +1382,34 @@
             if (clickCount >= 5) {
                 clearTimeout(clickTimer);
                 clickCount = 0;
-                let pwd = prompt("🕵️‍♂️ 進入開發者模式：\n請輸入強制更新密碼：");
-                // 密碼不存在網頁裡：輸入的內容直接當作 API 金鑰，由 n8n 的 Header Auth 驗證
-                if (pwd) triggerN8nUpdate(pwd.trim());
+                openPwdModal();
             }
+        });
+
+        // 密碼視窗：預設遮蔽，按眼睛可切換顯示
+        const pwdModal = document.getElementById('pwdModal');
+        const pwdInput = document.getElementById('pwdInput');
+        function openPwdModal() {
+            pwdInput.value = '';
+            pwdInput.type = 'password';
+            document.getElementById('pwdEye').innerText = '👁️';
+            pwdModal.style.display = 'flex';
+            pwdInput.focus();
+        }
+        function closePwdModal() { pwdModal.style.display = 'none'; pwdInput.value = ''; }
+        document.getElementById('pwdEye').addEventListener('click', () => {
+            const show = pwdInput.type === 'password';
+            pwdInput.type = show ? 'text' : 'password';
+            document.getElementById('pwdEye').innerText = show ? '🙈' : '👁️';
+        });
+        document.getElementById('pwdCancel').addEventListener('click', closePwdModal);
+        pwdModal.addEventListener('click', e => { if (e.target === pwdModal) closePwdModal(); });
+        document.getElementById('pwdForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const key = pwdInput.value.trim();
+            closePwdModal();
+            // 密碼不存在網頁裡：輸入的內容直接當作 API 金鑰，由 n8n 的 Header Auth 驗證
+            if (key) triggerN8nUpdate(key);
         });
 
         function triggerN8nUpdate(apiKey) {
