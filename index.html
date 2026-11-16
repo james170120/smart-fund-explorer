@@ -664,6 +664,29 @@
         html[data-theme="notebook"] .theme-switch button { color: var(--ink-soft); }
         html[data-theme="notebook"] .theme-switch button:hover { color: var(--accent-blue); }
         html[data-theme="notebook"] .theme-switch button.active { background: var(--accent-blue); color: #fffaf2; }
+        /* ===== 修正：捲軸角落、複利表表頭、手機版表格 ===== */
+        /* FixedColumns 在捲軸交會處放的遮擋塊預設是白色，改成跟主題同色 */
+        html[data-theme="dark"] div.dtfc-right-top-blocker, html[data-theme="dark"] div.dtfc-left-top-blocker { background-color: #0d1526 !important; }
+        html[data-theme="dark"] div.dtfc-right-bottom-blocker, html[data-theme="dark"] div.dtfc-left-bottom-blocker { background-color: var(--card-bg) !important; }
+        html[data-theme="dark"] ::-webkit-scrollbar-corner { background: transparent; }
+        html[data-theme="notebook"] div.dtfc-right-top-blocker, html[data-theme="notebook"] div.dtfc-left-top-blocker { background-color: var(--paper-deep) !important; }
+        html[data-theme="notebook"] div.dtfc-right-bottom-blocker, html[data-theme="notebook"] div.dtfc-left-bottom-blocker { background-color: var(--card-bg) !important; }
+        /* 複利計算機年度表：表頭底線改用主題的邊框色（原本是亮白色） */
+        html[data-theme="dark"] .cc-table th, html[data-theme="notebook"] .cc-table th { border-bottom: 1px solid var(--border-light); }
+        @media (max-width: 768px) {
+            /* 名稱欄窄一點，右邊的報酬率等欄位能多露出來 */
+            .name-container { max-width: 128px; }
+            /* 表格不再自己上下捲動，直接跟著整頁捲 */
+            .dataTables_wrapper .dataTables_scrollBody { max-height: none !important; height: auto !important; }
+            /* 分頁：一排放得下、每顆至少 40x44 好按 */
+            .dataTables_wrapper .dataTables_paginate { display: flex; justify-content: center; align-items: center; gap: 2px; padding-top: 10px; float: none; }
+            .dataTables_wrapper .dataTables_paginate > span { display: flex; align-items: center; gap: 2px; }
+            .dataTables_wrapper .dataTables_paginate .paginate_button { display: inline-flex !important; align-items: center; justify-content: center; min-width: 40px; height: 44px; padding: 0 6px !important; margin: 0 !important; }
+            .dataTables_wrapper .dataTables_paginate .ellipsis { padding: 0 4px; }
+            .dataTables_wrapper .dataTables_paginate .paginate_button.previous, .dataTables_wrapper .dataTables_paginate .paginate_button.next { font-size: 0 !important; }
+            .dataTables_wrapper .dataTables_paginate .paginate_button.previous::before { content: '‹'; font-size: 1.5rem; line-height: 1; }
+            .dataTables_wrapper .dataTables_paginate .paginate_button.next::before { content: '›'; font-size: 1.5rem; line-height: 1; }
+        }
     </style>
 </head>
 <body>
@@ -1283,11 +1306,13 @@
                                     dividendSelect.appendChild(option);
                                 });
 
+                                // 手機上頁碼少顯示幾顆，分頁才放得進一排
+                                $.fn.dataTable.ext.pager.numbers_length = window.innerWidth <= 768 ? 5 : 7;
                                 table = $('#fundTable').DataTable({
                                     data: data,
                                     columns: columns,
                                     scrollX: true,
-                                    scrollY: window.innerWidth <= 768 ? '60vh' : 'calc(100vh - 290px)',
+                                    scrollY: window.innerWidth <= 768 ? false : 'calc(100vh - 290px)',
                                     scrollCollapse: true,
                                     fixedColumns: { left: 1 },
                                     pageLength: 50,
