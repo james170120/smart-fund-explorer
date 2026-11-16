@@ -77,7 +77,7 @@
             cursor: pointer;
             padding: 5px 10px;
             border-radius: 8px;
-            transition: all 0.2s;
+            transition: background-color 0.2s, color 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -112,7 +112,7 @@
             color: var(--text-main);
             font-weight: 600;
             font-size: 0.95rem;
-            transition: all 0.2s;
+            transition: background-color 0.2s, color 0.2s;
             display: flex;
             align-items: center;
             border-bottom: 1px solid #f1f5f9;
@@ -174,12 +174,12 @@
         .filter-title::before { content: ''; display: inline-block; width: 4px; height: 14px; background-color: var(--accent-blue); margin-right: 8px; border-radius: 4px; }
 
         label { display: block; margin-bottom: 6px; font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
-        select, input[type="number"], input[type="text"] { width: 100%; padding: 10px 12px; margin-bottom: 15px; border: 1px solid #dce4ec; border-radius: 8px; background-color: #fafbfc; font-size: 0.9rem; color: var(--text-main); transition: all 0.2s; box-sizing: border-box; }
+        select, input[type="number"], input[type="text"] { width: 100%; padding: 10px 12px; margin-bottom: 15px; border: 1px solid #dce4ec; border-radius: 8px; background-color: #fafbfc; font-size: 0.9rem; color: var(--text-main); transition: border-color 0.2s, background-color 0.2s, box-shadow 0.2s; box-sizing: border-box; }
         select:focus, input[type="number"]:focus, input[type="text"]:focus { outline: none; border-color: var(--accent-blue); background-color: #fff; box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.15); }
         .input-group-compact { margin-bottom: 6px; display: flex; align-items: center; }
 
         .btn-group { display: flex; gap: 10px; margin-top: 10px; }
-        button { flex: 1; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s; }
+        button { flex: 1; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: background-color 0.2s, color 0.2s, box-shadow 0.2s, transform 0.12s; }
         .btn-reset { background-color: #eef2f7; color: #475569; }
         .btn-reset:hover { background-color: #cbd5e1; transform: translateY(-1px); }
 
@@ -195,7 +195,7 @@
         table.dataTable tbody td { padding: 12px 10px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
 
         .name-container { max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
-        .name-clickable { color: var(--accent-blue); cursor: pointer; transition: all 0.2s; font-weight: 500; }
+        .name-clickable { color: var(--accent-blue); cursor: pointer; transition: color 0.2s; font-weight: 500; }
         .name-clickable:hover { color: var(--accent-hover); text-decoration: underline; }
 
         /* Modal & Tooltip */
@@ -556,7 +556,7 @@
 
         /* ===== 溫暖手帳風 ===== */
         *, *::before, *::after { box-sizing: border-box; }
-        html[data-theme="notebook"] { --primary-bg: #f5efe6; --card-bg: #fffaf2; --text-main: #3b3a36; --text-muted: #8a8174; --accent-blue: #2f5d50; --accent-hover: #24493f; --border-light: #e6dccb; --color-up: #c0603a; --color-up-bg: #f6e4da; --color-down: #4f7d5c; --color-down-bg: #e3ebe5; --ink-soft: #5c574e; --green-soft: #e3ebe5; --paper-deep: #efe6d8; --hand: "LXGW WenKai TC", "Noto Serif TC", serif; }
+        html[data-theme="notebook"] { --primary-bg: #f5efe6; --card-bg: #fffaf2; --text-main: #3b3a36; --text-muted: #8a8174; --accent-blue: #2f5d50; --accent-hover: #24493f; --border-light: #e6dccb; --color-up: #a94f2c; --color-up-bg: #f6e4da; --color-down: #3f6b4c; --color-down-bg: #e3ebe5; --ink-soft: #5c574e; --green-soft: #e3ebe5; --paper-deep: #efe6d8; --hand: "LXGW WenKai TC", "Noto Serif TC", serif; }
         html[data-theme="notebook"] body { font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif; background-color: var(--primary-bg); color: var(--text-main); }
         html[data-theme="notebook"] header { background-color: var(--primary-bg); box-shadow: none; border-bottom: 1px dashed #d8ccb8; }
         html[data-theme="notebook"] header h1 { cursor: default; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
@@ -686,6 +686,39 @@
             .dataTables_wrapper .dataTables_paginate .paginate_button.previous, .dataTables_wrapper .dataTables_paginate .paginate_button.next { font-size: 0 !important; }
             .dataTables_wrapper .dataTables_paginate .paginate_button.previous::before { content: '‹'; font-size: 1.5rem; line-height: 1; }
             .dataTables_wrapper .dataTables_paginate .paginate_button.next::before { content: '›'; font-size: 1.5rem; line-height: 1; }
+        }
+        /* ===== 修正：按鈕大小、輸入框、按壓回饋、減少動態、詳情雙欄、手帳捲軸 ===== */
+        /* 風格切換按鈕：外觀不變，可點範圍往上下延伸到約 45px */
+        .theme-switch button { position: relative; }
+        .theme-switch button::after { content: ''; position: absolute; top: -10px; bottom: -10px; left: -1px; right: -1px; }
+        /* 彈窗的 ✕：點擊範圍 44x44，用負邊距讓位置看起來不變 */
+        .btn-close-modal, .cc-close { flex: none; width: 44px; height: 44px; padding: 0 !important; margin: -8px -10px -8px 0; display: inline-flex; align-items: center; justify-content: center; line-height: 1; border-radius: 10px; }
+        /* 分頁按鈕至少 40x40 */
+        .dataTables_wrapper .dataTables_paginate .paginate_button { min-width: 40px; min-height: 40px; display: inline-flex !important; align-items: center; justify-content: center; }
+        .dataTables_wrapper .dataTables_paginate .ellipsis { display: inline-flex; align-items: center; min-height: 40px; }
+        /* 按下去的回饋 */
+        button:active, .policy-option:active, .dropdown-item:active, .dataTables_wrapper .dataTables_paginate .paginate_button:active { transform: scale(0.96); }
+        .pwd-eye:active { transform: translateY(-50%) scale(0.96); }
+        .policy-option, .dropdown-item { transition: color 0.3s, background-color 0.2s, transform 0.12s; }
+        .dataTables_wrapper .dataTables_paginate .paginate_button { transition: background-color 0.2s, color 0.2s, transform 0.12s; }
+        /* 手帳風捲軸 */
+        html[data-theme="notebook"] ::-webkit-scrollbar { width: 10px; height: 10px; }
+        html[data-theme="notebook"] ::-webkit-scrollbar-track, html[data-theme="notebook"] ::-webkit-scrollbar-corner { background: transparent; }
+        html[data-theme="notebook"] ::-webkit-scrollbar-thumb { background: #d8ccb8; border-radius: 10px; border: 2px solid var(--primary-bg); }
+        html[data-theme="notebook"] ::-webkit-scrollbar-thumb:hover { background: #c4b498; }
+        @media (max-width: 768px) {
+            /* iPhone 輸入框字小於 16px 會自動放大畫面 */
+            .filter-card select, .filter-card input, .dataTables_wrapper select, .dataTables_wrapper input, .cc-grid input, .cc-grid select, .pwd-row input { font-size: 16px; }
+            .hamburger-btn { min-width: 44px; min-height: 44px; }
+            /* 基金詳情：短資料兩個一排 */
+            .modal-body { padding: 18px; }
+            .data-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+        }
+        /* 系統設定「減少動態效果」時，關掉動畫 */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+            button:active, .policy-option:active, .dropdown-item:active, .dataTables_wrapper .dataTables_paginate .paginate_button:active { transform: none; }
+            .pwd-eye:active { transform: translateY(-50%); }
         }
     </style>
 </head>
@@ -979,6 +1012,12 @@
         // ==========================================
         let updateReqId = 0;
         let loadReqId = 0;
+        // 嘉實評等是 N/A、-、無 或空白時，不算有評等
+        function hasRating(v) {
+            const t = String(v == null ? '' : v).trim();
+            return t !== '' && !/^(n\/?a|-|－|無|none)$/i.test(t);
+        }
+
         function escapeHtml(v) {
             return String(v == null ? '' : v).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
         }
@@ -1383,7 +1422,7 @@
                     <div class="data-box"><div class="data-label">風險等級</div><div class="data-value">${formatBadge(data['風險收益等級'])}</div></div>
                     <div class="data-box">
                         <div class="data-label">嘉實評等<span class="help-icon" data-tooltip="嘉實(Moneydj)針對績效與風險的綜合評分。最高5顆星，星數越多代表在同類基金中表現越佳。">?</span></div>
-                        <div class="data-value" style="color:var(--c-rating); font-weight:700;">${data['嘉實基金評等'] ? escapeHtml(data['嘉實基金評等']) + ' ⭐' : '-'}</div>
+                        <div class="data-value" style="color:var(--c-rating); font-weight:700;">${hasRating(data['嘉實基金評等']) ? escapeHtml(data['嘉實基金評等']) + ' ⭐' : (data['嘉實基金評等'] ? escapeHtml(data['嘉實基金評等']) : '-')}</div>
                     </div>
                     <div class="data-box"><div class="data-label">配息頻率</div><div class="data-value">${escapeHtml(data['配息頻率']) || '-'}</div></div>
                     <div class="data-box"><div class="data-label">成立日期</div><div class="data-value">${escapeHtml(data['成立日期']) || '-'}</div></div>
