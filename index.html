@@ -821,6 +821,46 @@
         html[data-theme="dark"] .data-box.risk-mid { border-color: rgba(252, 211, 77, 0.5); }
         html[data-theme="dark"] .data-box.risk-low { border-color: rgba(110, 231, 183, 0.35); }
         .data-box.risk-high .data-label { color: var(--color-up); font-weight: 600; }
+        /* ===== 字級放大：整體偏小，全站往上調一級 ===== */
+        /* 首頁：比原本大一點點就好（使用者覺得放太大） */
+        body { font-size: 14px; }
+        html[data-theme] table.dataTable tbody td { font-size: 14.5px; }
+        html[data-theme] table.dataTable thead th { font-size: 0.8rem; }
+        html[data-theme] .dataTables_wrapper .dataTables_info, html[data-theme] .dataTables_wrapper .dataTables_length, html[data-theme] .dataTables_wrapper .dataTables_filter, html[data-theme] .dataTables_wrapper .dataTables_paginate { font-size: 0.875rem; }
+        html[data-theme] .badge { font-size: 0.78rem; }
+        html[data-theme] #lastUpdateTag { font-size: 0.82rem !important; }
+        html[data-theme] .policy-option { font-size: 0.92rem !important; }
+        html[data-theme] label { font-size: 0.95rem; }
+        /* 基金詳情 */
+        html[data-theme] .modal-title { font-size: 1.4rem; }
+        html[data-theme] .modal-subtitle { font-size: 0.95rem; }
+        html[data-theme] .data-section-title { font-size: 1.15rem; margin-bottom: 14px; }
+        html[data-theme] .data-label { font-size: 0.9rem; margin-bottom: 6px; }
+        html[data-theme] .data-value { font-size: 1.3rem; }
+        html[data-theme] .data-box { padding: 14px; }
+        /* 首頁篩選條件摘要 */
+        html[data-theme] .filter-title { font-size: 0.95rem; white-space: nowrap; }
+        html[data-theme="notebook"] .filter-title { font-size: 1.08rem; }
+        .fsum-sec { font-size: 0.8rem; margin: 12px 0 6px; }
+        .fsum-item { padding: 7px 10px; gap: 2px; }
+        .fsum-item .k { font-size: 0.78rem; }
+        .fsum-item .v { font-size: 0.95rem; }
+        .fsum-btn { font-size: 0.82rem; min-height: 34px; padding: 6px 10px; white-space: nowrap; }
+        .fsum-btn .ic { width: 14px; height: 14px; }
+        .fsum-head { flex-wrap: nowrap; }
+        .fsum-tools { gap: 4px; }
+        /* 篩選小視窗 */
+        #fmBody .fm-field label { font-size: 0.95rem; }
+        .fm-foot span { font-size: 0.95rem; }
+        /* 複利計算機、說明框 */
+        html[data-theme] .cc-grid label { font-size: 0.92rem; }
+        .cc-table { font-size: 0.9rem; }
+        .cc-help { font-size: 0.9rem; }
+        .global-tooltip { font-size: 0.85rem; }
+        /* 成立年份：輸入框＋以後／以前 */
+        .ctl-row { display: flex; gap: 8px; }
+        .ctl-row input { flex: 1; min-width: 0; }
+        .ctl-row select { flex: none; width: auto; }
     </style>
 </head>
 <body>
@@ -857,7 +897,7 @@
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                 <label style="font-weight: 700; color: var(--text-main); margin-bottom: 0;">保險公司：</label>
                 <a id="officialLink" href="https://kgilife.moneydj.com/main.asp?sUrl=$W$HTML$SELECT]DJHTM{P}SBR1" target="_blank" style="font-size: 0.8rem; color: var(--accent-blue); text-decoration: none; font-weight: 600;">
-                    官方網站<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3"/></svg>
+                    凱基官方網站<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3"/></svg>
                 </a>
             </div>
             <div class="policy-switcher" id="companySwitcher">
@@ -896,8 +936,11 @@
                 </select>
                 <label class="input-group-compact" for="filterReturnValue">要求最低報酬率 (%)</label>
                 <input type="number" inputmode="decimal" id="filterReturnValue" placeholder="例如: 15" step="0.1">
-                <label class="input-group-compact" for="filterInceptionYear">成立年份 (含以前)</label>
-                <input type="number" inputmode="numeric" pattern="[0-9]*" id="filterInceptionYear" placeholder="例如: 2018 (尋找老字號標的)">
+                <label class="input-group-compact" for="filterInceptionYear">成立年份</label>
+                <div class="ctl-row">
+                    <input type="number" inputmode="numeric" pattern="[0-9]*" id="filterInceptionYear" placeholder="例如: 2018">
+                    <select id="filterInceptionDir" aria-label="成立年份的方向"><option value="after" selected>以後（含）</option><option value="before">以前（含）</option></select>
+                </div>
                 <label class="input-group-compact" for="filterCurrency">計價幣別</label>
                 <select id="filterCurrency"><option value="">全部幣別</option></select>
                 <label class="input-group-compact" for="filterDividend">配息頻率</label>
@@ -1273,7 +1316,7 @@
             linkElement.innerHTML = '凱基官方網站' + ICON_EXT;
         }
 
-        const filterInputs = ['filterReturnPeriod', 'filterReturnValue', 'filterInceptionYear', 'filterCurrency', 'filterDividend', 'filterNav', 'filterStdDev', 'filterSharpe', 'filterBeta'];
+        const filterInputs = ['filterReturnPeriod', 'filterReturnValue', 'filterInceptionYear', 'filterInceptionDir', 'filterCurrency', 'filterDividend', 'filterNav', 'filterStdDev', 'filterSharpe', 'filterBeta'];
         filterInputs.forEach(id => {
             const element = document.getElementById(id);
             if(element) {
@@ -1309,7 +1352,7 @@
         const FILTER_CFG = {
             filterReturnPeriod: { name: '報酬率期間', group: 'core', def: '一年(%)', show: t => t.replace(/\s*\(%\)\s*$/, '') },
             filterReturnValue: { name: '最低報酬率', group: 'core', fmt: v => '≧ ' + v + '%' },
-            filterInceptionYear: { name: '成立年份', group: 'core', fmt: v => v + ' 以前' },
+            filterInceptionYear: { name: '成立年份', group: 'core', fmt: v => v + (document.getElementById('filterInceptionDir').value === 'before' ? ' 以前' : ' 以後') },
             filterCurrency: { name: '計價幣別', group: 'core', def: '', show: t => t.replace(/^全部.*/, '全部') },
             filterDividend: { name: '配息頻率', group: 'core', def: '', show: t => t.replace(/^全部.*/, '全部') },
             filterNav: { name: '最新淨值', group: 'risk', fmt: v => '≦ ' + v },
@@ -1330,7 +1373,7 @@
                     wrap.className = 'fm-field';
                     label.parentNode.insertBefore(wrap, label);
                     wrap.appendChild(label);
-                    if (ctl) wrap.appendChild(ctl);
+                    if (ctl) wrap.appendChild(ctl.closest('.ctl-row') || ctl);
                 });
                 body.appendChild(card);
             });
@@ -1371,7 +1414,23 @@
             const n = (typeof table !== 'undefined' && table) ? table.page.info().recordsDisplay : null;
             document.getElementById('fmCount').textContent = n !== null ? '符合 ' + n + ' 檔' : '';
             document.getElementById('fsumClear').style.display = active ? '' : 'none';
+            fitSummaryValues();
         }
+
+        function fitSummaryValues() {
+            document.querySelectorAll('.fsum-item .v').forEach(v => {
+                v.style.fontSize = '';
+                if (!v.clientWidth) return;
+                let size = parseFloat(getComputedStyle(v).fontSize);
+                while (v.scrollWidth > v.clientWidth + 0.5 && size > 11) {
+                    size -= 0.5;
+                    v.style.fontSize = size + 'px';
+                }
+            });
+        }
+        window.addEventListener('resize', fitSummaryValues);
+        new MutationObserver(fitSummaryValues).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitSummaryValues);
 
         function openFilterModal() { refreshFilterSummary(); filterModal.style.display = 'flex'; }
         function closeFilterModal() { filterModal.style.display = 'none'; }
@@ -1381,7 +1440,8 @@
         document.getElementById('fsumClear').addEventListener('click', () => document.getElementById('btnReset').click());
         document.getElementById('fmBack').addEventListener('click', closeFilterModal);
         document.getElementById('fmDone').addEventListener('click', closeFilterModal);
-        document.getElementById('btnReset').addEventListener('click', refreshFilterSummary);
+        document.getElementById('btnReset').addEventListener('click', () => { document.getElementById('filterInceptionDir').value = 'after'; refreshFilterSummary(); if (table) table.draw(); });
+        document.getElementById('filterInceptionDir').addEventListener('input', refreshFilterSummary);
         filterModal.addEventListener('click', e => { if (e.target === filterModal) closeFilterModal(); });
         document.addEventListener('keydown', e => { if (e.key === 'Escape' && filterModal.style.display === 'flex') closeFilterModal(); });
         $(document).on('draw.dt', refreshFilterSummary);
@@ -1423,7 +1483,8 @@
                     if (!isNaN(targetYear)) {
                         if (!match) return false;
                         let fundYear = parseInt(match[0], 10);
-                        if (fundYear > targetYear) return false;
+                        const dirBefore = document.getElementById('filterInceptionDir').value === 'before';
+                        if (dirBefore ? fundYear > targetYear : fundYear < targetYear) return false;
                     }
                 }
 
