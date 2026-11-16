@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-TW" data-theme="dark">
+<html lang="zh-TW" data-theme="notebook">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.3.0/css/fixedColumns.dataTables.min.css">
 
-    <script>try { if (localStorage.getItem('fundTheme') === 'notebook') document.documentElement.setAttribute('data-theme', 'notebook'); } catch (e) {}</script>
+    <script>try { if (localStorage.getItem('fundThemeChoice') === 'dark') document.documentElement.setAttribute('data-theme', 'dark'); } catch (e) {}</script>
     <style>
         :root {
             --primary-bg: #f4f7fb;
@@ -380,7 +380,6 @@
             .table-wrapper { height: 75vh; }
             header { flex-direction: column; align-items: flex-start; gap: 5px; padding: 12px 15px; }
             .header-menu-container { position: absolute; right: 15px; top: 12px; }
-            .global-tooltip { display: none !important; }
 
             /* 🌟 手機版區塊排列調整 */
             .dash-row { flex-direction: column; align-items: flex-start; gap: 10px; }
@@ -802,6 +801,14 @@
             }
             .sidebar, .main-content, .table-wrapper, .filter-card, header { max-width: 100%; min-width: 0; }
         }
+        /* ? 說明：手機上點擊範圍放大到約 34px，說明框不超出螢幕 */
+        .help-icon { position: relative; cursor: pointer; }
+        .help-icon::after { content: ''; position: absolute; inset: -10px; }
+        .global-tooltip { max-width: calc(100vw - 16px); }
+        @media (max-width: 768px) {
+            .help-icon { width: 16px; height: 16px; font-size: 11px; }
+            .global-tooltip { font-size: 0.85rem; line-height: 1.5; width: 260px; padding: 10px 12px; }
+        }
     </style>
 </head>
 <body>
@@ -876,9 +883,9 @@
                     <option value="成立以來平均報酬(%)">成立以來平均年報酬 (%)</option>
                 </select>
                 <label class="input-group-compact" for="filterReturnValue">要求最低報酬率 (%)</label>
-                <input type="number" id="filterReturnValue" placeholder="例如: 15" step="0.1">
+                <input type="number" inputmode="decimal" id="filterReturnValue" placeholder="例如: 15" step="0.1">
                 <label class="input-group-compact" for="filterInceptionYear">成立年份 (含以前)</label>
-                <input type="number" id="filterInceptionYear" placeholder="例如: 2018 (尋找老字號標的)">
+                <input type="number" inputmode="numeric" pattern="[0-9]*" id="filterInceptionYear" placeholder="例如: 2018 (尋找老字號標的)">
                 <label class="input-group-compact" for="filterCurrency">計價幣別</label>
                 <select id="filterCurrency"><option value="">全部幣別</option></select>
                 <label class="input-group-compact" for="filterDividend">配息頻率</label>
@@ -888,13 +895,13 @@
             <div class="filter-card">
                 <div class="filter-title">進階風險指標</div>
                 <label class="input-group-compact" for="filterNav">最新淨值 (≦)</label>
-                <input type="number" id="filterNav" placeholder="例如: 20" step="0.01">
+                <input type="number" inputmode="decimal" id="filterNav" placeholder="例如: 20" step="0.01">
                 <label class="input-group-compact" for="filterStdDev">年化標準差 (波動風險 ≦)<span class="help-icon" data-tooltip="衡量基金的波動大小。數值越大，代表漲跌起伏越劇烈（風險越高）。">?</span></label>
-                <input type="number" id="filterStdDev" placeholder="建議 < 15" step="0.1">
+                <input type="number" inputmode="decimal" id="filterStdDev" placeholder="建議 < 15" step="0.1">
                 <label class="input-group-compact" for="filterSharpe">夏普值 (CP值 ≧)<span class="help-icon" data-tooltip="衡量承受每1%風險能帶來的超額報酬。數值越大越好，代表承擔相同風險下賺得比較多。">?</span></label>
-                <input type="number" id="filterSharpe" placeholder="建議 > 0.5" step="0.01">
+                <input type="number" inputmode="decimal" id="filterSharpe" placeholder="建議 > 0.5" step="0.01">
                 <label class="input-group-compact" for="filterBeta">Beta值 (大盤連動度 ≦)<span class="help-icon" data-tooltip="大盤漲跌1%時，基金跟著漲跌的幅度。大於1代表比大盤活潑，小於1代表比大盤抗跌。">?</span></label>
-                <input type="number" id="filterBeta" placeholder="建議 < 1" step="0.01">
+                <input type="number" inputmode="decimal" id="filterBeta" placeholder="建議 < 1" step="0.01">
                 <div class="btn-group">
                     <button class="btn-reset" id="btnReset">清除所有條件</button>
                 </div>
@@ -1646,22 +1653,44 @@
             if (event.target == modal) { closeModal(); }
         }
 
-        $(document).on('mouseenter', '.help-icon', function() {
-            let text = $(this).attr('data-tooltip');
-            let tooltip = document.getElementById('globalTooltip');
-            tooltip.innerHTML = text;
+        // ? 說明：電腦滑過去就顯示，手機點一下顯示、再點一下或點別處收起
+        let helpOpenFor = null;
+        function showHelp(icon) {
+            const tooltip = document.getElementById('globalTooltip');
+            tooltip.textContent = icon.getAttribute('data-tooltip') || '';
             tooltip.style.visibility = 'visible';
             tooltip.style.opacity = '1';
-            let rect = this.getBoundingClientRect();
+            const rect = icon.getBoundingClientRect();
+            const vw = document.documentElement.clientWidth;
+            let left = rect.left + rect.width / 2 - tooltip.offsetWidth / 2;
+            left = Math.max(8, Math.min(left, vw - tooltip.offsetWidth - 8));
             let top = rect.top - tooltip.offsetHeight - 8;
-            let left = rect.left + (rect.width / 2) - (tooltip.offsetWidth / 2);
+            if (top < 8) top = rect.bottom + 8;
             tooltip.style.top = top + 'px';
             tooltip.style.left = left + 'px';
-        }).on('mouseleave', '.help-icon', function() {
-            let tooltip = document.getElementById('globalTooltip');
+            helpOpenFor = icon;
+        }
+        function hideHelp() {
+            const tooltip = document.getElementById('globalTooltip');
             tooltip.style.opacity = '0';
             tooltip.style.visibility = 'hidden';
-        });
+            helpOpenFor = null;
+        }
+        const canHover = window.matchMedia('(hover: hover)').matches;
+        $(document).on('mouseenter', '.help-icon', function() { if (canHover) showHelp(this); })
+                   .on('mouseleave', '.help-icon', function() { if (canHover) hideHelp(); });
+        document.addEventListener('click', e => {
+            const icon = e.target.closest('.help-icon');
+            if (icon) {
+                // ? 在標籤裡，不讓它順便把輸入框叫出鍵盤
+                e.preventDefault();
+                e.stopPropagation();
+                if (helpOpenFor === icon && !canHover) hideHelp(); else showHelp(icon);
+                return;
+            }
+            if (helpOpenFor) hideHelp();
+        }, true);
+        window.addEventListener('scroll', () => { if (helpOpenFor) hideHelp(); }, true);
 
         document.addEventListener("DOMContentLoaded", function() {
             loadCsvData(currentFile);
@@ -2076,10 +2105,10 @@
         });
 
         // 右上角風格切換（深色 / 手帳），記在瀏覽器中
-        function setTheme(t) {
-            if (t !== 'notebook') t = 'dark';
+        function setTheme(t, save) {
+            if (t !== 'dark') t = 'notebook';
             document.documentElement.setAttribute('data-theme', t);
-            try { localStorage.setItem('fundTheme', t); } catch (e) {}
+            if (save) { try { localStorage.setItem('fundThemeChoice', t); } catch (e) {} }
             document.querySelectorAll('#themeSwitch [data-theme-opt]').forEach(b => {
                 const on = b.dataset.themeOpt === t;
                 b.classList.toggle('active', on);
@@ -2088,7 +2117,7 @@
             if (myBarChart && lastChartArgs) renderCharts(...lastChartArgs);
             if (typeof table !== 'undefined' && table) { table.columns.adjust(); setTimeout(fitTableHeight, 50); }
         }
-        document.querySelectorAll('#themeSwitch [data-theme-opt]').forEach(b => b.addEventListener('click', () => setTheme(b.dataset.themeOpt)));
+        document.querySelectorAll('#themeSwitch [data-theme-opt]').forEach(b => b.addEventListener('click', () => setTheme(b.dataset.themeOpt, true)));
         setTheme(document.documentElement.getAttribute('data-theme'));
 
         function triggerN8nUpdate(apiKey) {
