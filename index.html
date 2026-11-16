@@ -757,6 +757,28 @@
         /* 手帳：只留一張墨綠主卡，另一張改成紙面 */
         html[data-theme="notebook"] .card-teal { background: var(--card-bg); border: 1px solid var(--border-light); color: var(--text-main); }
         html[data-theme="notebook"] .card-teal .hl-title { color: var(--text-muted); }
+        /* ===== 篩選條件：緊縮成一列一個值，點一下跳小視窗輸入 ===== */
+        .fhidden { display: none !important; }
+        .filter-card { padding: 16px; }
+        .filter-title { margin-bottom: 8px; }
+        .frow { flex: none; display: flex; align-items: center; gap: 8px; width: 100%; min-height: 40px; margin: 0; padding: 8px 6px; background: transparent; border: 0; border-radius: 0; text-align: left; font: inherit; color: var(--text-main); cursor: pointer; transition: background-color 0.15s; }
+        .frow ~ .frow { border-top: 1px solid var(--border-light); }
+        .frow:hover { background-color: rgba(127, 127, 127, 0.08); }
+        .frow:active { transform: none; background-color: rgba(127, 127, 127, 0.14); }
+        .frow-label { flex: 1; min-width: 0; font-size: 0.85rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .frow-value { font-size: 0.85rem; font-weight: 600; color: var(--text-main); white-space: nowrap; font-variant-numeric: tabular-nums; }
+        .frow-value.is-empty { font-weight: 400; color: var(--text-muted); }
+        .frow-value.is-set { color: var(--accent-blue); }
+        .frow .ic { width: 14px; height: 14px; color: var(--text-muted); }
+        .filter-card .btn-group { margin-top: 12px; }
+        .fm-card .pwd-sub { line-height: 1.5; }
+        .fm-card input { width: 100%; margin-bottom: 14px; }
+        .fm-opts { display: flex; flex-direction: column; gap: 2px; max-height: 60vh; overflow-y: auto; margin: 0 -8px 4px; }
+        .fm-opt { flex: none; display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 44px; padding: 10px 12px; background: transparent; border-radius: 8px; text-align: left; font-weight: 500; color: var(--text-main); }
+        .fm-opt:hover { background-color: rgba(127, 127, 127, 0.1); }
+        .fm-opt:active { transform: none; background-color: rgba(127, 127, 127, 0.16); }
+        .fm-opt.on { color: var(--accent-blue); font-weight: 600; }
+        .fm-opt .ic { width: 16px; height: 16px; }
     </style>
 </head>
 <body>
@@ -907,6 +929,14 @@
                     <div class="cc-warn">假設報酬率每年固定不變，且未扣除手續費、稅金與通貨膨脹。實際投資報酬會波動，結果僅供參考，不代表未來績效。</div>
                 </details>
             </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="filterModal">
+        <div class="pwd-card fm-card" role="dialog" aria-modal="true" aria-labelledby="fmTitle">
+            <h3 class="pwd-title" id="fmTitle"></h3>
+            <div class="pwd-sub" id="fmHint"></div>
+            <div id="fmBody"></div>
         </div>
     </div>
 
@@ -1211,6 +1241,118 @@
             document.getElementById('filterBeta').value = '';
             if(table) table.draw();
         });
+
+        // 篩選條件：側欄只顯示目前的值，點一下跳小視窗輸入
+        const FILTER_CFG = {
+            filterReturnPeriod: { name: '報酬率期間', def: '一年(%)', show: t => t.replace(/\s*\(%\)\s*$/, '') },
+            filterReturnValue: { name: '最低報酬率', fmt: v => '≧ ' + v + '%' },
+            filterInceptionYear: { name: '成立年份', fmt: v => v + ' 年以前' },
+            filterCurrency: { name: '計價幣別', def: '', show: t => t.replace(/^全部.*/, '全部') },
+            filterDividend: { name: '配息頻率', def: '', show: t => t.replace(/^全部.*/, '全部') },
+            filterNav: { name: '最新淨值', fmt: v => '≦ ' + v },
+            filterStdDev: { name: '年化標準差', fmt: v => '≦ ' + v },
+            filterSharpe: { name: '夏普值', fmt: v => '≧ ' + v },
+            filterBeta: { name: 'Beta 值', fmt: v => '≦ ' + v }
+        };
+        const ICON_CHEVRON = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>';
+        const ICON_CHECK = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+        const filterModal = document.getElementById('filterModal');
+        const filterRows = {};
+
+        function labelInfo(label) {
+            const c = label.cloneNode(true);
+            const help = c.querySelector('.help-icon');
+            const tip = help ? help.getAttribute('data-tooltip') : '';
+            if (help) help.remove();
+            return { title: c.textContent.trim(), tip };
+        }
+        function fireFilter(el) { el.dispatchEvent(new Event('input', { bubbles: true })); }
+
+        function refreshFilterRows() {
+            Object.keys(filterRows).forEach(id => {
+                const el = document.getElementById(id), cfg = FILTER_CFG[id], out = filterRows[id].querySelector('.frow-value');
+                out.classList.remove('is-empty', 'is-set');
+                if (el.tagName === 'SELECT') {
+                    const opt = el.options[el.selectedIndex];
+                    out.textContent = opt ? cfg.show(opt.text) : '';
+                    if (el.value !== cfg.def) out.classList.add('is-set');
+                    else if (el.value === '') out.classList.add('is-empty');
+                } else if (el.value === '') {
+                    out.textContent = '不限';
+                    out.classList.add('is-empty');
+                } else {
+                    out.textContent = cfg.fmt(el.value);
+                    out.classList.add('is-set');
+                }
+            });
+        }
+
+        function closeFilterModal() { filterModal.style.display = 'none'; }
+        function openFilterModal(id) {
+            const el = document.getElementById(id);
+            const info = labelInfo(document.querySelector('label[for="' + id + '"]'));
+            const body = document.getElementById('fmBody');
+            document.getElementById('fmTitle').textContent = info.title;
+            const hint = document.getElementById('fmHint');
+            hint.textContent = info.tip || '';
+            hint.style.display = info.tip ? '' : 'none';
+            body.innerHTML = '';
+            if (el.tagName === 'SELECT') {
+                const list = document.createElement('div');
+                list.className = 'fm-opts';
+                Array.from(el.options).forEach(o => {
+                    const b = document.createElement('button');
+                    b.type = 'button';
+                    b.className = 'fm-opt' + (o.value === el.value ? ' on' : '');
+                    b.innerHTML = '<span></span>' + (o.value === el.value ? ICON_CHECK : '');
+                    b.firstChild.textContent = o.text;
+                    b.addEventListener('click', () => { el.value = o.value; fireFilter(el); refreshFilterRows(); closeFilterModal(); });
+                    list.appendChild(b);
+                });
+                body.appendChild(list);
+            } else {
+                const inp = document.createElement('input');
+                inp.type = 'number';
+                inp.inputMode = 'decimal';
+                inp.step = el.step || 'any';
+                inp.placeholder = el.placeholder;
+                inp.value = el.value;
+                inp.addEventListener('input', () => { el.value = inp.value; fireFilter(el); refreshFilterRows(); });
+                inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); closeFilterModal(); } });
+                const actions = document.createElement('div');
+                actions.className = 'pwd-actions';
+                actions.innerHTML = '<button type="button" class="btn-reset">清除</button><button type="button" class="pwd-ok">完成</button>';
+                actions.children[0].addEventListener('click', () => { inp.value = ''; el.value = ''; fireFilter(el); refreshFilterRows(); closeFilterModal(); });
+                actions.children[1].addEventListener('click', closeFilterModal);
+                body.appendChild(inp);
+                body.appendChild(actions);
+                setTimeout(() => inp.focus(), 50);
+            }
+            filterModal.style.display = 'flex';
+        }
+
+        Object.keys(FILTER_CFG).forEach(id => {
+            const el = document.getElementById(id);
+            const label = document.querySelector('label[for="' + id + '"]');
+            if (!el || !label) return;
+            const row = document.createElement('button');
+            row.type = 'button';
+            row.className = 'frow';
+            row.innerHTML = '<span class="frow-label"></span><span class="frow-value"></span>' + ICON_CHEVRON;
+            row.querySelector('.frow-label').textContent = FILTER_CFG[id].name;
+            row.title = labelInfo(label).title;
+            row.addEventListener('click', () => openFilterModal(id));
+            label.parentNode.insertBefore(row, label);
+            label.classList.add('fhidden');
+            el.classList.add('fhidden');
+            filterRows[id] = row;
+            el.addEventListener('change', refreshFilterRows);
+            if (el.tagName === 'SELECT') new MutationObserver(refreshFilterRows).observe(el, { childList: true });
+        });
+        document.getElementById('btnReset').addEventListener('click', refreshFilterRows);
+        filterModal.addEventListener('click', e => { if (e.target === filterModal) closeFilterModal(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape' && filterModal.style.display === 'flex') closeFilterModal(); });
+        refreshFilterRows();
 
         $.fn.dataTable.ext.search.push(
             function( settings, data, dataIndex ) {
