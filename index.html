@@ -720,34 +720,71 @@
             button:active, .policy-option:active, .dropdown-item:active, .dataTables_wrapper .dataTables_paginate .paginate_button:active { transform: none; }
             .pwd-eye:active { transform: translateY(-50%); }
         }
+        /* ===== unslop：線條圖示、狀態燈號、字重、平面卡片 ===== */
+        .ic { width: 16px; height: 16px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; vertical-align: -3px; }
+        .ic-lg { width: 22px; height: 22px; vertical-align: middle; }
+        .theme-switch button { display: inline-flex; align-items: center; gap: 6px; }
+        .theme-switch .ic { width: 14px; height: 14px; }
+        .dropdown-item { gap: 10px; }
+        .dropdown-item .ic { color: var(--text-muted); }
+        .dropdown-item.active .ic { color: currentColor; }
+        #officialLink { display: inline-flex !important; align-items: center; gap: 4px; }
+        #officialLink .ic { width: 14px; height: 14px; }
+        .pwd-eye { display: inline-flex; align-items: center; justify-content: center; color: var(--text-muted); }
+        .pwd-eye .ic { width: 18px; height: 18px; }
+        .btn-blue .ic { margin-left: 6px; }
+        /* 標題前的小點＝資料更新燈號：綠＝已更新、琥珀＝更新中或冷卻、紅＝失敗 */
+        header h1 { display: flex; align-items: center; gap: 10px; }
+        html[data-theme] header h1::before { content: ''; width: 8px; height: 8px; border-radius: 50%; flex: none; box-shadow: none; background: var(--c-muted); transition: background-color 0.3s; }
+        html[data-status="ok"] header h1::before { background: var(--c-ok); }
+        html[data-status="warn"] header h1::before { background: var(--c-warn); }
+        html[data-status="err"] header h1::before { background: var(--c-err); }
+        html[data-view="calc"] header h1::before { display: none; }
+        /* 字重：階層靠大小和顏色，不靠粗體 */
+        html[data-theme] header h1, html[data-theme] .modal-title, html[data-theme] .cc-head h3, html[data-theme] .pwd-title,
+        html[data-theme] .card-step1 .step-title, html[data-theme] .card-step2 .step-title, html[data-theme] .chart-title,
+        html[data-theme] .data-section-title, html[data-theme] .filter-title, html[data-theme] .cc-help summary,
+        html[data-theme] .hl-value, html[data-theme] .cc-result .main .data-value, html[data-theme] .data-value,
+        html[data-theme] .val-up, html[data-theme] .val-down, html[data-theme] .badge, html[data-theme] .dash-row-tag { font-weight: 600; }
+        html[data-theme] .policy-option, html[data-theme] .dropdown-item { font-weight: 500; }
+        /* 深色：試算結果卡改成平面，顏色只留在數字上 */
+        html[data-theme="dark"] .card-blue, html[data-theme="dark"] .card-teal { background: var(--raise); border-color: var(--border-light); }
+        html[data-theme="dark"] .card-blue .hl-value { color: var(--accent-blue); }
+        html[data-theme="dark"] .card-teal .hl-value { color: var(--text-main); }
+        html[data-theme="dark"] .hl-title { color: var(--text-muted); }
+        html[data-theme="dark"] .cc-result .data-box.main { background: var(--raise); border: 1px solid var(--border-light); }
+        html[data-theme="dark"] .cc-result .main .data-label { color: var(--text-muted); }
+        /* 手帳：只留一張墨綠主卡，另一張改成紙面 */
+        html[data-theme="notebook"] .card-teal { background: var(--card-bg); border: 1px solid var(--border-light); color: var(--text-main); }
+        html[data-theme="notebook"] .card-teal .hl-title { color: var(--text-muted); }
     </style>
 </head>
 <body>
 
     <header>
-        <!-- 🌟 給標題加上 ID，讓 JS 可以控制它 -->
+        <!-- 給標題加上 ID，讓 JS 可以控制它 -->
         <h1 id="headerTitle">智慧基金篩選</h1>
 
-        <!-- 🍔 漢堡選單容器 -->
+        <!-- 漢堡選單容器 -->
         <div class="header-menu-container">
             <div class="theme-switch" id="themeSwitch" role="group" aria-label="切換風格">
-                <button type="button" data-theme-opt="dark" title="深色看盤風">🌙 深色</button>
-                <button type="button" data-theme-opt="notebook" title="溫暖手帳風">📒 手帳</button>
+                <button type="button" data-theme-opt="dark" title="深色看盤風"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>深色</button>
+                <button type="button" data-theme-opt="notebook" title="溫暖手帳風"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>手帳</button>
             </div>
-            <button id="hamburgerBtn" class="hamburger-btn">☰</button>
+            <button id="hamburgerBtn" class="hamburger-btn" aria-label="選單"><svg class="ic ic-lg" viewBox="0 0 24 24" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg></button>
             <div id="dropdownMenu" class="dropdown-menu">
-                <a href="#" id="navFund" class="dropdown-item active">基金篩選🔍 </a>
-                <a href="#" id="navCalc" class="dropdown-item">退休試算💰 </a>
-                <a href="#" id="navCompound" class="dropdown-item">複利計算機🧮 </a>
-                <a href="https://edesk.bli.gov.tw/me/#/na/login" target="_blank" class="dropdown-item">勞保局e化服務系統💼 </a>
-                <a href="https://james170120.github.io/video-downloader/" class="dropdown-item">影音下載神器🎬 </a>
-                <a href="https://james170120.github.io/創建中" target="_blank" class="dropdown-item">創建中🕹️ </a>
+                <a href="#" id="navFund" class="dropdown-item active"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><span>基金篩選</span></a>
+                <a href="#" id="navCalc" class="dropdown-item"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 10V2"/><path d="m4.93 10.93 1.41 1.41"/><path d="M2 18h2"/><path d="M20 18h2"/><path d="m19.07 10.93-1.41 1.41"/><path d="M22 22H2"/><path d="m16 6-4 4-4-4"/><path d="M16 18a4 4 0 0 0-8 0"/></svg><span>退休試算</span></a>
+                <a href="#" id="navCompound" class="dropdown-item"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg><span>複利計算機</span></a>
+                <a href="https://edesk.bli.gov.tw/me/#/na/login" target="_blank" class="dropdown-item"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg><span>勞保局e化服務系統</span></a>
+                <a href="https://james170120.github.io/video-downloader/" class="dropdown-item"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg><span>影音下載神器</span></a>
+                <a href="https://james170120.github.io/創建中" target="_blank" class="dropdown-item"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg><span>創建中</span></a>
             </div>
         </div>
     </header>
 
     <div id="lastUpdateTag" style="font-size: 0.8rem; color: var(--c-ok); margin-top: 5px; font-weight: 600; padding: 0 15px;">
-        ⌛ 正在確認最新數據時間...
+        正在確認資料更新時間
     </div>
 
     <!-- 原本的基金表格容器 -->
@@ -756,7 +793,7 @@
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                 <label style="font-weight: 700; color: var(--text-main); margin-bottom: 0;">保險公司：</label>
                 <a id="officialLink" href="https://kgilife.moneydj.com/main.asp?sUrl=$W$HTML$SELECT]DJHTM{P}SBR1" target="_blank" style="font-size: 0.8rem; color: var(--accent-blue); text-decoration: none; font-weight: 600;">
-                    🌐 官方網站
+                    官方網站<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3"/></svg>
                 </a>
             </div>
             <div class="policy-switcher" id="companySwitcher">
@@ -835,7 +872,7 @@
     <div class="modal-overlay" id="compoundModal">
         <div class="cc-card" role="dialog" aria-label="複利計算機">
             <div class="cc-head">
-                <h3>🧮 複利計算機</h3>
+                <h3>複利計算機</h3>
                 <button type="button" class="cc-close" id="ccClose" aria-label="關閉">&times;</button>
             </div>
             <div class="cc-body">
@@ -857,7 +894,7 @@
                     <table class="cc-table"><thead><tr><th>年</th><th>累計投入</th><th>資產</th></tr></thead><tbody id="ccRows"></tbody></table>
                 </div>
                 <details class="cc-help" open>
-                    <summary>📖 這是怎麼算的？</summary>
+                    <summary>這是怎麼算的</summary>
                     <ul>
                         <li><b>什麼是複利：</b>賺到的利息會再一起生利息，時間越長，滾雪球效果越明顯。</li>
                         <li><b>每月利率：</b>選「每月複利」時，每月利率＝年報酬率 ÷ 12；選「每年複利」時，每月利率＝<code>(1＋年報酬率)<sup>1/12</sup>－1</code>，這樣滿 12 個月剛好成長一整年的報酬率。</li>
@@ -867,7 +904,7 @@
                         <li><b>總投入本金：</b>初始本金＋之後每次投入的金額總和。<b>利息收益：</b>期末總資產－總投入本金。</li>
                         <li><b>範例：</b>一次性投入 10 萬元、年報酬 6%、每月複利、20 年，期末約為 100,000 × (1.005)<sup>240</sup> ≈ 331,020 元。</li>
                     </ul>
-                    <div class="cc-warn">⚠️ 假設報酬率每年固定不變，且未扣除手續費、稅金與通貨膨脹。實際投資報酬會波動，結果僅供參考，不代表未來績效。</div>
+                    <div class="cc-warn">假設報酬率每年固定不變，且未扣除手續費、稅金與通貨膨脹。實際投資報酬會波動，結果僅供參考，不代表未來績效。</div>
                 </details>
             </div>
         </div>
@@ -875,11 +912,11 @@
 
     <div class="modal-overlay" id="pwdModal">
         <form class="pwd-card" id="pwdForm" autocomplete="off">
-            <h3 class="pwd-title">🕵️‍♂️ 開發者模式</h3>
+            <h3 class="pwd-title">開發者模式</h3>
             <div class="pwd-sub">請輸入強制更新密碼</div>
             <div class="pwd-row">
                 <input type="password" id="pwdInput" autocomplete="off" placeholder="*****">
-                <button type="button" class="pwd-eye" id="pwdEye" aria-label="顯示或隱藏密碼">👁️</button>
+                <button type="button" class="pwd-eye" id="pwdEye" aria-label="顯示或隱藏密碼"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg></button>
             </div>
             <div class="pwd-actions">
                 <button type="button" class="btn-reset" id="pwdCancel">取消</button>
@@ -890,44 +927,44 @@
 
 
     <!-- ==========================================
-         💰 退休試算器容器 (全新樣式，防破圖設計)
+         退休試算器容器 (全新樣式，防破圖設計)
          ========================================== -->
     <div id="calculatorContainer">
 
         <!-- Step 1：藍色時間軸風 -->
         <div id="calcStep1" class="step-container active">
             <div class="card-step1">
-                <div class="step-title">⏳ 階段一：規劃時間軸</div>
+                <div class="step-title">階段一：規劃時間軸</div>
                 <div class="input-wrap">
-                    <label class="calc-label">👦 1. 現在的年齡（歲）</label>
+                    <label class="calc-label">1. 現在的年齡（歲）</label>
                     <input type="number" id="inpCurrentAge" value="30">
                 </div>
                 <div class="input-wrap">
-                    <label class="calc-label">👴 2. 預計退休的年齡（歲）</label>
+                    <label class="calc-label">2. 預計退休的年齡（歲）</label>
                     <input type="number" id="inpRetireAge" value="65">
                 </div>
-                <button class="btn-blue" onclick="goToStep(2)">設定完成，下一步 ➔</button>
+                <button class="btn-blue" onclick="goToStep(2)">下一步<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
             </div>
         </div>
 
 <!-- Step 2：綠色財富風 -->
         <div id="calcStep2" class="step-container">
             <div class="card-step2">
-                <div class="step-title">💼 階段二：資產與金流檢視</div>
-                <!-- 🌟 替換為 text 屬性，並加上 oninput 即時格式化逗號 -->
-                <label class="calc-label">🏖️ 1. 退休生活每年要多少錢（元）</label>
+                <div class="step-title">階段二：資產與金流檢視</div>
+                <!-- 替換為 text 屬性，並加上 oninput 即時格式化逗號 -->
+                <label class="calc-label">1. 退休生活每年要多少錢（元）</label>
                 <input type="text" inputmode="numeric" id="inpAnnualExp" value="600,000" oninput="this.value=formatNumber(this.value)">
 
-                <label class="calc-label">🏦 2. 目前的理財到退休時有多少錢（元）</label>
+                <label class="calc-label">2. 目前的理財到退休時有多少錢（元）</label>
                 <input type="text" inputmode="numeric" id="inpCurrentSavings" value="1,000,000" oninput="this.value=formatNumber(this.value)">
 
-                <label class="calc-label">🛡️ 3. 退休時可固定領回多少錢（元/年）</label>
+                <label class="calc-label">3. 退休時可固定領回多少錢（元/年）</label>
                 <input type="text" inputmode="numeric" id="inpFixedIncome" value="240,000" oninput="this.value=formatNumber(this.value)">
 
                 <div style="display: flex; gap: 10px; margin-top: 10px;">
                     <button class="btn-back" onclick="goToStep(1)">上一步</button>
-                    <!-- 🌟 這裡改成呼叫 startCalculation -->
-                    <button class="btn-green" onclick="startCalculation()">開始精算系統 ⚡</button>
+                    <!-- 這裡改成呼叫 startCalculation -->
+                    <button class="btn-green" onclick="startCalculation()">開始試算</button>
                 </div>
             </div>
         </div>
@@ -935,15 +972,15 @@
         <!-- Step 3：儀表板風 -->
         <div id="calcStep3" class="step-container card-step3">
 
-            <!-- 🌟 整合所有 8 個參數，並綁定 oninput 即時重算 -->
-            <!-- 🌟 重新設計的分區塊參數列 -->
+            <!-- 整合所有 8 個參數，並綁定 oninput 即時重算 -->
+            <!-- 重新設計的分區塊參數列 -->
             <div class="dashboard-header">
                 <!-- 區塊 1：階段一輸入 -->
                 <div class="dash-row">
                     <div class="dash-row-tag">階段一</div>
                     <div class="dash-row-inputs">
-                        <div class="dash-input-group"><label>👦 現在年齡</label><input type="number" id="inpCurrentAge3" oninput="calculateResult()"></div>
-                        <div class="dash-input-group"><label>👴 退休年齡</label><input type="number" id="inpRetireAge3" oninput="calculateResult()"></div>
+                        <div class="dash-input-group"><label>現在年齡</label><input type="number" id="inpCurrentAge3" oninput="calculateResult()"></div>
+                        <div class="dash-input-group"><label>退休年齡</label><input type="number" id="inpRetireAge3" oninput="calculateResult()"></div>
                     </div>
                 </div>
 
@@ -951,9 +988,9 @@
                 <div class="dash-row">
                     <div class="dash-row-tag">階段二</div>
                     <div class="dash-row-inputs">
-                        <div class="dash-input-group"><label>🏖️ 每年花費</label><input type="text" inputmode="numeric" id="inpAnnualExp3" oninput="this.value=formatNumber(this.value); calculateResult()"></div>
-                        <div class="dash-input-group"><label>🏦 目前已準備</label><input type="text" inputmode="numeric" id="inpCurrentSavings3" oninput="this.value=formatNumber(this.value); calculateResult()"></div>
-                        <div class="dash-input-group"><label>🛡️ 每年固定領</label><input type="text" inputmode="numeric" id="inpFixedIncome3" oninput="this.value=formatNumber(this.value); calculateResult()"></div>
+                        <div class="dash-input-group"><label>每年花費</label><input type="text" inputmode="numeric" id="inpAnnualExp3" oninput="this.value=formatNumber(this.value); calculateResult()"></div>
+                        <div class="dash-input-group"><label>目前已準備</label><input type="text" inputmode="numeric" id="inpCurrentSavings3" oninput="this.value=formatNumber(this.value); calculateResult()"></div>
+                        <div class="dash-input-group"><label>每年固定領</label><input type="text" inputmode="numeric" id="inpFixedIncome3" oninput="this.value=formatNumber(this.value); calculateResult()"></div>
                     </div>
                 </div>
 
@@ -961,24 +998,24 @@
                 <div class="dash-row">
                     <div class="dash-row-tag">目標設定</div>
                     <div class="dash-row-inputs">
-                        <div class="dash-input-group"><label>🎯 準備到幾歲</label><input type="number" id="inpTargetAge3" value="90" oninput="calculateResult()"></div>
-                        <div class="dash-input-group"><label>📈 退休前報酬(%)</label><input type="number" id="inpPreReturn3" value="6" oninput="calculateResult()"></div>
-                        <div class="dash-input-group"><label>📈 退休後報酬(%)</label><input type="number" id="inpPostReturn3" value="4" oninput="calculateResult()"></div>
+                        <div class="dash-input-group"><label>準備到幾歲</label><input type="number" id="inpTargetAge3" value="90" oninput="calculateResult()"></div>
+                        <div class="dash-input-group"><label>退休前報酬(%)</label><input type="number" id="inpPreReturn3" value="6" oninput="calculateResult()"></div>
+                        <div class="dash-input-group"><label>退休後報酬(%)</label><input type="number" id="inpPostReturn3" value="4" oninput="calculateResult()"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- 🌟 新增這行：動態白話文解析容器 -->
+            <!-- 新增這行：動態白話文解析容器 -->
             <div id="resultSummary" class="result-summary"></div>
 
             <!-- 核心結果數字卡片 (更換為新的顏色 Class) -->
             <div class="result-highlight-box">
                 <div class="highlight-card card-blue">
-                    <div class="hl-title">⚡ 現在一筆投入需</div>
+                    <div class="hl-title">現在一筆投入需</div>
                     <div id="resLumpSum" class="hl-value">0</div>
                 </div>
                     <div class="highlight-card card-teal">
-                    <div class="hl-title">🔄 或 持續投入需</div>
+                    <div class="hl-title">或 持續投入需</div>
                     <div id="resAnnual" class="hl-value" style="font-size: 1.45rem;">0</div>
                 </div>
             </div>
@@ -986,16 +1023,16 @@
             <!-- 圖表安全區 -->
             <div class="charts-container">
                 <div class="chart-safe-zone">
-                    <div class="chart-title">📈 資金成長與消耗軌跡</div>
+                    <div class="chart-title">資金成長與消耗軌跡</div>
                     <div class="canvas-wrapper"><canvas id="barChart"></canvas></div>
                 </div>
 
                 <div class="chart-safe-zone">
-                    <div class="chart-title">🥧 退休資金結構分析</div>
+                    <div class="chart-title">退休資金結構分析</div>
                     <div class="canvas-wrapper"><canvas id="pieChart"></canvas></div>
                 </div>
             </div>
-            <!-- 🌟 重新調整基礎數值按鈕已刪除 -->
+            <!-- 重新調整基礎數值按鈕已刪除 -->
         </div>
     </div>
 
@@ -1012,6 +1049,11 @@
         // ==========================================
         let updateReqId = 0;
         let loadReqId = 0;
+        // 線條圖示（lucide）
+        var ICON_EXT = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3"/></svg>';
+        var ICON_EYE = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>';
+        var ICON_EYE_OFF = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/></svg>';
+
         // 嘉實評等是 N/A、-、無 或空白時，不算有評等
         function hasRating(v) {
             const t = String(v == null ? '' : v).trim();
@@ -1029,15 +1071,15 @@
             const url = `https://api.github.com/repos/${owner}/${repo}/commits?path=${encodedFileName}&page=1&per_page=1`;
 
             const timeTag = document.getElementById('lastUpdateTag');
-            timeTag.innerText = '⌛ 正在確認最新數據時間...';
-            timeTag.style.color = 'var(--c-muted)';
+            timeTag.innerText = '正在確認資料更新時間';
+            timeTag.style.color = 'var(--c-muted)'; document.documentElement.dataset.status = 'busy';
             const reqId = ++updateReqId;
             const showTime = (iso) => {
                 if (reqId !== updateReqId) return;
                 const date = new Date(iso);
                 const timeStr = date.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' });
-                timeTag.innerText = `🟢 最新資料庫更新時間：${timeStr}`;
-                timeTag.style.color = 'var(--c-ok)';
+                timeTag.innerText = `資料更新於 ${timeStr}`;
+                timeTag.style.color = 'var(--c-ok)'; document.documentElement.dataset.status = 'ok';
             };
             // 快取 30 分鐘，避免超出 GitHub API 未登入每小時 60 次的限制
             const cacheKey = 'updTime:' + cleanFileName;
@@ -1057,14 +1099,14 @@
                     try { sessionStorage.setItem(cacheKey, JSON.stringify({ t: Date.now(), iso })); } catch (e) {}
                     showTime(iso);
                 } else {
-                    timeTag.innerText = `⚠️ 尚未有更新紀錄`;
-                    timeTag.style.color = 'var(--c-warn)';
+                    timeTag.innerText = '尚無更新紀錄';
+                    timeTag.style.color = 'var(--c-warn)'; document.documentElement.dataset.status = 'warn';
                 }
             } catch (e) {
                 if (reqId !== updateReqId) return;
                 console.error("抓取更新時間失敗：", e);
-                timeTag.innerText = `🔴 無法取得資料庫更新時間`;
-                timeTag.style.color = 'var(--c-err)';
+                timeTag.innerText = '無法取得資料更新時間';
+                timeTag.style.color = 'var(--c-err)'; document.documentElement.dataset.status = 'err';
             }
         }
 
@@ -1095,7 +1137,7 @@
                 } else {
                     linkElement.href = 'https://kgilife.moneydj.com/main.asp?sUrl=$W$HTML$SELECT]DJHTM{P}SJF1';
                 }
-                linkElement.innerHTML = '🌐 凱基官方網站';
+                linkElement.innerHTML = '凱基官方網站' + ICON_EXT;
                 linkElement.style.display = 'inline-block';
             } else if (companyId === 'chubb') {
                 kgiContainer.style.display = 'none';
@@ -1103,7 +1145,7 @@
                 loadCsvData(currentFile);
                 fetchLastUpdateTime(currentFile);
                 linkElement.href = 'https://chubb.moneydj.com/fund-page.html?sUrl=$W$HTML$SELECT]DJHTM{A}1';
-                linkElement.innerHTML = '🌐 安達官方網站';
+                linkElement.innerHTML = '安達官方網站' + ICON_EXT;
                 linkElement.style.display = 'inline-block';
             } else if (companyId === 'cardif') {
                 kgiContainer.style.display = 'none';
@@ -1111,7 +1153,7 @@
                 loadCsvData(currentFile);
                 fetchLastUpdateTime(currentFile);
                 linkElement.href = 'https://cardif.moneydj.com/main.asp?sUrl=$W$HTML$SELECT]DJHTM';
-                linkElement.innerHTML = '🌐 法巴官方網站';
+                linkElement.innerHTML = '法巴官方網站' + ICON_EXT;
                 linkElement.style.display = 'inline-block';
             }
         }
@@ -1135,7 +1177,7 @@
             } else if (fileName === 'latest_yisheng.csv') {
                 linkElement.href = 'https://kgilife.moneydj.com/main.asp?sUrl=$W$HTML$SELECT]DJHTM{P}SJF1';
             }
-            linkElement.innerHTML = '🌐 凱基官方網站';
+            linkElement.innerHTML = '凱基官方網站' + ICON_EXT;
         }
 
         const filterInputs = ['filterReturnPeriod', 'filterReturnValue', 'filterInceptionYear', 'filterCurrency', 'filterDividend', 'filterNav', 'filterStdDev', 'filterSharpe', 'filterBeta'];
@@ -1366,7 +1408,7 @@
                 })
                 .catch(error => {
                     console.error("載入失敗：", error);
-                    alert("載入保單資料失敗！請確認檔案 " + fileName + " 是否存在。");
+                    alert("載入保單資料失敗，請確認檔案 " + fileName + " 是否存在");
                 });
         }
 
@@ -1415,30 +1457,30 @@
             document.getElementById('modalFundCode').innerText = data['代碼'] ? `代碼：${data['代碼']}` : '';
 
             let contentHtml = `
-                <div class="data-section-title">📊 基礎資訊</div>
+                <div class="data-section-title">基礎資訊</div>
                 <div class="data-grid">
                     <div class="data-box"><div class="data-label">最新淨值</div><div class="data-value large">${escapeHtml(data['淨值']) || '-'}</div></div>
                     <div class="data-box"><div class="data-label">計價幣別</div><div class="data-value">${escapeHtml(data['幣別']) || '-'}</div></div>
                     <div class="data-box"><div class="data-label">風險等級</div><div class="data-value">${formatBadge(data['風險收益等級'])}</div></div>
                     <div class="data-box">
                         <div class="data-label">嘉實評等<span class="help-icon" data-tooltip="嘉實(Moneydj)針對績效與風險的綜合評分。最高5顆星，星數越多代表在同類基金中表現越佳。">?</span></div>
-                        <div class="data-value" style="color:var(--c-rating); font-weight:700;">${hasRating(data['嘉實基金評等']) ? escapeHtml(data['嘉實基金評等']) + ' ⭐' : (data['嘉實基金評等'] ? escapeHtml(data['嘉實基金評等']) : '-')}</div>
+                        <div class="data-value" style="color:var(--c-rating); font-weight:600;">${hasRating(data['嘉實基金評等']) ? escapeHtml(data['嘉實基金評等']) + ' ★' : (data['嘉實基金評等'] ? escapeHtml(data['嘉實基金評等']) : '-')}</div>
                     </div>
                     <div class="data-box"><div class="data-label">配息頻率</div><div class="data-value">${escapeHtml(data['配息頻率']) || '-'}</div></div>
                     <div class="data-box"><div class="data-label">成立日期</div><div class="data-value">${escapeHtml(data['成立日期']) || '-'}</div></div>
                 </div>
 
-                <div class="data-section-title">📈 績效表現</div>
+                <div class="data-section-title">績效表現</div>
                 <div class="data-grid">
                     <div class="data-box"><div class="data-label">近三個月</div><div class="data-value">${formatVal(data['三個月(%)'])}</div></div>
                     <div class="data-box"><div class="data-label">近六個月</div><div class="data-value">${formatVal(data['六個月(%)'])}</div></div>
                     <div class="data-box"><div class="data-label">近一年</div><div class="data-value">${formatVal(data['一年(%)'])}</div></div>
                     <div class="data-box"><div class="data-label">近三年</div><div class="data-value">${formatVal(data['三年(%)'])}</div></div>
                     <div class="data-box"><div class="data-label">成立以來總報酬</div><div class="data-value">${formatVal(data['成立以來(%)'])}</div></div>
-                    <div class="data-box" style="background: var(--hl-box-bg); border-color: var(--hl-box-border);"><div class="data-label" style="color: var(--hl-box-label); font-weight:600;">✨ 成立以來平均年報酬</div><div class="data-value">${formatVal(data['成立以來平均報酬(%)'])}</div></div>
+                    <div class="data-box" style="background: var(--hl-box-bg); border-color: var(--hl-box-border);"><div class="data-label" style="color: var(--hl-box-label); font-weight:600;">成立以來平均年報酬</div><div class="data-value">${formatVal(data['成立以來平均報酬(%)'])}</div></div>
                 </div>
 
-                <div class="data-section-title">🛡️ 風險與波動指標</div>
+                <div class="data-section-title">風險與波動指標</div>
                 <div class="data-grid">
                     <div class="data-box"><div class="data-label">年化標準差<span class="help-icon" data-tooltip="衡量基金的波動大小。數值越大，代表漲跌起伏越劇烈（風險越高）。">?</span></div><div class="data-value">${escapeHtml(data['年化標準差']) || '-'}</div></div>
                     <div class="data-box"><div class="data-label">夏普值 (CP值)<span class="help-icon" data-tooltip="衡量承受每1%風險能帶來的超額報酬。數值越大越好，代表承擔相同風險下賺得比較多。">?</span></div><div class="data-value">${formatVal(data['年化Sharpe'])}</div></div>
@@ -1481,14 +1523,14 @@
 
 
         // ==========================================
-        // 🍔 漢堡選單與視圖切換邏輯
+        // 漢堡選單與視圖切換邏輯
         // ==========================================
         const hamburgerBtn = document.getElementById('hamburgerBtn');
         const dropdownMenu = document.getElementById('dropdownMenu');
         const navFund = document.getElementById('navFund');
         const navCalc = document.getElementById('navCalc');
-        const headerTitle = document.getElementById('headerTitle'); // 🌟 抓取標題元素
-        const lastUpdateTag = document.getElementById('lastUpdateTag'); // 🌟 抓取更新時間元素
+        const headerTitle = document.getElementById('headerTitle'); // 抓取標題元素
+        const lastUpdateTag = document.getElementById('lastUpdateTag'); // 抓取更新時間元素
 
         hamburgerBtn.addEventListener('click', function(e) {
             e.stopPropagation();
@@ -1512,8 +1554,9 @@
             if(table) { table.columns.adjust(); setTimeout(fitTableHeight, 0); }
             dropdownMenu.classList.remove('show');
 
-            // 🌟 切換回基金模式：改回原標題，並「顯示」更新時間
+            // 切換回基金模式：改回原標題，並「顯示」更新時間
             headerTitle.innerText = '智慧基金篩選';
+            document.documentElement.dataset.view = 'fund';
             lastUpdateTag.style.display = 'block';
         });
 
@@ -1527,26 +1570,27 @@
             document.getElementById('calculatorContainer').style.display = 'block';
             dropdownMenu.classList.remove('show');
 
-            // 🌟 切換到試算模式：更改標題，並「隱藏」更新時間
+            // 切換到試算模式：更改標題，並「隱藏」更新時間
             headerTitle.innerText = '退休試算';
+            document.documentElement.dataset.view = 'calc';
             lastUpdateTag.style.display = 'none';
         });
 
 
         // ==========================================
-        // 💰 退休試算核心運算 (防破圖版)
+        // 退休試算核心運算 (防破圖版)
         // ==========================================
         let myBarChart = null;
         let myPieChart = null;
 
-        // 🌟 新增：數字加上千分位逗號
+        // 新增：數字加上千分位逗號
         function formatNumber(val) {
             if (!val) return '';
             let raw = val.toString().replace(/\D/g, ''); // 拔除所有非數字字元
             return raw ? parseInt(raw, 10).toLocaleString('en-US') : '';
         }
 
-        // 🌟 新增：將帶有逗號的字串還原成純數字來計算
+        // 新增：將帶有逗號的字串還原成純數字來計算
         function getRawNumber(val) {
             if (!val) return 0;
             return parseFloat(val.toString().replace(/,/g, '')) || 0;
@@ -1558,7 +1602,7 @@
             document.getElementById('calculatorContainer').scrollTop = 0;
         }
 
-        // 🌟 新增：從 Step 2 進入 Step 3 時，把填寫好的資料「複製」到儀表板上
+        // 新增：從 Step 2 進入 Step 3 時，把填寫好的資料「複製」到儀表板上
         function startCalculation() {
             document.getElementById('inpCurrentAge3').value = document.getElementById('inpCurrentAge').value;
             document.getElementById('inpRetireAge3').value = document.getElementById('inpRetireAge').value;
@@ -1569,7 +1613,7 @@
             calculateResult();
         }
 
-// 🌟 修改：加入動態白話文拆解邏輯
+// 修改：加入動態白話文拆解邏輯
         function calculateResult() {
             goToStep(3);
 
@@ -1590,7 +1634,7 @@
             if(yearsToRetire <= 0 || yearsInRetire <= 0) {
                 document.getElementById('resLumpSum').innerText = "0 元";
                 document.getElementById('resAnnual').innerText = "0 元";
-                document.getElementById('resultSummary').innerHTML = '⚠️ 請確認「退休年齡」大於「現在年齡」，且「準備到幾歲」大於「退休年齡」。';
+                document.getElementById('resultSummary').innerHTML = '請確認「退休年齡」大於「現在年齡」，且「準備到幾歲」大於「退休年齡」。';
                 if (myBarChart) { myBarChart.destroy(); myBarChart = null; }
                 if (myPieChart) { myPieChart.destroy(); myPieChart = null; }
                 return;
@@ -1607,13 +1651,13 @@
             let gapAtRetire = totalNeededAtRetire - currentSavings;
             if(gapAtRetire < 0) gapAtRetire = 0;
 
-            // 🌟 3. 計算「新資金」實際每年要分攤的額度
+            // 3. 計算「新資金」實際每年要分攤的額度
             let pmtGap = 0;
             if (gapAtRetire > 0 && yearsInRetire > 0) {
                 pmtGap = gapAtRetire / annuityDue;
             }
 
-            // 🌟 4. 計算「舊有理財金」每年幫忙分攤的額度
+            // 4. 計算「舊有理財金」每年幫忙分攤的額度
             let savingsCover = annualGap - pmtGap;
             if (savingsCover < 0) savingsCover = 0;
 
@@ -1622,18 +1666,18 @@
             let annualNeeded = gapAtRetire / fvFactor;
             let monthlyNeeded = annualNeeded / 12;
 
-            // 🌟 5. 動態產生白話文解析，拆解給使用者看
+            // 5. 動態產生白話文解析，拆解給使用者看
             let postPct = document.getElementById('inpPostReturn3').value || 0;
             let summaryHTML = `
-                💡 <b>試算解析：</b>為了在 <span class="summary-highlight">${retireAge} 歲</span> 退休生活至 <span class="summary-highlight">${targetAge} 歲</span>，扣除固定領回後，每年仍有 <b>${Math.round(annualGap).toLocaleString()} 元</b> 的資金缺口。<br>
+                <b>試算解析：</b>為了在 <span class="summary-highlight">${retireAge} 歲</span> 退休生活至 <span class="summary-highlight">${targetAge} 歲</span>，扣除固定領回後，每年仍有 <b>${Math.round(annualGap).toLocaleString()} 元</b> 的資金缺口。<br>
             `;
 
             // 如果有填寫目前已準備的理財金，就多秀出這段拆解說明
             if (currentSavings > 0) {
                 summaryHTML += `
                 <div style="margin-top: 8px; font-size: 0.9rem; background: var(--note-bg); padding: 10px; border-radius: 10px; border: var(--note-border); color: var(--note-text);">
-                    ✨ 您填寫的「目前已準備理財」，在 ${postPct}% 的利息滾動下，每年可幫您分攤約 <b style="color:var(--c-emph1);">${Math.round(savingsCover).toLocaleString()} 元</b>。<br>
-                    ✨ 因此，下方軌跡圖中的新資金，每年實際只需扣除剩餘的 <b style="color:var(--c-emph2);">${Math.round(pmtGap).toLocaleString()} 元</b>！
+                    您填寫的「目前已準備理財」，在 ${postPct}% 的利息滾動下，每年可幫您分攤約 <b style="color:var(--c-emph1);">${Math.round(savingsCover).toLocaleString()} 元</b>。<br>
+                    因此，下方軌跡圖中的新資金，每年實際只需扣除剩餘的 <b style="color:var(--c-emph2);">${Math.round(pmtGap).toLocaleString()} 元</b>。
                 </div>
                 `;
             }
@@ -1664,7 +1708,7 @@
             let dataLump = [];
             let dataAnn = [];
 
-            // 🌟 核心邏輯：只畫出為了解決資金缺口而投入的新資金軌跡
+            // 核心邏輯：只畫出為了解決資金缺口而投入的新資金軌跡
             let balLump = lumpSum;
             let balAnn = 0;
             let pmtGap = 0;
@@ -1707,7 +1751,7 @@
                 }
             }
 
-            // 📈 資金成長與消耗軌跡 (曲線圖)
+            // 資金成長與消耗軌跡 (曲線圖)
             let barCtx = document.getElementById('barChart').getContext('2d');
             if (myBarChart) myBarChart.destroy();
             myBarChart = new Chart(barCtx, {
@@ -1768,7 +1812,7 @@
                 }
             });
 
-            // 🥧 退休資金結構分析 (圓餅圖)
+            // 退休資金結構分析 (圓餅圖)
             let pieCtx = document.getElementById('pieChart').getContext('2d');
             if (myPieChart) myPieChart.destroy();
             myPieChart = new Chart(pieCtx, {
@@ -1801,7 +1845,7 @@
 
 
         // ==========================================
-        // 🔒 開發者後門與資料追蹤
+        // 開發者後門與資料追蹤
         // ==========================================
         let clickCount = 0;
         let clickTimer = null;
@@ -1862,7 +1906,7 @@
         function openPwdModal() {
             pwdInput.value = '';
             pwdInput.type = 'password';
-            document.getElementById('pwdEye').innerText = '👁️';
+            document.getElementById('pwdEye').innerHTML = ICON_EYE;
             pwdModal.style.display = 'flex';
             pwdInput.focus();
         }
@@ -1870,7 +1914,7 @@
         document.getElementById('pwdEye').addEventListener('click', () => {
             const show = pwdInput.type === 'password';
             pwdInput.type = show ? 'text' : 'password';
-            document.getElementById('pwdEye').innerText = show ? '🙈' : '👁️';
+            document.getElementById('pwdEye').innerHTML = show ? ICON_EYE_OFF : ICON_EYE;
         });
         document.getElementById('pwdCancel').addEventListener('click', closePwdModal);
         pwdModal.addEventListener('click', e => { if (e.target === pwdModal) closePwdModal(); });
@@ -1901,33 +1945,33 @@
         function triggerN8nUpdate(apiKey) {
             const webhookUrl = "https://orthodox-oarfish.pikapod.net/webhook/force-update";
             const timeTag = document.getElementById('lastUpdateTag');
-            timeTag.innerText = '🚀 正在向 n8n 發送強制更新指令...';
-            timeTag.style.color = 'var(--c-info)';
+            timeTag.innerText = '正在送出更新指令';
+            timeTag.style.color = 'var(--c-info)'; document.documentElement.dataset.status = 'busy';
 
             fetch(webhookUrl, { method: 'GET', headers: { 'X-Api-Key': apiKey } })
                 .then(response => {
                     if (response.status === 401 || response.status === 403) {
-                        alert("❌ 密碼錯誤，存取拒絕！");
-                        timeTag.innerText = '🔴 密碼錯誤，未執行更新';
-                        timeTag.style.color = 'var(--c-err)';
+                        alert("密碼錯誤，未執行更新");
+                        timeTag.innerText = '密碼錯誤，未執行更新';
+                        timeTag.style.color = 'var(--c-err)'; document.documentElement.dataset.status = 'err';
                         return;
                     }
                     if (response.status === 429) {
-                        response.text().then(t => alert("⏳ " + (t || "冷卻中，請稍後再試")));
-                        timeTag.innerText = '⏳ 冷卻中，近期已更新過，請稍後再試';
-                        timeTag.style.color = 'var(--c-warn)';
+                        response.text().then(t => alert(t || "冷卻中，請稍後再試"));
+                        timeTag.innerText = '冷卻中，近期已更新過';
+                        timeTag.style.color = 'var(--c-warn)'; document.documentElement.dataset.status = 'warn';
                         return;
                     }
                     if (response.ok) {
-                        alert("✅ 成功觸發 n8n 強制更新！\n\n機器人已經在背景努力抓取最新資料並上傳 GitHub。\n請大約等待 1~2 分鐘後，再重新整理此網頁查看最新時間。");
-                        timeTag.innerText = '⏳ n8n 背景更新中，請稍後重新整理...';
+                        alert("已送出更新指令\n\nn8n 會在背景抓取最新資料並上傳 GitHub，約 1–2 分鐘後重新整理，就能看到新的更新時間。");
+                        timeTag.innerText = '背景更新中，約 1–2 分鐘後重新整理';
                     } else { throw new Error('伺服器無回應'); }
                 })
                 .catch(error => {
                     console.error("觸發失敗:", error);
-                    alert("❌ 觸發 n8n 失敗，請確認 Webhook 網址是否正確且已啟用 (Active)。");
-                    timeTag.innerText = `🔴 強制更新失敗`;
-                    timeTag.style.color = 'var(--c-err)';
+                    alert("無法連線到 n8n，請確認 Webhook 網址正確且已啟用（Active）");
+                    timeTag.innerText = '更新失敗';
+                    timeTag.style.color = 'var(--c-err)'; document.documentElement.dataset.status = 'err';
                 });
         }
 
