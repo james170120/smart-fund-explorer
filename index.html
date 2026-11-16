@@ -809,6 +809,18 @@
             .help-icon { width: 16px; height: 16px; font-size: 11px; }
             .global-tooltip { font-size: 0.85rem; line-height: 1.5; width: 260px; padding: 10px 12px; }
         }
+        /* 基金詳情：風險等級框依等級上色 */
+        html[data-theme] .data-box.risk-high { border: 2px solid var(--color-up); }
+        html[data-theme] .data-box.risk-mid, html[data-theme] .data-box.risk-low { border-style: solid; }
+        html[data-theme="notebook"] .data-box.risk-high { background: #fbeee8; }
+        html[data-theme="notebook"] .data-box.risk-mid { border-color: rgba(138, 100, 24, 0.45); }
+        html[data-theme="notebook"] .data-box.risk-low { border-color: rgba(47, 93, 80, 0.4); }
+        html[data-theme="dark"] .data-box.risk-high { border-color: #ef4444; background: rgba(239, 68, 68, 0.16); }
+        html[data-theme="dark"] .data-box.risk-high .data-label { color: #fca5a5; }
+        html[data-theme="dark"] .data-box.risk-high .badge-rr45 { background-color: #ef4444; color: #fff; }
+        html[data-theme="dark"] .data-box.risk-mid { border-color: rgba(252, 211, 77, 0.5); }
+        html[data-theme="dark"] .data-box.risk-low { border-color: rgba(110, 231, 183, 0.35); }
+        .data-box.risk-high .data-label { color: var(--color-up); font-weight: 600; }
     </style>
 </head>
 <body>
@@ -1125,6 +1137,15 @@
         var ICON_EXT = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3"/></svg>';
         var ICON_EYE = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>';
         var ICON_EYE_OFF = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/></svg>';
+
+        // 基金詳情的「風險等級」框：RR4/RR5 紅框提醒、RR3 琥珀、RR1/RR2 綠（後兩者較淡）
+        function riskBoxClass(v) {
+            const t = String(v || '').trim().toUpperCase();
+            if (t === 'RR4' || t === 'RR5') return 'risk-high';
+            if (t === 'RR3') return 'risk-mid';
+            if (t === 'RR1' || t === 'RR2') return 'risk-low';
+            return '';
+        }
 
         // 嘉實評等是 N/A、-、無 或空白時，不算有評等
         function hasRating(v) {
@@ -1615,7 +1636,7 @@
                 <div class="data-grid">
                     <div class="data-box"><div class="data-label">最新淨值</div><div class="data-value large">${escapeHtml(data['淨值']) || '-'}</div></div>
                     <div class="data-box"><div class="data-label">計價幣別</div><div class="data-value">${escapeHtml(data['幣別']) || '-'}</div></div>
-                    <div class="data-box"><div class="data-label">風險等級</div><div class="data-value">${formatBadge(data['風險收益等級'])}</div></div>
+                    <div class="data-box ${riskBoxClass(data['風險收益等級'])}"><div class="data-label">風險等級</div><div class="data-value">${formatBadge(data['風險收益等級'])}</div></div>
                     <div class="data-box">
                         <div class="data-label">嘉實評等<span class="help-icon" data-tooltip="嘉實(Moneydj)針對績效與風險的綜合評分。最高5顆星，星數越多代表在同類基金中表現越佳。">?</span></div>
                         <div class="data-value" style="color:var(--c-rating); font-weight:600;">${hasRating(data['嘉實基金評等']) ? escapeHtml(data['嘉實基金評等']) + ' ★' : (data['嘉實基金評等'] ? escapeHtml(data['嘉實基金評等']) : '-')}</div>
