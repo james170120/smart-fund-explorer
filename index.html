@@ -770,9 +770,11 @@
         .fsum-item .v { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-variant-numeric: tabular-nums; }
         .fsum-item.is-default .v { color: var(--text-main); }
         .fsum-item.is-set .v { color: var(--accent-blue); }
-        .fsum-actions { display: flex; gap: 8px; margin-top: 12px; }
-        .fsum-actions button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 12px; }
-        .fsum-actions .fsum-clear { flex: none; }
+        .fsum-tools { display: flex; align-items: center; gap: 6px; flex: none; }
+        .fsum-btn { flex: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 32px; padding: 6px 10px; font-size: 0.8rem; border-radius: 8px; }
+        .fsum-btn .ic { width: 14px; height: 14px; }
+        .fsum-clear { background: transparent !important; color: var(--text-muted) !important; }
+        .fsum-clear:hover { color: var(--text-main) !important; }
         /* 全部條件的小視窗 */
         .fm-sheet { max-width: 600px; }
         .fm-sheet .cc-head { gap: 8px; }
@@ -846,15 +848,11 @@
             </div>
 
             <div class="filter-card fsum" id="filterSummary">
-                <div class="fsum-head"><div class="filter-title">篩選條件</div><span class="fsum-count" id="fsumCount"></span></div>
+                <div class="fsum-head"><div class="filter-title">篩選條件</div><div class="fsum-tools"><button type="button" class="btn-reset fsum-btn fsum-clear" id="fsumClear">清除</button><button type="button" class="btn-reset fsum-btn" id="fsumEdit"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg>修改條件</button></div></div>
                 <div class="fsum-sec">核心過濾</div>
                 <div class="fsum-grid" id="fsumCore"></div>
                 <div class="fsum-sec">進階風險</div>
                 <div class="fsum-grid" id="fsumRisk"></div>
-                <div class="fsum-actions">
-                    <button type="button" class="btn-reset" id="fsumEdit"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg>修改篩選條件</button>
-                    <button type="button" class="btn-reset fsum-clear" id="fsumClear">清除</button>
-                </div>
             </div>
 
             <div class="filter-card">
@@ -1334,7 +1332,6 @@
                 }
             });
             const n = (typeof table !== 'undefined' && table) ? table.page.info().recordsDisplay : null;
-            document.getElementById('fsumCount').textContent = (active ? '已設 ' + active + ' 項' : '未設條件') + (n !== null ? '，' + n + ' 檔' : '');
             document.getElementById('fmCount').textContent = n !== null ? '符合 ' + n + ' 檔' : '';
             document.getElementById('fsumClear').style.display = active ? '' : 'none';
         }
