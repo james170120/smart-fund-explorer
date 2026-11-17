@@ -1034,13 +1034,33 @@
             .cc-page .cc-result .main .data-value { font-size: 1.8rem; }
             .cc-canvas { height: 220px; }
         }
+        /* 左上角回首頁按鈕 */
+        .header-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
+        .home-btn { flex: none; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 12px 0 10px; border-radius: 10px; background: transparent; border: 1px solid var(--border-light) !important; color: var(--text-muted); font-size: 0.85rem; font-weight: 600; transition: background-color 0.15s, color 0.15s; }
+        .home-btn .ic { width: 16px; height: 16px; }
+        .home-btn:hover { color: var(--text-main); background: rgba(127, 127, 127, 0.08); }
+        html[data-view="home"] .home-btn { display: none; }
+        @media (max-width: 768px) {
+            .header-left { gap: 8px; max-width: calc(100% - 190px); }
+            .home-btn { min-height: 40px; min-width: 40px; padding: 0 10px; justify-content: center; }
+            .home-btn span { display: none; }
+            /* 有回首頁按鈕時標題稍微縮小、不換行，才放得下 */
+            html[data-theme]:not([data-view="home"]) header h1 { font-size: 1.06rem; white-space: nowrap; gap: 6px; letter-spacing: 0; }
+        }
+        @media (max-width: 380px) {
+            html[data-theme]:not([data-view="home"]) header h1 { font-size: 0.95rem; }
+            .header-left { gap: 6px; }
+        }
     </style>
 </head>
 <body>
 
     <header>
         <!-- 給標題加上 ID，讓 JS 可以控制它 -->
-        <h1 id="headerTitle">智慧基金篩選</h1>
+        <div class="header-left">
+            <button type="button" id="homeBtn" class="home-btn" aria-label="回首頁" title="回首頁"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>首頁</span></button>
+            <h1 id="headerTitle">智慧基金篩選</h1>
+        </div>
 
         <!-- 漢堡選單容器 -->
         <div class="header-menu-container">
@@ -2425,6 +2445,8 @@
             renderHomeFx();
         }
         navHome.addEventListener('click', e => { e.preventDefault(); goHome(); });
+        // 左上角「首頁」按鈕（首頁本身不顯示）
+        document.getElementById('homeBtn').addEventListener('click', goHome);
 
         // 首頁卡片／按鈕：直接切到對應畫面
         homeContainer.addEventListener('click', e => {
