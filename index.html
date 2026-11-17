@@ -861,6 +861,58 @@
         .ctl-row { display: flex; gap: 8px; }
         .ctl-row input { flex: 1; min-width: 0; }
         .ctl-row select { flex: none; width: auto; }
+        /* ===== 匯率走勢 ===== */
+        #fxContainer { display: none; flex: 1; min-height: 0; overflow-y: auto; padding: 20px; }
+        html[data-view="fx"] header h1::before { display: none; }
+        .fx-top { display: grid; grid-template-columns: minmax(300px, 380px) 1fr; gap: 20px; align-items: start; }
+        .fx-card { background: var(--card-bg); border: 1px solid var(--border-light); border-radius: 16px; padding: 20px; min-width: 0; }
+        .fx-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+        .fx-title { margin: 0; font-size: 1.1rem; font-weight: 600; color: var(--text-main); }
+        html[data-theme="notebook"] .fx-title { font-family: var(--hand); color: var(--accent-blue); font-size: 1.2rem; }
+        .fx-meta { font-size: 0.8rem; color: var(--text-muted); white-space: nowrap; }
+        .fx-sub { font-size: 0.8rem; color: var(--text-muted); margin: 6px 0 12px; }
+        .fx-list { display: flex; flex-direction: column; gap: 2px; }
+        .fx-row { flex: none; display: grid; grid-template-columns: 44px 1fr auto 64px; align-items: center; gap: 8px; width: 100%; min-height: 44px; padding: 8px 10px; background: transparent; border-radius: 10px; text-align: left; color: var(--text-main); font-weight: 400; transition: background-color 0.15s; }
+        .fx-row:hover { background: rgba(127, 127, 127, 0.08); }
+        .fx-row:active { transform: none; }
+        .fx-row.active { background: rgba(127, 127, 127, 0.13); box-shadow: inset 3px 0 0 var(--accent-blue); }
+        .fx-code { font-size: 0.78rem; font-weight: 600; color: var(--text-muted); letter-spacing: 0.3px; }
+        .fx-name { font-size: 0.95rem; }
+        .fx-rate { font-size: 1rem; font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; }
+        .fx-row-chg { font-size: 0.8rem; text-align: right; font-variant-numeric: tabular-nums; }
+        .fx-chart-head { align-items: flex-start; flex-wrap: wrap; }
+        .fx-now { display: flex; align-items: baseline; gap: 10px; margin-top: 6px; }
+        #fxNow { font-size: 2rem; font-weight: 600; color: var(--text-main); font-variant-numeric: tabular-nums; }
+        .fx-chg { font-size: 0.95rem; font-variant-numeric: tabular-nums; }
+        .fx-vs { margin-left: 6px; font-size: 0.78rem; color: var(--text-muted); }
+        .fx-range { display: flex; gap: 2px; padding: 3px; border-radius: 10px; background: rgba(127, 127, 127, 0.1); }
+        .fx-range button { flex: none; padding: 6px 12px; min-height: 34px; border-radius: 7px; background: transparent; color: var(--text-muted); font-size: 0.85rem; font-weight: 500; }
+        .fx-range button.active { background: var(--card-bg); color: var(--text-main); font-weight: 600; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12); }
+        .fx-canvas { position: relative; height: 360px; margin-top: 16px; }
+        .fx-note { margin-top: 10px; font-size: 0.75rem; color: var(--text-muted); }
+        .fx-news-card { margin-top: 20px; }
+        .fx-news-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 4px; }
+        .fx-news-tabs button { flex: none; padding: 6px 12px; min-height: 34px; border-radius: 999px; background: rgba(127, 127, 127, 0.1); color: var(--text-muted); font-size: 0.85rem; font-weight: 500; }
+        .fx-news-tabs button.active { background: var(--accent-blue); color: var(--card-bg); }
+        .fx-news { list-style: none; margin: 0; padding: 0; }
+        .fx-news li { padding: 12px 0; border-bottom: 1px solid var(--border-light); }
+        .fx-news li:last-child { border-bottom: none; }
+        .fx-news a { color: var(--text-main); text-decoration: none; font-size: 0.98rem; line-height: 1.5; }
+        .fx-news a:hover { color: var(--accent-blue); text-decoration: underline; }
+        .fx-news-meta { margin-top: 4px; font-size: 0.8rem; color: var(--text-muted); }
+        .fx-tag { display: inline-block; margin-right: 8px; padding: 1px 8px; border-radius: 6px; background: rgba(127, 127, 127, 0.12); color: var(--text-main); font-size: 0.75rem; }
+        .fx-empty { padding: 16px 0; color: var(--text-muted); font-size: 0.9rem; }
+        @media (max-width: 900px) {
+            .fx-top { grid-template-columns: 1fr; }
+            .fx-chart-card { order: -1; }
+        }
+        @media (max-width: 768px) {
+            #fxContainer { padding: 12px; height: auto; overflow: visible; }
+            .fx-card { padding: 16px; border-radius: 14px; }
+            .fx-canvas { height: 240px; }
+            #fxNow { font-size: 1.6rem; }
+            .fx-row { grid-template-columns: 40px 1fr auto 60px; }
+        }
     </style>
 </head>
 <body>
@@ -880,6 +932,7 @@
                 <a href="#" id="navFund" class="dropdown-item active"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><span>基金篩選</span></a>
                 <a href="#" id="navCalc" class="dropdown-item"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 10V2"/><path d="m4.93 10.93 1.41 1.41"/><path d="M2 18h2"/><path d="M20 18h2"/><path d="m19.07 10.93-1.41 1.41"/><path d="M22 22H2"/><path d="m16 6-4 4-4-4"/><path d="M16 18a4 4 0 0 0-8 0"/></svg><span>退休試算</span></a>
                 <a href="#" id="navCompound" class="dropdown-item"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg><span>複利計算機</span></a>
+                <a href="#" id="navFx" class="dropdown-item"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg><span>匯率走勢</span></a>
                 <a href="https://edesk.bli.gov.tw/me/#/na/login" target="_blank" class="dropdown-item"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg><span>勞保局e化服務系統</span></a>
                 <a href="https://james170120.github.io/video-downloader/" class="dropdown-item"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg><span>影音下載神器</span></a>
                 <a href="https://james170120.github.io/創建中" target="_blank" class="dropdown-item"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg><span>創建中</span></a>
@@ -1052,6 +1105,45 @@
         </form>
     </div>
 
+
+    <!-- ==========================================
+         匯率走勢：左邊匯率清單、右邊線圖、下方新聞
+         ========================================== -->
+    <div id="fxContainer">
+        <div class="fx-top">
+            <section class="fx-card fx-list-card">
+                <div class="fx-head">
+                    <h2 class="fx-title">匯率</h2>
+                    <span class="fx-meta" id="fxDate"></span>
+                </div>
+                <div class="fx-sub">1 單位外幣 ＝ 新台幣（元）</div>
+                <div class="fx-list" id="fxList" role="listbox" aria-label="貨幣"></div>
+            </section>
+            <section class="fx-card fx-chart-card">
+                <div class="fx-head fx-chart-head">
+                    <div>
+                        <h2 class="fx-title" id="fxChartTitle">美元 USD</h2>
+                        <div class="fx-now"><span id="fxNow">-</span><span class="fx-chg" id="fxChg"></span></div>
+                    </div>
+                    <div class="fx-range" id="fxRange" role="group" aria-label="走勢區間">
+                        <button type="button" data-r="1m" class="active">1 個月</button>
+                        <button type="button" data-r="3m">3 個月</button>
+                        <button type="button" data-r="1y">1 年</button>
+                    </div>
+                </div>
+                <div class="fx-canvas"><canvas id="fxChart"></canvas></div>
+                <div class="fx-note">每日更新的市場參考匯率（中間價），不是銀行牌告買賣價；資料來源：Currency API</div>
+            </section>
+        </div>
+        <section class="fx-card fx-news-card">
+            <div class="fx-head">
+                <h2 class="fx-title">匯率新聞</h2>
+                <span class="fx-meta" id="fxNewsDate"></span>
+            </div>
+            <div class="fx-news-tabs" id="fxNewsTabs" role="group" aria-label="新聞貨幣"></div>
+            <ul class="fx-news" id="fxNews"></ul>
+        </section>
+    </div>
 
     <!-- ==========================================
          退休試算器容器 (全新樣式，防破圖設計)
@@ -1793,6 +1885,7 @@
         const dropdownMenu = document.getElementById('dropdownMenu');
         const navFund = document.getElementById('navFund');
         const navCalc = document.getElementById('navCalc');
+        const navFx = document.getElementById('navFx');
         const headerTitle = document.getElementById('headerTitle'); // 抓取標題元素
         const lastUpdateTag = document.getElementById('lastUpdateTag'); // 抓取更新時間元素
 
@@ -1812,9 +1905,11 @@
             e.preventDefault();
             this.classList.add('active');
             navCalc.classList.remove('active');
+            navFx.classList.remove('active');
 
             document.querySelector('.dashboard-container').style.display = 'flex';
             document.getElementById('calculatorContainer').style.display = 'none';
+            document.getElementById('fxContainer').style.display = 'none';
             if(table) { table.columns.adjust(); setTimeout(fitTableHeight, 0); }
             dropdownMenu.classList.remove('show');
 
@@ -1829,15 +1924,191 @@
             e.preventDefault();
             this.classList.add('active');
             navFund.classList.remove('active');
+            navFx.classList.remove('active');
 
             document.querySelector('.dashboard-container').style.display = 'none';
             document.getElementById('calculatorContainer').style.display = 'block';
+            document.getElementById('fxContainer').style.display = 'none';
             dropdownMenu.classList.remove('show');
 
             // 切換到試算模式：更改標題，並「隱藏」更新時間
             headerTitle.innerText = '退休試算';
             document.documentElement.dataset.view = 'calc';
             lastUpdateTag.style.display = 'none';
+        });
+
+
+        // ==========================================
+        // 匯率走勢
+        // 匯率：Currency API（每日更新的市場參考匯率，網頁直接讀）
+        // 新聞：fx_news.json（由 n8n 定時抓 Google 新聞後上傳到 GitHub）
+        // ==========================================
+        const FX_LIST = [
+            ['USD', '美元'], ['JPY', '日圓'], ['EUR', '歐元'], ['CNY', '人民幣'], ['HKD', '港幣'],
+            ['AUD', '澳幣'], ['GBP', '英鎊'], ['SGD', '新加坡幣'], ['CAD', '加拿大幣'], ['CHF', '瑞士法郎'],
+            ['NZD', '紐西蘭幣'], ['ZAR', '南非幣'], ['KRW', '韓元'], ['THB', '泰銖']
+        ];
+        const FX_NAME = Object.fromEntries(FX_LIST);
+        const fxState = { cur: 'USD', range: '1m', latest: null, prev: null, newsTab: 'ALL', news: null, loaded: false };
+        const fxCache = {};
+        let fxChart = null;
+
+        function fxDateStr(d) { return d.toISOString().slice(0, 10); }
+        function fxAddDays(dateStr, n) { const d = new Date(dateStr + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return fxDateStr(d); }
+        // 讀某一天（或 latest）以新台幣為基準的匯率；兩個網址互為備援，讀過的會記住
+        function fxGet(day) {
+            if (fxCache[day]) return fxCache[day];
+            const urls = day === 'latest'
+                ? ['https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/twd.min.json', 'https://latest.currency-api.pages.dev/v1/currencies/twd.min.json']
+                : ['https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@' + day + '/v1/currencies/twd.min.json', 'https://' + day + '.currency-api.pages.dev/v1/currencies/twd.min.json'];
+            fxCache[day] = (async () => {
+                for (const u of urls) {
+                    try { const r = await fetch(u); if (r.ok) { const j = await r.json(); if (j && j.twd) return j; } } catch (e) {}
+                }
+                return null;
+            })();
+            return fxCache[day];
+        }
+        // 1 外幣 = ? 台幣
+        function fxRate(data, code) { const v = data && data.twd[code.toLowerCase()]; return v ? 1 / v : null; }
+        function fxFmt(v) { return v == null ? '-' : v.toFixed(v < 1 ? 4 : 3); }
+        function fxPct(now, before) { return (now != null && before) ? (now / before - 1) * 100 : null; }
+        function fxChgHtml(p) {
+            if (p == null) return '';
+            const cls = p > 0 ? 'val-up' : (p < 0 ? 'val-down' : '');
+            return '<span class="' + cls + '">' + (p > 0 ? '+' : '') + p.toFixed(2) + '%</span>';
+        }
+
+        function fxRenderList() {
+            const box = document.getElementById('fxList');
+            box.innerHTML = FX_LIST.map(([code, name]) => {
+                const now = fxRate(fxState.latest, code), before = fxRate(fxState.prev, code);
+                return '<button type="button" class="fx-row' + (code === fxState.cur ? ' active' : '') + '" data-cur="' + code + '" role="option" aria-selected="' + (code === fxState.cur) + '">' +
+                    '<span class="fx-code">' + code + '</span><span class="fx-name">' + name + '</span>' +
+                    '<span class="fx-rate">' + fxFmt(now) + '</span><span class="fx-row-chg">' + fxChgHtml(fxPct(now, before)) + '</span></button>';
+            }).join('');
+        }
+
+        async function fxRenderChart() {
+            const cur = fxState.cur, range = fxState.range;
+            document.getElementById('fxChartTitle').textContent = FX_NAME[cur] + ' ' + cur;
+            const now = fxRate(fxState.latest, cur);
+            document.getElementById('fxNow').textContent = fxFmt(now);
+            document.getElementById('fxChg').innerHTML = fxChgHtml(fxPct(now, fxRate(fxState.prev, cur))) + (fxState.prev ? '<span class="fx-vs">與前一日比</span>' : '');
+            // 1 個月每天一點、3 個月每 3 天一點、1 年每週一點
+            const cfg = { '1m': [30, 1], '3m': [90, 3], '1y': [364, 7] }[range];
+            const end = fxState.latest.date, days = [];
+            for (let k = cfg[0]; k > 0; k -= cfg[1]) days.push(fxAddDays(end, -k));
+            const hist = await Promise.all(days.map(fxGet));
+            if (cur !== fxState.cur || range !== fxState.range) return;
+            const pts = hist.map((h, i) => [days[i], fxRate(h, cur)]).filter(p => p[1] != null);
+            pts.push([end, now]);
+            // 1 年顯示「年/月」，其他顯示「月/日」
+            const labels = pts.map(p => range === '1y' ? p[0].slice(0, 7).replace('-', '/') : p[0].slice(5).replace('-', '/'));
+            const values = pts.map(p => +p[1].toFixed(now < 1 ? 5 : 4));
+            const ctx = document.getElementById('fxChart').getContext('2d');
+            if (fxChart) fxChart.destroy();
+            Chart.defaults.color = cv('--ch-text');
+            Chart.defaults.borderColor = cv('--ch-grid');
+            fxChart = new Chart(ctx, {
+                type: 'line',
+                data: { labels, datasets: [{ label: FX_NAME[cur], data: values, borderColor: cv('--ch-1'), backgroundColor: cv('--ch-1-fill'), borderWidth: 2, fill: true, pointRadius: 0, pointHitRadius: 10, tension: 0.3 }] },
+                options: {
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: { legend: { display: false }, tooltip: { callbacks: { title: items => pts[items[0].dataIndex][0], label: c => ' 1 ' + cur + ' = ' + fxFmt(c.raw) + ' 台幣' } } },
+                    scales: { x: { grid: { display: false }, ticks: { maxTicksLimit: window.innerWidth <= 768 ? 4 : 7, maxRotation: 0 } }, y: { grid: { color: cv('--ch-grid') }, ticks: { callback: v => fxFmt(v) } } }
+                }
+            });
+        }
+
+        function fxRelTime(iso) {
+            const t = new Date(iso).getTime();
+            if (!t) return '';
+            const m = Math.round((Date.now() - t) / 60000);
+            if (m < 60) return Math.max(m, 1) + ' 分鐘前';
+            if (m < 60 * 24) return Math.round(m / 60) + ' 小時前';
+            return Math.round(m / 1440) + ' 天前';
+        }
+        function fxRenderNews() {
+            const list = document.getElementById('fxNews'), tabs = document.getElementById('fxNewsTabs');
+            const data = fxState.news;
+            if (!data || !Array.isArray(data.items) || !data.items.length) {
+                tabs.innerHTML = '';
+                list.innerHTML = '<li class="fx-empty">目前沒有新聞資料。設定好 n8n 的新聞流程後，這裡會自動顯示。</li>';
+                document.getElementById('fxNewsDate').textContent = '';
+                return;
+            }
+            const curs = FX_LIST.map(c => c[0]).filter(c => data.items.some(it => it.cur === c));
+            if (fxState.newsTab !== 'ALL' && !curs.includes(fxState.newsTab)) fxState.newsTab = 'ALL';
+            tabs.innerHTML = ['ALL'].concat(curs).map(c => '<button type="button" data-tab="' + c + '" class="' + (c === fxState.newsTab ? 'active' : '') + '">' + (c === 'ALL' ? '全部' : FX_NAME[c]) + '</button>').join('');
+            const items = data.items.filter(it => fxState.newsTab === 'ALL' || it.cur === fxState.newsTab)
+                .sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate)).slice(0, 15);
+            list.innerHTML = items.map(it => '<li><a href="' + escapeHtml(it.link) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(it.title) + '</a>' +
+                '<div class="fx-news-meta"><span class="fx-tag">' + escapeHtml(FX_NAME[it.cur] || it.cur) + '</span>' + escapeHtml(it.source || '') + (it.pubDate ? ' · ' + fxRelTime(it.pubDate) : '') + '</div></li>').join('');
+            document.getElementById('fxNewsDate').textContent = data.updated ? '更新於 ' + fxRelTime(data.updated) : '';
+        }
+
+        async function fxLoad() {
+            if (fxState.loaded) { fxRenderChart(); return; }
+            document.getElementById('fxList').innerHTML = '<div class="fx-empty">讀取匯率中</div>';
+            const latest = await fxGet('latest');
+            if (!latest) { document.getElementById('fxList').innerHTML = '<div class="fx-empty">暫時讀不到匯率資料，請稍後再試</div>'; return; }
+            fxState.latest = latest;
+            fxState.prev = await fxGet(fxAddDays(latest.date, -1));
+            fxState.loaded = true;
+            document.getElementById('fxDate').textContent = '資料日期 ' + latest.date.replace(/-/g, '/');
+            fxRenderList();
+            fxRenderChart();
+            try {
+                const r = await fetch('fx_news.json?t=' + Date.now());
+                fxState.news = r.ok ? await r.json() : null;
+            } catch (e) { fxState.news = null; }
+            fxRenderNews();
+        }
+
+        document.getElementById('fxList').addEventListener('click', e => {
+            const row = e.target.closest('.fx-row');
+            if (!row) return;
+            fxState.cur = row.dataset.cur;
+            // 新聞也跟著切到這個貨幣（有新聞的話）
+            if (fxState.news && fxState.news.items && fxState.news.items.some(it => it.cur === fxState.cur)) fxState.newsTab = fxState.cur;
+            fxRenderList();
+            fxRenderChart();
+            fxRenderNews();
+            // 手機上線圖在清單上方，點完捲回線圖讓你看到變化
+            if (window.innerWidth <= 900) document.querySelector('.fx-chart-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        document.getElementById('fxRange').addEventListener('click', e => {
+            const b = e.target.closest('button[data-r]');
+            if (!b) return;
+            fxState.range = b.dataset.r;
+            document.querySelectorAll('#fxRange button').forEach(x => x.classList.toggle('active', x === b));
+            fxRenderChart();
+        });
+        document.getElementById('fxNewsTabs').addEventListener('click', e => {
+            const b = e.target.closest('button[data-tab]');
+            if (!b) return;
+            fxState.newsTab = b.dataset.tab;
+            fxRenderNews();
+        });
+        // 切換深色／手帳時，線圖跟著換色
+        new MutationObserver(() => { if (fxChart && document.documentElement.dataset.view === 'fx') fxRenderChart(); })
+            .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+        navFx.addEventListener('click', function(e) {
+            e.preventDefault();
+            this.classList.add('active');
+            navFund.classList.remove('active');
+            navCalc.classList.remove('active');
+            document.querySelector('.dashboard-container').style.display = 'none';
+            document.getElementById('calculatorContainer').style.display = 'none';
+            document.getElementById('fxContainer').style.display = 'block';
+            dropdownMenu.classList.remove('show');
+            headerTitle.innerText = '匯率走勢';
+            document.documentElement.dataset.view = 'fx';
+            lastUpdateTag.style.display = 'none';
+            fxLoad();
         });
 
 
