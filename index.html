@@ -1004,6 +1004,36 @@
         .spark-dot { fill: var(--ch-1); }
         .spark-cap { display: block; margin-top: 4px; font-size: 0.72rem; color: var(--text-muted); }
         .home-card-spark + .home-card-live { margin-top: 2px; padding-top: 0; }
+        /* ===== 複利計算機分頁 ===== */
+        #compoundContainer { display: none; flex: 1; min-height: 0; overflow-y: auto; padding: 20px; }
+        html[data-view="compound"] header h1::before { display: none; }
+        .cc-page { display: grid; grid-template-columns: 360px minmax(0, 1fr); gap: 20px; align-items: start; max-width: 1400px; margin: 0 auto; }
+        .cc-side, .cc-main { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+        .cc-intro { margin: 6px 0 16px; font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); }
+        .cc-form-card .cc-grid { gap: 0 12px; }
+        /* 標籤長短不同時，同一列的輸入框仍對齊在底部 */
+        .cc-form-card .cc-grid > div { display: flex; flex-direction: column; }
+        .cc-form-card .cc-grid > div > label { flex: 1; display: flex; align-items: flex-end; }
+        .cc-page .cc-help { margin-top: 0; border-radius: 16px; padding: 14px 18px; }
+        .cc-page .cc-result { grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0; gap: 12px; }
+        .cc-page .cc-result .data-box.main { grid-column: 1 / -1; padding: 18px; }
+        .cc-page .cc-result .main .data-value { font-size: 2.2rem; }
+        .cc-canvas { position: relative; height: 300px; margin-top: 8px; }
+        .cc-page .cc-table-wrap { max-height: 380px; margin-top: 10px; }
+        .cc-page .cc-table { font-size: 0.92rem; }
+        .cc-page .cc-table th, .cc-page .cc-table td { padding: 8px 12px; }
+        @media (max-width: 900px) {
+            .cc-page { grid-template-columns: 1fr; }
+            .cc-side, .cc-main { display: contents; }
+            .cc-form-card { order: 1; } .cc-result { order: 2; } .cc-chart-card { order: 3; } .cc-table-card { order: 4; } .cc-page .cc-help { order: 5; }
+        }
+        @media (max-width: 768px) {
+            #compoundContainer { padding: 12px; height: auto; overflow: visible; }
+            .cc-page .cc-result { grid-template-columns: 1fr 1fr; }
+            .cc-page .cc-result .data-box:last-child { grid-column: 1 / -1; }
+            .cc-page .cc-result .main .data-value { font-size: 1.8rem; }
+            .cc-canvas { height: 220px; }
+        }
     </style>
 </head>
 <body>
@@ -1129,47 +1159,6 @@
     </div>
     <div id="globalTooltip" class="global-tooltip"></div>
 
-    <div class="modal-overlay" id="compoundModal">
-        <div class="cc-card" role="dialog" aria-label="複利計算機">
-            <div class="cc-head">
-                <h3>複利計算機</h3>
-                <button type="button" class="cc-close" id="ccClose" aria-label="關閉">&times;</button>
-            </div>
-            <div class="cc-body">
-                <div class="cc-grid">
-                    <div style="grid-column: 1 / -1;"><label for="ccMode">投入方式</label><select id="ccMode"><option value="dca">定期定額（本金＋定期投入）</option><option value="lump">一次性投入（不再追加）</option></select></div>
-                    <div><label for="ccPrincipal" id="ccPrincipalLabel">初始本金／第 1 筆（元）</label><input type="text" inputmode="numeric" id="ccPrincipal" value="100,000"></div>
-                    <div id="ccContribBox"><label for="ccContrib">定期投入（元）</label><input type="text" inputmode="numeric" id="ccContrib" value="10,000"></div>
-                    <div id="ccFreqBox"><label for="ccContribFreq">投入頻率</label><select id="ccContribFreq"><option value="12">每月投入</option><option value="1">每年投入</option></select></div>
-                    <div><label for="ccRate">年報酬率 (%)</label><input type="number" id="ccRate" value="6" step="0.1" min="0"></div>
-                    <div><label for="ccYears">投資年數</label><input type="number" id="ccYears" value="20" min="1" max="100" step="1"></div>
-                    <div><label for="ccCompFreq">複利頻率</label><select id="ccCompFreq"><option value="12">每月複利</option><option value="1">每年複利</option></select></div>
-                </div>
-                <div class="cc-result">
-                    <div class="data-box main"><div class="data-label">期末總資產</div><div class="data-value" id="ccTotal">-</div></div>
-                    <div class="data-box"><div class="data-label">總投入本金</div><div class="data-value" id="ccInvested">-</div></div>
-                    <div class="data-box"><div class="data-label">利息收益</div><div class="data-value" id="ccInterest">-</div></div>
-                </div>
-                <div class="cc-table-wrap">
-                    <table class="cc-table"><thead><tr><th>年</th><th>累計投入</th><th>資產</th></tr></thead><tbody id="ccRows"></tbody></table>
-                </div>
-                <details class="cc-help" open>
-                    <summary>這是怎麼算的</summary>
-                    <ul>
-                        <li><b>什麼是複利：</b>賺到的利息會再一起生利息，時間越長，滾雪球效果越明顯。</li>
-                        <li><b>每月利率：</b>選「每月複利」時，每月利率＝年報酬率 ÷ 12；選「每年複利」時，每月利率＝<code>(1＋年報酬率)<sup>1/12</sup>－1</code>，這樣滿 12 個月剛好成長一整年的報酬率。</li>
-                        <li><b>逐月計算：</b>每個月先把當月的投入金額加進去，再讓目前資產乘上 <code>(1＋每月利率)</code>，重複到投資年數結束。</li>
-                        <li><b>投入時間：</b>初始本金就是第 1 筆投入。選「每月投入」時，第 2 個月起每月月初再投入一筆；選「每年投入」時，第 2 年起每年年初再投入一筆。投入當期就開始計息。例如每月投入、20 年，共投入 1 筆初始本金＋239 筆定期投入，合計 240 筆。</li>
-                        <li><b>一次性投入：</b>只在一開始投入一筆、之後不再追加，公式為 <code>期末資產＝投入金額 × (1＋每月利率)<sup>年數×12</sup></code>。</li>
-                        <li><b>總投入本金：</b>初始本金＋之後每次投入的金額總和。<b>利息收益：</b>期末總資產－總投入本金。</li>
-                        <li><b>範例：</b>一次性投入 10 萬元、年報酬 6%、每月複利、20 年，期末約為 100,000 × (1.005)<sup>240</sup> ≈ 331,020 元。</li>
-                    </ul>
-                    <div class="cc-warn">假設報酬率每年固定不變，且未扣除手續費、稅金與通貨膨脹。實際投資報酬會波動，結果僅供參考，不代表未來績效。</div>
-                </details>
-            </div>
-        </div>
-    </div>
-
     <div class="modal-overlay" id="filterModal">
         <div class="cc-card fm-sheet" role="dialog" aria-modal="true" aria-labelledby="fmTitle">
             <div class="cc-head">
@@ -1221,7 +1210,6 @@
             <div class="home-top">
                 <div class="home-top-head">
                     <h3>近一年報酬前三名</h3>
-                    <span id="homeTopPolicy"></span>
                 </div>
                 <ol class="home-top-list" id="homeTopList"><li class="home-top-empty">讀取中</li></ol>
                 <button type="button" class="home-top-more" data-go="fund">看全部基金<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
@@ -1260,6 +1248,60 @@
         </section>
 
         <p class="home-note">資料來源：各保險公司投資標的網站（MoneyDJ）、Currency API、Google 新聞。內容僅供參考，不構成投資建議。</p>
+    </div>
+
+    <!-- ==========================================
+         複利計算機（獨立分頁）
+         ========================================== -->
+    <div id="compoundContainer">
+        <div class="cc-page">
+            <div class="cc-side">
+                <section class="fx-card cc-form-card">
+                    <h2 class="fx-title">複利計算機</h2>
+                    <p class="cc-intro">輸入本金、每期投入和年報酬率，看資產怎麼一年一年滾大。改數字會立刻重算。</p>
+                <div class="cc-grid">
+                    <div style="grid-column: 1 / -1;"><label for="ccMode">投入方式</label><select id="ccMode"><option value="dca">定期定額（本金＋定期投入）</option><option value="lump">一次性投入（不再追加）</option></select></div>
+                    <div><label for="ccPrincipal" id="ccPrincipalLabel">初始本金／第 1 筆（元）</label><input type="text" inputmode="numeric" id="ccPrincipal" value="100,000"></div>
+                    <div id="ccContribBox"><label for="ccContrib">定期投入（元）</label><input type="text" inputmode="numeric" id="ccContrib" value="10,000"></div>
+                    <div id="ccFreqBox"><label for="ccContribFreq">投入頻率</label><select id="ccContribFreq"><option value="12">每月投入</option><option value="1">每年投入</option></select></div>
+                    <div><label for="ccRate">年報酬率 (%)</label><input type="number" id="ccRate" value="6" step="0.1" min="0"></div>
+                    <div><label for="ccYears">投資年數</label><input type="number" id="ccYears" value="20" min="1" max="100" step="1"></div>
+                    <div><label for="ccCompFreq">複利頻率</label><select id="ccCompFreq"><option value="12">每月複利</option><option value="1">每年複利</option></select></div>
+                </div>
+                </section>
+                <details class="cc-help" open>
+                    <summary>這是怎麼算的</summary>
+                    <ul>
+                        <li><b>什麼是複利：</b>賺到的利息會再一起生利息，時間越長，滾雪球效果越明顯。</li>
+                        <li><b>每月利率：</b>選「每月複利」時，每月利率＝年報酬率 ÷ 12；選「每年複利」時，每月利率＝<code>(1＋年報酬率)<sup>1/12</sup>－1</code>，這樣滿 12 個月剛好成長一整年的報酬率。</li>
+                        <li><b>逐月計算：</b>每個月先把當月的投入金額加進去，再讓目前資產乘上 <code>(1＋每月利率)</code>，重複到投資年數結束。</li>
+                        <li><b>投入時間：</b>初始本金就是第 1 筆投入。選「每月投入」時，第 2 個月起每月月初再投入一筆；選「每年投入」時，第 2 年起每年年初再投入一筆。投入當期就開始計息。例如每月投入、20 年，共投入 1 筆初始本金＋239 筆定期投入，合計 240 筆。</li>
+                        <li><b>一次性投入：</b>只在一開始投入一筆、之後不再追加，公式為 <code>期末資產＝投入金額 × (1＋每月利率)<sup>年數×12</sup></code>。</li>
+                        <li><b>總投入本金：</b>初始本金＋之後每次投入的金額總和。<b>利息收益：</b>期末總資產－總投入本金。</li>
+                        <li><b>範例：</b>一次性投入 10 萬元、年報酬 6%、每月複利、20 年，期末約為 100,000 × (1.005)<sup>240</sup> ≈ 331,020 元。</li>
+                    </ul>
+                    <div class="cc-warn">假設報酬率每年固定不變，且未扣除手續費、稅金與通貨膨脹。實際投資報酬會波動，結果僅供參考，不代表未來績效。</div>
+                </details>
+            </div>
+            <div class="cc-main">
+                <div class="cc-result">
+                    <div class="data-box main"><div class="data-label">期末總資產</div><div class="data-value" id="ccTotal">-</div></div>
+                    <div class="data-box"><div class="data-label">總投入本金</div><div class="data-value" id="ccInvested">-</div></div>
+                    <div class="data-box"><div class="data-label">利息收益</div><div class="data-value" id="ccInterest">-</div></div>
+                    <div class="data-box"><div class="data-label">資產是投入的</div><div class="data-value" id="ccMultiple">-</div></div>
+                </div>
+                <section class="fx-card cc-chart-card">
+                    <div class="fx-head"><h3 class="fx-title">資產成長</h3><span class="fx-meta">每年年底</span></div>
+                    <div class="cc-canvas"><canvas id="ccChart"></canvas></div>
+                </section>
+                <section class="fx-card cc-table-card">
+                    <div class="fx-head"><h3 class="fx-title">逐年明細</h3></div>
+                    <div class="cc-table-wrap">
+                        <table class="cc-table"><thead><tr><th>年</th><th>累計投入</th><th>利息</th><th>資產</th></tr></thead><tbody id="ccRows"></tbody></table>
+                    </div>
+                </section>
+            </div>
+        </div>
     </div>
 
     <!-- ==========================================
@@ -2073,12 +2115,13 @@
             document.getElementById('calculatorContainer').style.display = 'none';
             document.getElementById('fxContainer').style.display = 'none';
             leaveHome();
+            leaveCompound();
             if(table) { table.columns.adjust(); setTimeout(fitTableHeight, 0); }
             dropdownMenu.classList.remove('show');
 
             // 切換回基金模式：改回原標題，並「顯示」更新時間
             headerTitle.innerText = '智慧基金篩選';
-            document.documentElement.dataset.view = 'fund';
+            document.documentElement.dataset.view = 'fund'; pushRoute('fund');
             lastUpdateTag.style.display = 'block';
         });
 
@@ -2093,11 +2136,12 @@
             document.getElementById('calculatorContainer').style.display = 'block';
             document.getElementById('fxContainer').style.display = 'none';
             leaveHome();
+            leaveCompound();
             dropdownMenu.classList.remove('show');
 
             // 切換到試算模式：更改標題，並「隱藏」更新時間
             headerTitle.innerText = '退休試算';
-            document.documentElement.dataset.view = 'calc';
+            document.documentElement.dataset.view = 'calc'; pushRoute('calc');
             lastUpdateTag.style.display = 'none';
         });
 
@@ -2347,9 +2391,10 @@
             document.getElementById('calculatorContainer').style.display = 'none';
             document.getElementById('fxContainer').style.display = 'block';
             leaveHome();
+            leaveCompound();
             dropdownMenu.classList.remove('show');
             headerTitle.innerText = '匯率走勢';
-            document.documentElement.dataset.view = 'fx';
+            document.documentElement.dataset.view = 'fx'; pushRoute('fx');
             lastUpdateTag.style.display = 'none';
             fxLoad();
         });
@@ -2358,6 +2403,7 @@
         // 首頁
         // ==========================================
         const homeContainer = document.getElementById('homeContainer');
+        var routeSilent = false;
         function leaveHome() {
             homeContainer.style.display = 'none';
             navHome.classList.remove('active');
@@ -2368,10 +2414,11 @@
             document.querySelector('.dashboard-container').style.display = 'none';
             document.getElementById('calculatorContainer').style.display = 'none';
             document.getElementById('fxContainer').style.display = 'none';
+            leaveCompound();
             homeContainer.style.display = 'block';
             dropdownMenu.classList.remove('show');
             headerTitle.innerText = '智慧基金篩選';
-            document.documentElement.dataset.view = 'home';
+            document.documentElement.dataset.view = 'home'; pushRoute('home');
             lastUpdateTag.style.display = 'block';
             window.scrollTo(0, 0);
             renderHomeTop();
@@ -2404,7 +2451,6 @@
             if (!rows.length) return;
             const nameKey = Object.keys(rows[0].d).find(k => k.includes('標的名稱'));
             rows.sort((a, b) => b.v - a.v);
-            document.getElementById('homeTopPolicy').textContent = HOME_POLICY[currentFile] || '';
             list.innerHTML = rows.slice(0, 3).map((r, i) =>
                 '<li><button type="button" class="home-top-item name-clickable" data-row-idx="' + r.idx + '">' +
                 '<span class="home-top-rank">' + (i + 1) + '</span>' +
@@ -2444,7 +2490,44 @@
                 '<span class="spark-cap">美元 近 1 個月</span>';
         }
 
-        goHome();
+        // ==========================================
+        // 瀏覽器「上一頁／下一頁」：每個畫面各自一筆瀏覽紀錄
+        // 首頁網址不帶 #，其他畫面是 #fund、#retire、#fx，可以直接分享或加書籤
+        // ==========================================
+        const ROUTE_HASH = { home: '', fund: '#fund', calc: '#retire', fx: '#fx', compound: '#compound' };
+        function viewFromHash(h) {
+            return { '#fund': 'fund', '#retire': 'calc', '#fx': 'fx', '#compound': 'compound' }[h] || 'home';
+        }
+        function openView(v) {
+            if (v === 'fund') navFund.click();
+            else if (v === 'calc') navCalc.click();
+            else if (v === 'fx') navFx.click();
+            else if (v === 'compound') navCompound.click();
+            else goHome();
+        }
+        function pushRoute(v) {
+            if (routeSilent) return;
+            if (history.state && history.state.view === v) return;
+            history.pushState({ view: v }, '', ROUTE_HASH[v] || (location.pathname + location.search));
+        }
+        window.addEventListener('popstate', e => {
+            const v = (e.state && e.state.view) || viewFromHash(location.hash);
+            // 返回時先把開著的小視窗關掉，畫面才不會卡在彈窗後面
+            closeModal();
+            closeFilterModal();
+            routeSilent = true;
+            openView(v);
+            routeSilent = false;
+        });
+
+        // 第一次進來：網址有 #fund 這類就直接開那個畫面，沒有就是首頁
+        document.addEventListener('DOMContentLoaded', () => {
+            const firstView = viewFromHash(location.hash);
+            routeSilent = true;
+            openView(firstView);
+            routeSilent = false;
+            history.replaceState({ view: firstView }, '', ROUTE_HASH[firstView] || (location.pathname + location.search));
+        });
 
 
         // ==========================================
@@ -2732,8 +2815,8 @@
             }
         });
 
-        // 複利計算機：只能按 X 關閉，點背景不會關閉
-        const compoundModal = document.getElementById('compoundModal');
+        // 複利計算機（獨立分頁）
+        let ccChart = null;
         function calcCompound() {
             const principal = getRawNumber(document.getElementById('ccPrincipal').value);
             const lump = document.getElementById('ccMode').value === 'lump';
@@ -2760,17 +2843,67 @@
             document.getElementById('ccTotal').innerText = fmt(bal) + ' 元';
             document.getElementById('ccInvested').innerText = fmt(invested) + ' 元';
             document.getElementById('ccInterest').innerText = fmt(bal - invested) + ' 元';
-            document.getElementById('ccRows').innerHTML = rows.map(r => `<tr><td>${r[0]}</td><td>${fmt(r[1])}</td><td>${fmt(r[2])}</td></tr>`).join('');
+            document.getElementById('ccMultiple').innerText = invested > 0 ? (bal / invested).toFixed(2) + ' 倍' : '-';
+            document.getElementById('ccRows').innerHTML = rows.map(r => `<tr><td>${r[0]}</td><td>${fmt(r[1])}</td><td>${fmt(r[2] - r[1])}</td><td>${fmt(r[2])}</td></tr>`).join('');
+            renderCcChart(rows);
         }
+        // 資產成長圖：資產（主色、填色）對比累計投入（虛線）
+        function renderCcChart(rows) {
+            if (document.documentElement.dataset.view !== 'compound') return;
+            const canvas = document.getElementById('ccChart');
+            if (ccChart) ccChart.destroy();
+            Chart.defaults.color = cv('--ch-text');
+            Chart.defaults.borderColor = cv('--ch-grid');
+            const wan = v => (v / 10000).toLocaleString('en-US', { maximumFractionDigits: v >= 1e6 ? 0 : 1 }) + ' 萬';
+            ccChart = new Chart(canvas.getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: rows.map(r => '第 ' + r[0] + ' 年'),
+                    datasets: [
+                        { label: '資產', data: rows.map(r => Math.round(r[2])), borderColor: cv('--ch-1'), backgroundColor: cv('--ch-1-fill'), borderWidth: 2.5, fill: true, pointRadius: 0, pointHitRadius: 10, tension: 0.3 },
+                        { label: '累計投入', data: rows.map(r => Math.round(r[1])), borderColor: cv('--ch-text'), backgroundColor: 'transparent', borderWidth: 2, borderDash: [6, 4], fill: false, pointRadius: 0, pointHitRadius: 10, tension: 0 }
+                    ]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: {
+                        legend: { position: 'top', align: 'end', labels: { usePointStyle: true, boxWidth: 8 } },
+                        tooltip: { callbacks: { label: c => ' ' + c.dataset.label + '：' + Math.round(c.raw).toLocaleString('en-US') + ' 元' } }
+                    },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { maxTicksLimit: window.innerWidth <= 768 ? 5 : 10, maxRotation: 0 } },
+                        y: { beginAtZero: true, grid: { color: cv('--ch-grid') }, ticks: { callback: v => wan(v) } }
+                    }
+                }
+            });
+        }
+        new MutationObserver(() => { if (document.documentElement.dataset.view === 'compound') calcCompound(); })
+            .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
         ['ccPrincipal', 'ccContrib'].forEach(id => document.getElementById(id).addEventListener('input', function () { this.value = formatNumber(this.value); calcCompound(); }));
         ['ccMode', 'ccContribFreq', 'ccRate', 'ccYears', 'ccCompFreq'].forEach(id => document.getElementById(id).addEventListener('input', calcCompound));
-        document.getElementById('navCompound').addEventListener('click', function (e) {
+        const navCompound = document.getElementById('navCompound');
+        const compoundContainer = document.getElementById('compoundContainer');
+        function leaveCompound() {
+            document.getElementById('compoundContainer').style.display = 'none';
+            document.getElementById('navCompound').classList.remove('active');
+        }
+        navCompound.addEventListener('click', function (e) {
             e.preventDefault();
+            [navFund, navCalc, navFx, navHome].forEach(n => n.classList.remove('active'));
+            this.classList.add('active');
+            document.querySelector('.dashboard-container').style.display = 'none';
+            document.getElementById('calculatorContainer').style.display = 'none';
+            document.getElementById('fxContainer').style.display = 'none';
+            homeContainer.style.display = 'none';
+            compoundContainer.style.display = 'block';
             dropdownMenu.classList.remove('show');
-            compoundModal.style.display = 'flex';
+            headerTitle.innerText = '複利計算機';
+            document.documentElement.dataset.view = 'compound'; pushRoute('compound');
+            lastUpdateTag.style.display = 'none';
+            window.scrollTo(0, 0);
             calcCompound();
         });
-        document.getElementById('ccClose').addEventListener('click', () => { compoundModal.style.display = 'none'; });
 
         // 密碼視窗：預設遮蔽，按眼睛可切換顯示
         const pwdModal = document.getElementById('pwdModal');
