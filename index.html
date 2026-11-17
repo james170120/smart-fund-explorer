@@ -864,7 +864,10 @@
         /* ===== 匯率走勢 ===== */
         #fxContainer { display: none; flex: 1; min-height: 0; overflow-y: auto; padding: 20px; }
         html[data-view="fx"] header h1::before { display: none; }
-        .fx-top { display: grid; grid-template-columns: minmax(300px, 380px) 1fr; gap: 20px; align-items: start; }
+        .fx-top { display: grid; grid-template-columns: 300px minmax(0, 1fr); grid-template-areas: "list chart" "list news"; gap: 16px 20px; align-items: start; }
+        .fx-list-card { grid-area: list; }
+        .fx-chart-card { grid-area: chart; }
+        .fx-news-card { grid-area: news; }
         .fx-card { background: var(--card-bg); border: 1px solid var(--border-light); border-radius: 16px; padding: 20px; min-width: 0; }
         .fx-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
         .fx-title { margin: 0; font-size: 1.1rem; font-weight: 600; color: var(--text-main); }
@@ -872,25 +875,25 @@
         .fx-meta { font-size: 0.8rem; color: var(--text-muted); white-space: nowrap; }
         .fx-sub { font-size: 0.8rem; color: var(--text-muted); margin: 6px 0 12px; }
         .fx-list { display: flex; flex-direction: column; gap: 2px; }
-        .fx-row { flex: none; display: grid; grid-template-columns: 44px 1fr auto 64px; align-items: center; gap: 8px; width: 100%; min-height: 44px; padding: 8px 10px; background: transparent; border-radius: 10px; text-align: left; color: var(--text-main); font-weight: 400; transition: background-color 0.15s; }
+        .fx-row { flex: none; display: grid; grid-template-columns: 40px 1fr auto 58px; align-items: center; gap: 6px; width: 100%; min-height: 36px; padding: 5px 8px; background: transparent; border-radius: 10px; text-align: left; color: var(--text-main); font-weight: 400; transition: background-color 0.15s; }
         .fx-row:hover { background: rgba(127, 127, 127, 0.08); }
         .fx-row:active { transform: none; }
         .fx-row.active { background: rgba(127, 127, 127, 0.13); box-shadow: inset 3px 0 0 var(--accent-blue); }
-        .fx-code { font-size: 0.78rem; font-weight: 600; color: var(--text-muted); letter-spacing: 0.3px; }
-        .fx-name { font-size: 0.95rem; }
-        .fx-rate { font-size: 1rem; font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; }
-        .fx-row-chg { font-size: 0.8rem; text-align: right; font-variant-numeric: tabular-nums; }
+        .fx-code { font-size: 0.72rem; font-weight: 600; color: var(--text-muted); letter-spacing: 0.3px; }
+        .fx-name { font-size: 0.88rem; }
+        .fx-rate { font-size: 0.92rem; font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; }
+        .fx-row-chg { font-size: 0.75rem; text-align: right; font-variant-numeric: tabular-nums; }
         .fx-chart-head { align-items: flex-start; flex-wrap: wrap; }
-        .fx-now { display: flex; align-items: baseline; gap: 10px; margin-top: 6px; }
-        #fxNow { font-size: 2rem; font-weight: 600; color: var(--text-main); font-variant-numeric: tabular-nums; }
+        .fx-now { display: flex; align-items: baseline; gap: 10px; margin-top: 2px; }
+        #fxNow { font-size: 1.4rem; font-weight: 600; color: var(--text-main); font-variant-numeric: tabular-nums; }
         .fx-chg { font-size: 0.95rem; font-variant-numeric: tabular-nums; }
         .fx-vs { margin-left: 6px; font-size: 0.78rem; color: var(--text-muted); }
         .fx-range { display: flex; gap: 2px; padding: 3px; border-radius: 10px; background: rgba(127, 127, 127, 0.1); }
         .fx-range button { flex: none; padding: 6px 12px; min-height: 34px; border-radius: 7px; background: transparent; color: var(--text-muted); font-size: 0.85rem; font-weight: 500; }
         .fx-range button.active { background: var(--card-bg); color: var(--text-main); font-weight: 600; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12); }
-        .fx-canvas { position: relative; height: 360px; margin-top: 16px; }
-        .fx-note { margin-top: 10px; font-size: 0.75rem; color: var(--text-muted); }
-        .fx-news-card { margin-top: 20px; }
+        .fx-canvas { position: relative; height: 150px; margin-top: 8px; }
+        .fx-note { margin-top: 6px; font-size: 0.72rem; color: var(--text-muted); }
+        .fx-news li { padding: 8px 0; }
         .fx-news-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 4px; }
         .fx-news-tabs button { flex: none; padding: 6px 12px; min-height: 34px; border-radius: 999px; background: rgba(127, 127, 127, 0.1); color: var(--text-muted); font-size: 0.85rem; font-weight: 500; }
         .fx-news-tabs button.active { background: var(--accent-blue); color: var(--card-bg); }
@@ -903,15 +906,30 @@
         .fx-tag { display: inline-block; margin-right: 8px; padding: 1px 8px; border-radius: 6px; background: rgba(127, 127, 127, 0.12); color: var(--text-main); font-size: 0.75rem; }
         .fx-empty { padding: 16px 0; color: var(--text-muted); font-size: 0.9rem; }
         @media (max-width: 900px) {
-            .fx-top { grid-template-columns: 1fr; }
-            .fx-chart-card { order: -1; }
+            .fx-top { grid-template-columns: 1fr; grid-template-areas: "chart" "list" "news"; }
         }
         @media (max-width: 768px) {
             #fxContainer { padding: 12px; height: auto; overflow: visible; }
             .fx-card { padding: 16px; border-radius: 14px; }
             .fx-canvas { height: 240px; }
-            #fxNow { font-size: 1.6rem; }
-            .fx-row { grid-template-columns: 40px 1fr auto 60px; }
+            #fxNow { font-size: 1.4rem; }
+            .fx-row { grid-template-columns: 40px 1fr auto 58px; min-height: 40px; }
+        }
+        /* 匯率：卡片內距縮小、清單表頭與排序 */
+        .fx-chart-card, .fx-news-card { padding: 16px 20px; }
+        .fx-news-tabs { margin: 8px 0 2px; }
+        .fx-news a { font-size: 0.95rem; }
+        .fx-news-meta { margin-top: 2px; }
+        .fx-list-head { display: grid; grid-template-columns: 40px 1fr auto 58px; gap: 6px; align-items: center; padding: 0 8px 6px; border-bottom: 1px solid var(--border-light); margin-bottom: 4px; font-size: 0.75rem; color: var(--text-muted); }
+        .fx-list-head > span:first-child { grid-column: 1 / 3; }
+        .fx-col-rate { text-align: right; }
+        .fx-sort { flex: none; display: inline-flex; align-items: center; justify-content: flex-end; gap: 3px; min-height: 28px; padding: 2px 4px; margin-right: -4px; background: transparent; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; border-radius: 6px; }
+        .fx-sort:hover { color: var(--text-main); background: rgba(127, 127, 127, 0.1); }
+        .fx-sort.on { color: var(--accent-blue); }
+        .fx-sort-ic { font-size: 0.85rem; line-height: 1; }
+        @media (max-width: 768px) {
+            .fx-list-head { grid-template-columns: 40px 1fr auto 58px; }
+            .fx-canvas { height: 200px; }
         }
     </style>
 </head>
@@ -1117,6 +1135,11 @@
                     <span class="fx-meta" id="fxDate"></span>
                 </div>
                 <div class="fx-sub">1 單位外幣 ＝ 新台幣（元）</div>
+                <div class="fx-list-head">
+                    <span>貨幣</span>
+                    <span class="fx-col-rate">匯率</span>
+                    <button type="button" class="fx-sort" id="fxSort" title="依漲跌排序：預設 → 漲最多 → 跌最多">漲跌<span class="fx-sort-ic" id="fxSortIc"></span></button>
+                </div>
                 <div class="fx-list" id="fxList" role="listbox" aria-label="貨幣"></div>
             </section>
             <section class="fx-card fx-chart-card">
@@ -1134,15 +1157,15 @@
                 <div class="fx-canvas"><canvas id="fxChart"></canvas></div>
                 <div class="fx-note">每日更新的市場參考匯率（中間價），不是銀行牌告買賣價；資料來源：Currency API</div>
             </section>
+            <section class="fx-card fx-news-card">
+                <div class="fx-head">
+                    <h2 class="fx-title">匯率新聞</h2>
+                    <span class="fx-meta" id="fxNewsDate"></span>
+                </div>
+                <div class="fx-news-tabs" id="fxNewsTabs" role="group" aria-label="新聞貨幣"></div>
+                <ul class="fx-news" id="fxNews"></ul>
+            </section>
         </div>
-        <section class="fx-card fx-news-card">
-            <div class="fx-head">
-                <h2 class="fx-title">匯率新聞</h2>
-                <span class="fx-meta" id="fxNewsDate"></span>
-            </div>
-            <div class="fx-news-tabs" id="fxNewsTabs" role="group" aria-label="新聞貨幣"></div>
-            <ul class="fx-news" id="fxNews"></ul>
-        </section>
     </div>
 
     <!-- ==========================================
@@ -1949,7 +1972,7 @@
             ['NZD', '紐西蘭幣'], ['ZAR', '南非幣'], ['KRW', '韓元'], ['THB', '泰銖']
         ];
         const FX_NAME = Object.fromEntries(FX_LIST);
-        const fxState = { cur: 'USD', range: '1m', latest: null, prev: null, newsTab: 'ALL', news: null, loaded: false };
+        const fxState = { cur: 'USD', range: '1m', latest: null, prev: null, newsTab: 'ALL', news: null, loaded: false, sort: 'default' };
         const fxCache = {};
         let fxChart = null;
 
@@ -1979,13 +2002,26 @@
             return '<span class="' + cls + '">' + (p > 0 ? '+' : '') + p.toFixed(2) + '%</span>';
         }
 
+        // 漲跌排序：預設（原本順序）→ 漲最多在上 → 跌最多在上
+        const FX_SORT = { default: { next: 'desc', ic: '⇅', label: '預設排序' }, desc: { next: 'asc', ic: '↓', label: '漲最多在上' }, asc: { next: 'default', ic: '↑', label: '跌最多在上' } };
         function fxRenderList() {
             const box = document.getElementById('fxList');
-            box.innerHTML = FX_LIST.map(([code, name]) => {
-                const now = fxRate(fxState.latest, code), before = fxRate(fxState.prev, code);
+            const rows = FX_LIST.map(([code, name], i) => {
+                const now = fxRate(fxState.latest, code);
+                return { code, name, i, now, pct: fxPct(now, fxRate(fxState.prev, code)) };
+            });
+            if (fxState.sort !== 'default') {
+                const dir = fxState.sort === 'desc' ? -1 : 1;
+                rows.sort((a, b) => (a.pct == null) - (b.pct == null) || dir * ((a.pct || 0) - (b.pct || 0)) || a.i - b.i);
+            }
+            const sortBtn = document.getElementById('fxSort');
+            sortBtn.classList.toggle('on', fxState.sort !== 'default');
+            sortBtn.setAttribute('aria-label', '依漲跌排序，目前：' + FX_SORT[fxState.sort].label);
+            document.getElementById('fxSortIc').textContent = FX_SORT[fxState.sort].ic;
+            box.innerHTML = rows.map(({ code, name, now, pct }) => {
                 return '<button type="button" class="fx-row' + (code === fxState.cur ? ' active' : '') + '" data-cur="' + code + '" role="option" aria-selected="' + (code === fxState.cur) + '">' +
                     '<span class="fx-code">' + code + '</span><span class="fx-name">' + name + '</span>' +
-                    '<span class="fx-rate">' + fxFmt(now) + '</span><span class="fx-row-chg">' + fxChgHtml(fxPct(now, before)) + '</span></button>';
+                    '<span class="fx-rate">' + fxFmt(now) + '</span><span class="fx-row-chg">' + fxChgHtml(pct) + '</span></button>';
             }).join('');
         }
 
@@ -2078,6 +2114,10 @@
             fxRenderNews();
             // 手機上線圖在清單上方，點完捲回線圖讓你看到變化
             if (window.innerWidth <= 900) document.querySelector('.fx-chart-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        document.getElementById('fxSort').addEventListener('click', () => {
+            fxState.sort = FX_SORT[fxState.sort].next;
+            fxRenderList();
         });
         document.getElementById('fxRange').addEventListener('click', e => {
             const b = e.target.closest('button[data-r]');
