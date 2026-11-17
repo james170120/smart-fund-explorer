@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-17T08:54:46.823Z",
+ "updated": "2026-11-17T10:00:55.550Z",
  "items": [
   {
    "cur": "USD",
@@ -45,17 +45,17 @@
   },
   {
    "cur": "USD",
+   "title": "國內匯市：新台幣匯率週二(17日)以32.850元作收，升值3.6分",
+   "source": "富聯網",
+   "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxOOVJsczRjWHlmQU8yeU5teVB5UUhHV3lkRExtM0xKdldFZlhvN3cxbm5aODZCOUdlbERObjd6RXdtS0lWZXFSQlN0aXJ2VnhfdUlKajJqWV9pMFJoZWk2TnBKSlAxcmxmVFAyMkdxUkhFdHRnMGZKTUpZdUVwWVMxampFLUpWeUJn?oc=5",
+   "pubDate": "2026-11-17T08:00:00.000Z"
+  },
+  {
+   "cur": "USD",
    "title": "新台幣貶向10年最弱水位台幣走弱關鍵：企業美元留海外| 全球財經| 全球",
    "source": "UDN",
    "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE5ZdGtFWWIwWE1qa0VoUTdkNFVvU3VWNWEtR2JEOVl3NkV4RXNzd2lFRU9STWhCbHNjeHpnSFF4dWxBNVUyQ2R4TGZMRXR5VHE2?oc=5",
    "pubDate": "2026-11-16T11:24:34.000Z"
-  },
-  {
-   "cur": "USD",
-   "title": "《匯市簡訊》美元兌人民幣持穩，人民幣匯率指數飆升至四年高點",
-   "source": "TradingView",
-   "link": "https://news.google.com/rss/articles/CBMid0FVX3lxTE94TUZGMWpscW9nZV9JejZQaUVmWnpXNlp3Vkp3NXAxUE5sYURoVnEzRkw4MGlIWlUyU1Nfa1YwZUo0Uk1fRTU2SHBfNUxBRHJqYnpfMml4a2hWLXhua05VNVpYYWV4V2UyblhoQ241RjhZNGtUTl9N?oc=5",
-   "pubDate": "2026-11-16T06:17:17.000Z"
   },
   {
    "cur": "JPY",
@@ -108,10 +108,10 @@
   },
   {
    "cur": "JPY",
-   "title": "【2026必逛大阪中古店】日元匯率低迷！ 推介 3 大必逛二手名牌店、日本名牌中古",
-   "source": "ELLE HK",
-   "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPblQ4Z2lKZlpqSzIyQ1FucGNUejU4NkF2a2RyM0ZrSEVvaEdvSjRVbDNnS2Q4bVZsLVVUamdQXzVSakVZODVpZmhWcFZZdUowdGhHZTZuTW5ocHlPa2IyWHo3TE82cjhXaVMwQWpGZFAtaWFMX1plcWdodjRCVWhTTHlwSW8zWUZUalRya21n?oc=5",
-   "pubDate": "2026-11-15T16:05:00.000Z"
+   "title": "《商情》日圓走弱 11/13大阪期膠轉揚1.2%",
+   "source": "富聯網",
+   "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPdVNmN3htUUlKZ2t3bWlWUmtTUFpSRi05Rjl4bXhFQl9YcFRyTHU0cWJTeXZRV0RqeVdyVWM2S0hmQzJsYlRfYkx5XzlPcWVmV0RmOGVlT3g4UWJPd3AxTEVUZ2N3WmZJb1hNMzdFcW9MSlh1V2VhVE02UFpPb3pueHIwdlh2RW1Y?oc=5",
+   "pubDate": "2026-11-16T01:02:00.000Z"
   },
   {
    "cur": "EUR",
@@ -143,6 +143,13 @@
   },
   {
    "cur": "CNY",
+   "title": "姜兆華：央行給人民幣升值「踩剎車」，外貿企業怎麽辦？",
+   "source": "風火輪傳媒有限公司",
+   "link": "https://news.google.com/rss/articles/CBMidEFVX3lxTE1kMWZORHNvSHpkV1BXZGhZaGhPVFJMWEN0T1AtWkI5NVJvdFdkY01MWGhaWElJQllDWW1UTE5fbHpCMHhlQ09PbVVuWG5tdlFMbndPTkNOZ0htRFRmRnpNNGxyeUdadGRlS0JQTGJQeWduQzBW?oc=5",
+   "pubDate": "2026-11-17T09:31:14.000Z"
+  },
+  {
+   "cur": "CNY",
    "title": "《大陸金融》人民幣升值0.09分 中間價6.7132元",
    "source": "富聯網",
    "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPRnNVQlZlNjZwNjZTTDlHdVVoVVc3MEpIclQ0andjWnVQSS1QTlFUTmdGRFZuZ1RSaXh6cmlkMzFtOENnemJ1VjVNQVI3X2lLRElzYngxZ0FPNnl6R01MaUxQeHNiRHVDWm1ISThzaEI0NFpMcFVPNEwzMUsxdDFaX09ZMDZnTDlN?oc=5",
@@ -150,17 +157,10 @@
   },
   {
    "cur": "CNY",
-   "title": "人民幣匯率指數漲0.78報104.43 在岸人民幣收報6.6678",
-   "source": "觀點網",
-   "link": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE5hdURhdzc1cnBRTVVPZFA0eklrdFZqaEhobVBxLUJEb3FHVmM2UnhhRG9JUTMwbkdOTGg0LUFhSG9vOXpFNS14WjNYOUJTODhtLS1ybUowTE14UlF1eWtzMG9RVU8?oc=5",
-   "pubDate": "2026-11-16T09:57:24.000Z"
-  },
-  {
-   "cur": "CNY",
-   "title": "經濟基本面修復支撐走勢 人民幣小幅偏強格局",
-   "source": "經濟日報",
-   "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFAyVXhlaHYxQlRqU3ZwcjNiZFFpVFNQTWlMR09IQWpUeUx4Y2MxeFEzRGdnbmZwa1AxWFdxX2RvcXNsWThoQWMySHRUTUI5V3dkZXY0VEFSWGY1QdIBX0FVX3lxTFBnTnZ5YVRLX2ROQ1RrVXdkanJqUTZlZ0tYS0QzdzNDUnR5bDZTeVdQRVRXOS1vQzhqYlU4YlVkaklReXdqbThOU3pnTzd1SlBvd2JtSG04WUxVVEN0NHlJ?oc=5",
-   "pubDate": "2026-11-14T14:53:20.000Z"
+   "title": "人民幣：巨額順差支撐逐步升值 – 德國商業銀行",
+   "source": "www.tmgm.com",
+   "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxOYlM4NFpBNXVCa1FiUE1HelV4QWltdjZfN3ZWQW9IZE9mQUxuRTNIaTh6WEljZFBvR09qSV91M1BneTkyaXdLNFFWcFQ5M2t4WE1hN0hDZ0ZqeDBPR2k2Q0hDaE1hV1ROOEZEMDlGelE3bEk5NE03RTAwenJacmJqaEFWVVRMQjNvTTRkVlhJb3BfQlR1RGVIOTV1d3FRRUxsQ0ZHZGMxdjRlYm8zdFljSUl3dlpubUppM25XblNUdE9JWTI5Q1lVZng3QjVRUQ?oc=5",
+   "pubDate": "2026-11-16T13:32:09.000Z"
   },
   {
    "cur": "CNY",
@@ -171,17 +171,17 @@
   },
   {
    "cur": "CNY",
-   "title": "《大陸金融》人民幣升值0.11分 中間價6.7141元",
-   "source": "富聯網",
-   "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNM21kMVBBbkZGNDhYSDhpaWY4MzFGcnFRelMydUxoN3gtTnBuXzktdEVjZW9DSXdyWjhkUWdrcmh0ZHdsSlFWUTZGUDR5THNHa2ptMkdVTWl1cXVIbVctaUdxWUkwTDc3eS1HUkpBdkZ1NGlCSGJJZDJrVnlDVmxQT21lMGFzTEtJ?oc=5",
-   "pubDate": "2026-11-16T01:22:00.000Z"
+   "title": "經濟基本面修復支撐走勢 人民幣小幅偏強格局",
+   "source": "經濟日報",
+   "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFAyVXhlaHYxQlRqU3ZwcjNiZFFpVFNQTWlMR09IQWpUeUx4Y2MxeFEzRGdnbmZwa1AxWFdxX2RvcXNsWThoQWMySHRUTUI5V3dkZXY0VEFSWGY1QdIBX0FVX3lxTFBnTnZ5YVRLX2ROQ1RrVXdkanJqUTZlZ0tYS0QzdzNDUnR5bDZTeVdQRVRXOS1vQzhqYlU4YlVkaklReXdqbThOU3pnTzd1SlBvd2JtSG04WUxVVEN0NHlJ?oc=5",
+   "pubDate": "2026-11-14T14:53:20.000Z"
   },
   {
    "cur": "CNY",
-   "title": "近5年首見！陸央行出手阻擊人民幣連14漲過熱",
-   "source": "ETtoday新聞雲",
-   "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE5OVDBNa3RibnlBNFJNSWlJb2F0N29xQ0hCMDMyOEJsUHd3WlN1ajFKSjUxN0c2ZDV0MU9oZkhGejRiYWREeEREWVBseURSR0FrdmdUYTc3Z2g2V1JCNVHSAUtBVV95cUxOMnV3R2c0UGFGTXExQnFxeHVRZGNWVXByc3pfUGotV2htVW8wSWV1S0JqWTVWSGpwRGZIZGZLSUlndm5VOThxbFo2cHM?oc=5",
-   "pubDate": "2026-11-15T10:00:00.000Z"
+   "title": "人民幣匯率指數漲0.78報104.43 在岸人民幣收報6.6678",
+   "source": "觀點網",
+   "link": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE5hdURhdzc1cnBRTVVPZFA0eklrdFZqaEhobVBxLUJEb3FHVmM2UnhhRG9JUTMwbkdOTGg0LUFhSG9vOXpFNS14WjNYOUJTODhtLS1ybUowTE14UlF1eWtzMG9RVU8?oc=5",
+   "pubDate": "2026-11-16T09:57:24.000Z"
   },
   {
    "cur": "AUD",
