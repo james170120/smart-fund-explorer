@@ -1549,7 +1549,13 @@
                                     }
                                 });
 
-                                const columns = Object.keys(data[0]).map(function(key) {
+                                // 欄位順序：先看名稱、淨值和報酬率，其他資訊往後放（代碼、淨值日期點基金就看得到）
+                                const COL_ORDER = ['標的名稱', '淨值', '三個月(%)', '六個月(%)', '一年(%)', '三年(%)', '成立以來(%)', '成立以來平均報酬(%)',
+                                    '風險收益等級', '類型', '幣別', '年化標準差', '年化Sharpe', '年化Beta', '嘉實基金評等',
+                                    '配息頻率', '基金規模', '成立日期', '代碼', '淨值日期', '規模日期', '備註'];
+                                const colRank = k => { const i = COL_ORDER.indexOf(k.replace(/^﻿/, '')); return i < 0 ? 999 : i; };
+                                const orderedKeys = Object.keys(data[0]).sort((x, y) => colRank(x) - colRank(y));
+                                const columns = orderedKeys.map(function(key) {
                                     let cleanKey = key.replace(/^\uFEFF/, '');
                                     let columnConfig = { title: cleanKey, data: key };
 
