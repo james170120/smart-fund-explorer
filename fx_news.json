@@ -1,13 +1,6 @@
 {
- "updated": "2026-11-21T22:00:25.564Z",
+ "updated": "2026-11-22T01:00:26.499Z",
  "items": [
-  {
-   "cur": "USD",
-   "title": "雷亞爾匯率大跌，巴西央行拋售10億美元，高利率爲何難穩匯率？",
-   "source": "群益期貨",
-   "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQcFQ1djFXN3NQOVlWUUlZVW9zek1YVGFYc1JpUTM0anZwUTV0ellMSDR6UjNKak4xV1hsaThKc2FOaWN4Uld3a1V1blh5d2xtdWR5RDJxclZLZ0JkTGxSMG9JS1VFa1Z2WmJVcHdiay1fTGxhMlBveXZ3M2RIdG5WZXl2Q2ZKZHRXTXlCRFQydw?oc=5",
-   "pubDate": "2026-11-21T04:33:04.000Z"
-  },
   {
    "cur": "USD",
    "title": "中文版-最新消息-新聞稿-新台幣匯率之參考資料",
@@ -17,17 +10,10 @@
   },
   {
    "cur": "USD",
-   "title": "美科技股重挫，韓元兌美元匯率反彈…試圖重返1,340韓元關卡",
-   "source": "BigGo 財經",
-   "link": "https://news.google.com/rss/articles/CBMiekFVX3lxTE9KNUcwX3pEYjdRbXZEcnR6cHJMYWZTNVpjcGViUmlMd25JZnpCcnNITGtaczhTYzh1UEFNX1NKaExNMl9xZnRvVDdnZVFibjdMY0NOdWxCaEJQUEQ4bW1YVGt3dEtuZmFFWnNxbkFuTnZtT0NMcUNwMkdn?oc=5",
-   "pubDate": "2026-11-20T00:56:00.000Z"
-  },
-  {
-   "cur": "USD",
-   "title": "白銀/美元(XAGUSD)匯率, 走勢圖, 即時行情",
-   "source": "Moomoo",
-   "link": "https://news.google.com/rss/articles/CBMirwJBVV95cUxOWTA1VHNDVVJXN1pQc185M2VnX0hpMld6QjJLdkN6dWNndjdTUHNydzhzYy1NamRIWjJDY2NXMmpBWWUtd0laa0JVSjRvcEIydW8tWWoxVWQwVlVSTk1jcl9nZ2M4eDR6QWZ2S2p2UDU1UDhzd0VPYWRUWm0tbVRDNjRBYnZ3SHpHLXdVMzNZZG1vQmx3M1hDUG5MZllieG1EeWRQYnFSTWVrckIyWElYcXN0eW5BZGcwOHZTaXE0ZlZBMDhtR3k5ZVJkMk9sOWhoRE1ZMnl3QWhsTlRLdURUZ1FqVjQxTGFPQWttMURqUHdwckFudnpwWmVDeTJYbkVxYWI4dXRJWFNNWklLMkJWbkMxbl9lMGxvNWpicEFmcTlEYzdOd2x4SVZoUTFyc0E?oc=5",
-   "pubDate": "2026-11-21T00:24:33.000Z"
+   "title": "雷亞爾匯率大跌，巴西央行拋售10億美元，高利率爲何難穩匯率？",
+   "source": "群益期貨",
+   "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQcFQ1djFXN3NQOVlWUUlZVW9zek1YVGFYc1JpUTM0anZwUTV0ellMSDR6UjNKak4xV1hsaThKc2FOaWN4Uld3a1V1blh5d2xtdWR5RDJxclZLZ0JkTGxSMG9JS1VFa1Z2WmJVcHdiay1fTGxhMlBveXZ3M2RIdG5WZXl2Q2ZKZHRXTXlCRFQydw?oc=5",
+   "pubDate": "2026-11-21T04:33:04.000Z"
   },
   {
    "cur": "USD",
@@ -35,6 +21,13 @@
    "source": "TVBS新聞網",
    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBHa1cyd3JWREI3SlhaemNHaEo4UHNGMERNV2RaN1QzdkpvQ0g2dGVvcmJtTTdfU0tvN1d1LXpCaU1YcmFCN1hyYWliTXhidGs?oc=5",
    "pubDate": "2026-11-19T02:48:00.000Z"
+  },
+  {
+   "cur": "USD",
+   "title": "白銀/美元(XAGUSD)匯率, 走勢圖, 即時行情",
+   "source": "Moomoo",
+   "link": "https://news.google.com/rss/articles/CBMirwJBVV95cUxOWTA1VHNDVVJXN1pQc185M2VnX0hpMld6QjJLdkN6dWNndjdTUHNydzhzYy1NamRIWjJDY2NXMmpBWWUtd0laa0JVSjRvcEIydW8tWWoxVWQwVlVSTk1jcl9nZ2M4eDR6QWZ2S2p2UDU1UDhzd0VPYWRUWm0tbVRDNjRBYnZ3SHpHLXdVMzNZZG1vQmx3M1hDUG5MZllieG1EeWRQYnFSTWVrckIyWElYcXN0eW5BZGcwOHZTaXE0ZlZBMDhtR3k5ZVJkMk9sOWhoRE1ZMnl3QWhsTlRLdURUZ1FqVjQxTGFPQWttMURqUHdwckFudnpwWmVDeTJYbkVxYWI4dXRJWFNNWklLMkJWbkMxbl9lMGxvNWpicEFmcTlEYzdOd2x4SVZoUTFyc0E?oc=5",
+   "pubDate": "2026-11-21T00:24:33.000Z"
   },
   {
    "cur": "USD",
@@ -58,11 +51,18 @@
    "pubDate": "2026-11-19T22:40:59.000Z"
   },
   {
+   "cur": "USD",
+   "title": "市場避險情緒升溫，美元匯率維持在19個月高位附近",
+   "source": "鉅亨網",
+   "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5EckhtMWQ5TE9UalhHd2VnWTU5Z1ljem9raU9hQktvcURyYnMyY1BTWmZhell2MGhEVVFscjBPeXBoMjA1eWxKZ3BlV2cwaU0?oc=5",
+   "pubDate": "2026-11-20T06:05:12.000Z"
+  },
+  {
    "cur": "JPY",
-   "title": "日圓匯率卡在159字頭，美國鷹派會議紀要與油價下跌相互拉鋸",
+   "title": "日圓匯率160大關攻防戰可望持續，美國PCE與東京都區部CPI成焦點",
    "source": "BigGo 財經",
-   "link": "https://news.google.com/rss/articles/CBMiekFVX3lxTE9NUFE4RERkOVV0R0xvMnNTSVdFNGctM3NCcFpQMlpERzctYWV0VVNlRkZORHJTUjhKY1BpNEhaVTNQSmtPd2FaZzVhTTBRLUlzNGJZRXpPazd6ZjhuZXFIWnNjdmFvN0JDeGhJN1lTWWhhNVVyVFdBUjh3?oc=5",
-   "pubDate": "2026-11-19T00:05:00.000Z"
+   "link": "https://news.google.com/rss/articles/CBMiekFVX3lxTE1nekN5T2l4bGxxcFJlREdzeHB3SjZCNkhmWDZzWWlVei0wdHVYSVJLbDQxeWhaNDlPQlBOU0NPWEp6TFNuM2ROejhPYnVjdHVvUWtnVXVsSmJLVV9laUFlZDV2QTRWZklFUzI2aUp3MGVyVUFDZ0F5OE93?oc=5",
+   "pubDate": "2026-11-21T22:25:00.000Z"
   },
   {
    "cur": "JPY",
@@ -124,8 +124,8 @@
    "cur": "EUR",
    "title": "英鎊：與歐盟達成協議對兌歐元匯率的提振有限 - ING",
    "source": "www.tmgm.com",
-   "link": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxPUUpWSUFxQjVWOG54QXVCemQyZDRMTUxzUUFHUG1OU0s3LV9lcmh3QllXbnNfN0RJOUlBVmJZWW8tYl9NLWxXR1dlaDlZVGpramtEbW9IVkgyNEtGckFKZ0lNVS1ZaW9NdzkxU2tMQXl4R1NGd2dKS0hnbEtDMFBrbEE1TEgtMDhBQVVGODJjX1kwV3hGUkEweGZZaFVXLS1FTlF2dW5IRm9xOWU2TmdLdzhHNWl2WHJYWVhWZDhVbFlPZTl4UEZvNw?oc=5",
-   "pubDate": "2026-11-20T23:39:43.000Z"
+   "link": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNQ1psRndNOGgzN0twelFCVFNjc1RHcnBSaXB0VHZuRVBOcEFrVFVrMEFDT2FIb0RmZ1lsTjQ4QmFqQlZXWVlQX21RTGtYZ29iblR4QU9UY3pPV2Q1MnViQlJPMm1aN3MzcVZPQW5ydzRDd1NmWVN2b2Q3MnhtS1pOcUk4cDUwWVBpNG8zVkV6TkhzZm5nMFJEZ09rY3IxQlF3WFBaU2otZ1BSejRCUVZ4SURPQUg4RW4teWdNVjFGVXZYQkk?oc=5",
+   "pubDate": "2026-11-20T10:16:28.000Z"
   },
   {
    "cur": "EUR",
@@ -143,17 +143,17 @@
   },
   {
    "cur": "EUR",
+   "title": "美元指數11月漲近2%逼近104！歐元、澳幣重挫，未來走勢如何？",
+   "source": "Mitrade",
+   "link": "https://news.google.com/rss/articles/CBMidEFVX3lxTFBWbTZhLXNEelczM05SOTRZM1I5anc3MENWRFRvZGpEdkxtZ2VRYWMzaWxRNnJ3MUVXMTVHRWM0eFRpbkpxTzFNbWFxMWU0aVpGR21vQnhnQ2syRFdLN1REVmFRYWdVRDlOOWJMMXVqVDRzWUtG?oc=5",
+   "pubDate": "2026-11-20T09:07:43.000Z"
+  },
+  {
+   "cur": "EUR",
    "title": "今(20)日國內各主要匯銀歐元匯率表",
    "source": "富聯網",
    "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxOdXFMNUNRa015RFQ3djIweWFaTFVobjk0a0hEM3VuQXlCX01ZT3g5bXhWNnlQTEJocGRnc2RGUXBiSU5tNmdJWEVSSkt3MmRBX2dFSncyTUVJU1FyZlMwVjQzaFJseFVwT1FtVVd1QkZmYXhkeklOQzhiaGFhLWROWDhmNVdnb0Mx?oc=5",
    "pubDate": "2026-11-20T02:19:00.000Z"
-  },
-  {
-   "cur": "EUR",
-   "title": "歐元兌加元走高，市場靜待歐洲央行總裁拉加德發表談話",
-   "source": "www.tmgm.com",
-   "link": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxORVBuSVVjLTIyelI5R2s4b2NWNzVJb2J5eXhrYUE0ODY4R3VMTXBNb0VLaVRWVUswMUlUVmRNamJZT1pvU21PX183VkpYQmFRN1l2a3h1MVF5TlBLRGZhR29uVXlET3pQYndYWW9fdzFSTTA5enlXLURsNWoyZmQ4SjZtbEoteV81ZmZZY2RyV3pValE4Y2pIaFFSWnVlU3VvREhwTVY0b25QWnpKRVk5NVBWamJ0XzZYSUItUFItZnVOWXlLU3ZiN2dUeGpCX3dGa1JR?oc=5",
-   "pubDate": "2026-11-19T09:25:43.000Z"
   },
   {
    "cur": "EUR",
@@ -178,17 +178,17 @@
   },
   {
    "cur": "CNY",
-   "title": "人民幣：兌美元短暫走貶引發管制措施 - 德國商業銀行",
-   "source": "www.tmgm.com",
-   "link": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxOUmxqZGhrMTdnRWFrMjI5TnVUUUZwZEYxb19sTmR0Rk1YX0V1eURSUHBfQ3RQQWE0VGNYLVFlOGp1OU03S3ZQTFlBbDIwdWFZSnZaZWd5cEdKWWRYLTVuSlFsWkFOUDdsV0tYNTVhczVQRHZBblJrZUtPM3ZjOXVnRTlvbV9OaWo0NkNQUloxWkk2cWh3NmV2ODBFNEtzZTdMRnZia1RrU281cU9kX215NDdMa1pwUHljb1plaFcxcENvVFNkM0ZRdENsMjdzSm95TWc?oc=5",
-   "pubDate": "2026-11-21T02:53:17.000Z"
-  },
-  {
-   "cur": "CNY",
    "title": "中國匯市：路透測算的人民幣匯率CFETS指數創逾四年半新高，年內已升7.14%",
    "source": "TradingView",
    "link": "https://news.google.com/rss/articles/CBMid0FVX3lxTE9rN0g4RWxkMWM5akJFWXdMSXdtZnJ4N1dvZW9GcFp5Ukg4aHRwb0paM0pfZkp3NU1pLWlDZ1VfbFNTT2dER05nVG1YdjFDRVBpVFdtaVJnNDdlb3d0RDFfR3dSU2JTX1Y3MHY2dW5OUTMtYXZuQXVv?oc=5",
    "pubDate": "2026-11-20T01:23:28.000Z"
+  },
+  {
+   "cur": "CNY",
+   "title": "人民幣：兌美元短暫走貶引發管制措施 - 德國商業銀行",
+   "source": "www.tmgm.com",
+   "link": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxOUmxqZGhrMTdnRWFrMjI5TnVUUUZwZEYxb19sTmR0Rk1YX0V1eURSUHBfQ3RQQWE0VGNYLVFlOGp1OU03S3ZQTFlBbDIwdWFZSnZaZWd5cEdKWWRYLTVuSlFsWkFOUDdsV0tYNTVhczVQRHZBblJrZUtPM3ZjOXVnRTlvbV9OaWo0NkNQUloxWkk2cWh3NmV2ODBFNEtzZTdMRnZia1RrU281cU9kX215NDdMa1pwUHljb1plaFcxcENvVFNkM0ZRdENsMjdzSm95TWc?oc=5",
+   "pubDate": "2026-11-21T02:53:17.000Z"
   },
   {
    "cur": "CNY",
@@ -220,10 +220,10 @@
   },
   {
    "cur": "CNY",
-   "title": "在岸人民幣兌美元低收84點子",
-   "source": "RTHK News",
-   "link": "https://news.google.com/rss/articles/CBMib0FVX3lxTE1RN0w2bVRxRGJrYnJFaG1fVU5DZ25FVlhYdTRkQ2lDZEE2UU1XYmpWcEdhUFlWT2dHbHkwYVB3b3dRRTI0Q0syYTVaSGdnMm1ZTWJJMXRqOXlpbWZWLThjX19XUFpyM29jNmRQTWctNA?oc=5",
-   "pubDate": "2026-11-20T10:39:00.000Z"
+   "title": "《大陸金融》人民幣貶值0.1分 中間價6.7128元",
+   "source": "富聯網",
+   "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxOWWtmMk9Xc05JanBEbVBWbGNIbVlqY00zVzVlVTdOdmVpN290ZXBKQUl5MXZ1Y0hta1hUZS1DRUl0Z0MxSmZuT2NZTFRidVM3N3V0bERSNHpFakZJLTZEU0lQZ2FMcmRhVWE2bWpPQzczUzZxVkhqOVdvRDBpbHllUU5WYjA4R2l2?oc=5",
+   "pubDate": "2026-11-19T01:33:00.000Z"
   },
   {
    "cur": "AUD",
@@ -259,13 +259,6 @@
    "source": "www.tmgm.com",
    "link": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxNMC1tZ19vdGIzQUpITGd2RTY3RjNWRkg5RmlkYTJpdC1Jekd2SERvVzh4N2VPeFBTMzhRbUY4c0Nvd3NCS01FWkNaajhyYkRQLS1MYXFSb2psM0hBQnp4a0c1WmhXeGtoNl8yMmlFUmtzR1lraXBqTEstWXl1M3BFYTRkLUk2RlBsbUlLcFpNTktjY2RYSVZUUjIyVWR2aGk5NEkxWnNJM2hFc2psQXI0U3laclR1cFlWZ0l0dW1QdmFwSkdOeWlma190Q0NnbEx3U1hIWkVzb2hNbXhaSk1DdG84bw?oc=5",
    "pubDate": "2026-11-19T12:54:23.000Z"
-  },
-  {
-   "cur": "AUD",
-   "title": "美元指數11月漲近2%逼近104！歐元、澳幣重挫，未來走勢如何？",
-   "source": "Mitrade",
-   "link": "https://news.google.com/rss/articles/CBMidEFVX3lxTFBWbTZhLXNEelczM05SOTRZM1I5anc3MENWRFRvZGpEdkxtZ2VRYWMzaWxRNnJ3MUVXMTVHRWM0eFRpbkpxTzFNbWFxMWU0aVpGR21vQnhnQ2syRFdLN1REVmFRYWdVRDlOOWJMMXVqVDRzWUtG?oc=5",
-   "pubDate": "2026-11-20T09:07:43.000Z"
   },
   {
    "cur": "AUD",
