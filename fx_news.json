@@ -1,19 +1,19 @@
 {
- "updated": "2026-11-24T04:00:25.578Z",
+ "updated": "2026-11-24T07:00:55.661Z",
  "items": [
-  {
-   "cur": "USD",
-   "title": "中文版-最新消息-新聞稿-新台幣匯率之參考資料",
-   "source": "中央銀行",
-   "link": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE1PMXY3QWc0a25nWHRvLW1NeDY2OGxqMXdyLU9EdDdfNV92dmxxQ1MxR0dhNUJnd3FQWm5PYXZWV3JRSENhTGF0b3ZWNFIwZHhiMTRJclh4Nm5pcGR3YlE4ZDBR?oc=5",
-   "pubDate": "2026-11-23T11:57:51.000Z"
-  },
   {
    "cur": "USD",
    "title": "黃仁勳回歸重燃AI行情，韓元兌美元匯率以1,340韓元開低",
    "source": "BigGo 財經",
    "link": "https://news.google.com/rss/articles/CBMiekFVX3lxTE1IMXRQRXBmdmFxeE1sYVhMbUgzWERYN3pkclJtb2l5ejNOaFItM0NHXzFfaUUySHZQdDBHS2F2TkJvMFEtbEgzbU14X1oyeGxoZVdKSFBHUkpBUXhzR04tOXhGZHFaU0szYXJka3RkZUE1bDlKZjNhcnZR?oc=5",
    "pubDate": "2026-11-23T23:25:00.000Z"
+  },
+  {
+   "cur": "USD",
+   "title": "中文版-最新消息-新聞稿-新台幣匯率之參考資料",
+   "source": "中央銀行",
+   "link": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE1PMXY3QWc0a25nWHRvLW1NeDY2OGxqMXdyLU9EdDdfNV92dmxxQ1MxR0dhNUJnd3FQWm5PYXZWV3JRSENhTGF0b3ZWNFIwZHhiMTRJclh4Nm5pcGR3YlE4ZDBR?oc=5",
+   "pubDate": "2026-11-23T11:57:51.000Z"
   },
   {
    "cur": "USD",
@@ -25,9 +25,23 @@
   {
    "cur": "USD",
    "title": "台股跳空大漲逾3000點！美元指數衝破104 新台幣開高後翻貶",
-   "source": "自由時報",
-   "link": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE5fVVQ1cHhtVWxqOC1sbGVnaXdnV0xMek5jXzN0U0tQbWxfY2lvTDNaQmJFUVJYdDhEZTZRRG1HUmJiMjdYczMtakZjUTZOdFJ1UjhtZWZNZkk?oc=5",
+   "source": "自由財經",
+   "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE9wZDVwc0FxMkdqM3lSdjFNQWx4MHRlZ0ZLcHhUZjJ1UmVnWHBWVUpiTWNnNElwWW9ZUUQ0SFlRWUVzU29nSGxtaVc0bFRGbzlMbVlFUHQ4bFU2cU53ckpZ0gFkQVVfeXFMT1dBdmxNTVpjTlRpaUV5UXAxU3pZa1pYLWRPb3pxNDVCLS1CVlhvMHNaT0tvb2dwZWJrVVEwYnBYMFdKRjYtMlliM2k1bWd5WjlEQmdITFhZRHIyakdzdlJzeGczVw?oc=5",
    "pubDate": "2026-11-24T03:35:54.000Z"
+  },
+  {
+   "cur": "USD",
+   "title": "輝達（NVIDIA）共同創辦人黃仁勳回歸擔任執行長，AI科技股上演慶祝行情，台股今（24）日早盤站回40,000點，大漲逾3,300點，創史上最大盤中漲點；新台幣兌美元匯率開盤同步走揚，但由於美元指數強勢，加上外資前幾日賣超規模仍須消化，匯市反而震盪走弱，午盤小",
+   "source": "Facebook",
+   "link": "https://news.google.com/rss/articles/CBMi4gZBVV95cUxOMmdnTC1ZVHBPaUF6STJTWTdrZVVfM1hTeGVzQWZVVGNibF9Wa2QzaFRPby0zajI5aEpVcS0yYk5LTEZHMmFiQk53QjI4MzFGV1JsYlpqdDFMSTBiVHBubFcwLVl1ZWJ2Y3J2ZUg0dlp4VzE3QVdCSXR4Qm1CaXNPUW92Y29wamFpenJoU2h2MXN6Z3FWUDAydTRiTmRUMEw4ajlFMmxoYjBxLW1MUFlzZzVBb0lnN2FfTW40enBXRm5ZRlB6ZUdDUXdVM1lrRmJyeVNwYUZGMDN6V3hKdVZOa1RSQWNDNGVaMWh1VEZ6S2swZ2VsYlQxbkxHU0trTDUwOXpGa2ozZ0RFRGwtMWFJejBHR2xTSjZ1NWdNRTN1Ti15RWpqdmRybmo3aDdSQ0lBQVYtZTNYdVZMZXdpLVJRU0VXdzVVQU9xZlNoOTRCM3E1QVh5NVRFejRQNG9DVFFwVU5JRGgzNDhWeVlPaHVWcGNkT1huOTBiNWFqS3hDX2pnZEtRMFhFOFVxUDJXaENkUS1WU0JHTlJFS21PMDRyQzVqczJMQWw1WlRya3dRZmdOMXdCMU05b0hVRkhXSGc0WTFRSGV2Q2JJaXFRZjRZOXZTMDA4NUR0Z25pSjdja2VEN05YMFBkb2Vaa3A3dWhOeFBCcUhHY3BtVUNvTTY5R0VKQlkyQlBPVEprSWdoanp4UFBiWU53bzBzNzZPQ0pEaGNmMHhuXy1QWGNSdFZSTXFLQ2V1aDBXN0pwYXNMdEgyRnFNUW5uWV91c2NSSHJJdTdYWjJqZHhLUkVwZzl2d1c3R1U1QXZxTDUySlE5RDUyY1lienhDcEZoanZJczAwTW9oOUN5LXhOR1NNWk5TdXI2YVQ0YU5JTmhpV3FOcXZJcFJONXYxVlNqWUJQYlBBQjlSZG1ESVNibGdJNzQwdUZSQmRNNHl0c2MzUFZTZlRKTTVpdElUSnZOMy1BTzNsbUljSUMweFEzV1FGX3J6cDIwTVR5dTJrekdqTDVCNzZoS2ZaNURmS1U1LXZidllXMm1UU0FGeHQtVHRzblNnSmY1YjFfSXRncUZWcUpYU3ZGSHBwVHlYbzFfUTZudEM4VXNfNkhmNk1UVlpROW1FSkY0VHVqcHAtSWxUc2w2OXk3Zw?oc=5",
+   "pubDate": "2026-11-24T06:10:01.000Z"
+  },
+  {
+   "cur": "USD",
+   "title": "台股飆漲拉不動？美元太強壓制新台幣逆向走貶- 金融",
+   "source": "工商時報",
+   "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE5aZ0xSSmMyVWg0SDUtQ3BZSjhnNXJuaGlGanh3QzhnSllqM0JUVDhabDRIV3R6UTFxRGpMdTM2S2x2RTM5SXJEel9IdkVOSmJMRnE1LWFWMHRId1FIYW5r?oc=5",
+   "pubDate": "2026-11-24T04:15:00.000Z"
   },
   {
    "cur": "USD",
@@ -38,24 +52,10 @@
   },
   {
    "cur": "USD",
-   "title": "009826比0050少虧22.65萬元！百萬本金回測揭績效差距清流君：美元升值僅占14.7％ | 存股族愛ETF | 股市",
-   "source": "UDN",
-   "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE1mcDF2NEJPc05tdmtleG9Idm81QzZ4bGIwMXFadHVTRHctcWZmYkpMNy1VOFFvSDZWZy0ydHkzSTJ2UUhZQk1aU2FLY1ZhUDc2TDRz?oc=5",
-   "pubDate": "2026-11-24T00:40:42.000Z"
-  },
-  {
-   "cur": "USD",
    "title": "美元指數創一年半新高 小麥期貨承壓走勢分歧",
    "source": "商傳媒",
    "link": "https://news.google.com/rss/articles/CBMi0wJBVV95cUxOTWRqLTRxSGphN0lYU0xyaXd0c1NLR0pYeGljeDBJTzBBRGlJTnFFTjNnUTNMUXpucFhUaW5IVnplckdfWlhOc1FTV2NnSThxOXJMOXkwbEtKTGdiM2FEalY4THNyNkRoYkZBQnZNR0wwUmdNbHdxUHowME9nYmx0bkFXOWkzTUV3S0tuRk1ORVFUTVIzTFR0ZFJQLUJuRWRKaGRURWhrTktSRnNST3N2bnkxRE5iY0lPdS1XeVcxaE1UcHA0T3FtM25lU1FJQXZBbEU1SnpSZ0VjcFFOQjJWOXpJRGt1cUt6T2lxYWVxR25rVy1lRU9ISTBjc1AwRnVmLTJXRThvallKcWplM3pmbzBSOWszbjYyaUQ5LWlnUzMycmV1OWZuOWZHdUk4bXdKcFFhM2xhcEx4Y2dJaEN2RndqVGpiVU5Jb19nTS1rM3BYU00?oc=5",
    "pubDate": "2026-11-24T01:16:56.000Z"
-  },
-  {
-   "cur": "USD",
-   "title": "TWA00 加權指數- 美元指數與台幣匯率- 股市爆料同學會",
-   "source": "CMoney",
-   "link": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE54M0k4SXUzYjdmX0pXWGJ5SHFZd1I1c0x0QUNwOG1SOHlFemkwcnNpWlBfaHZWMWlvdFVtc0FUcFI0dTExNGp2bzhDN0JsaFptcUdsVHQycmk?oc=5",
-   "pubDate": "2026-11-23T10:57:39.000Z"
   },
   {
    "cur": "JPY",
@@ -63,27 +63,6 @@
    "source": "BigGo 財經",
    "link": "https://news.google.com/rss/articles/CBMiekFVX3lxTE9kdlQ0MmNmRzU0SVlQc0tiVGh1LWNGWGRSeURvZXB5blVkOVJJUmsza3NfV0JMWlQ5Z25QYURQUFByZXFnNFNNSEZ3VmRUUWxVeUlmRllWUEJkYnNMaTRrV0JNYTh6WmJwTlBReDdMNVRSbFNHbDAydXp3?oc=5",
    "pubDate": "2026-11-23T08:55:00.000Z"
-  },
-  {
-   "cur": "JPY",
-   "title": "東京匯市美元兌日圓158日圓後半震盪，美股走高與美債殖利率下滑多空交錯",
-   "source": "BigGo 財經",
-   "link": "https://news.google.com/rss/articles/CBMiekFVX3lxTFBEMFJ0N1Y1cUhidmFTNXJUUFZETGVCOHZUU1ZIRnVSQkFRRnJNMmF4V0dtWDZKWWxkZm41a0pKUHdUQmhuaFNQb1pPQWVFRU1POXpPUkg5S0ktNFNDTnlzSEQ4ZzJsQXdNd2l1Z2ppSDA2WEFJMlBVYkVR?oc=5",
-   "pubDate": "2026-11-24T01:25:00.000Z"
-  },
-  {
-   "cur": "JPY",
-   "title": "日圓匯率160大關攻防戰可望持續，美國PCE與東京都區部CPI成焦點",
-   "source": "BigGo 財經",
-   "link": "https://news.google.com/rss/articles/CBMiekFVX3lxTE1nekN5T2l4bGxxcFJlREdzeHB3SjZCNkhmWDZzWWlVei0wdHVYSVJLbDQxeWhaNDlPQlBOU0NPWEp6TFNuM2ROejhPYnVjdHVvUWtnVXVsSmJLVV9laUFlZDV2QTRWZklFUzI2aUp3MGVyVUFDZ0F5OE93?oc=5",
-   "pubDate": "2026-11-21T22:25:00.000Z"
-  },
-  {
-   "cur": "JPY",
-   "title": "干預疑慮升溫，日圓走強，交易員靜待美國PCE通膨數據",
-   "source": "www.tmgm.com",
-   "link": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxONlhaTGFTa0NNekw4N0N1NEIwVklCQnJ5cHIxMW9DUm5VbmhsazJ5N0U4Y3R4SjBMZTdLcm5mWFJjelgzVS1IWHZfa1NqRUFKVkI4SkwyX3RvMTBBWlloel9VMHhteVpLd1BwUnpDZXloV1h2bHlXLVp6ODktUUpveE1SU29xaXBTaW41M2lrd3FCS3BlSm5zSy1wYmRfRU1YQ0w4cVh5dXZ5QnpMYTRDUkNfSVM4NHBDb2VWelN2RHBFdVQyTmJCQTJCU3BRdFhNdEZ1TS1WTGR5MXZESVZVcjN5QUZOQQ?oc=5",
-   "pubDate": "2026-11-24T01:43:31.000Z"
   },
   {
    "cur": "JPY",
@@ -101,10 +80,38 @@
   },
   {
    "cur": "JPY",
+   "title": "近千億美元干預也擋不住日元直奔160? 日元匯率回吐近半反彈，美日聯手干預效應漸退",
+   "source": "富途牛牛",
+   "link": "https://news.google.com/rss/articles/CBMinwFBVV95cUxQbGtXTndlWU83SEVLNjRjZHNJLV8wbnV1SzJMcXNTejE1N0pGSmo3U29hMEoyQkFwLUdHTG5ORVZ6TVpQV3RxX2ZNRUMwNjl6SmVsclFRMFM3ZktVQzk1QWd0aGMxbmlwejR2dEV0MnJLbEZWLWU4cmZSNFpTRGN0em5FTk5Pa0tYdlcyQ0RQa1V1Ykd6cXZWZlpHdXpYekU?oc=5",
+   "pubDate": "2026-11-23T00:04:15.000Z"
+  },
+  {
+   "cur": "JPY",
+   "title": "東京匯市美元兌日圓158日圓後半震盪，美股走高與美債殖利率下滑多空交錯",
+   "source": "BigGo 財經",
+   "link": "https://news.google.com/rss/articles/CBMiekFVX3lxTFBEMFJ0N1Y1cUhidmFTNXJUUFZETGVCOHZUU1ZIRnVSQkFRRnJNMmF4V0dtWDZKWWxkZm41a0pKUHdUQmhuaFNQb1pPQWVFRU1POXpPUkg5S0ktNFNDTnlzSEQ4ZzJsQXdNd2l1Z2ppSDA2WEFJMlBVYkVR?oc=5",
+   "pubDate": "2026-11-24T01:25:00.000Z"
+  },
+  {
+   "cur": "JPY",
+   "title": "日圓匯率160大關攻防戰可望持續，美國PCE與東京都區部CPI成焦點",
+   "source": "BigGo 財經",
+   "link": "https://news.google.com/rss/articles/CBMiekFVX3lxTE1nekN5T2l4bGxxcFJlREdzeHB3SjZCNkhmWDZzWWlVei0wdHVYSVJLbDQxeWhaNDlPQlBOU0NPWEp6TFNuM2ROejhPYnVjdHVvUWtnVXVsSmJLVV9laUFlZDV2QTRWZklFUzI2aUp3MGVyVUFDZ0F5OE93?oc=5",
+   "pubDate": "2026-11-21T22:25:00.000Z"
+  },
+  {
+   "cur": "JPY",
    "title": "比特幣價格一度跌至兩年多低點 日圓、瑞郎躍避險寵兒",
    "source": "經濟日報",
    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFAwQ3N2LTBRWGdGd3dFd080b21JVnc4ZnlHZnFCUF9naWJsWGRWT3lrXy1iQnBOZkZnemNTV1FfbndVc2E3aXB4WEY3dGlwazEzVExXT05sSVh1QdIBX0FVX3lxTE52ck1nTjNIeUpvYVBMZGpfNFY2SWZwNkx1QTFsRWRFeWRYUW1LU1hJVHJic2VvbTdNNFdWTEtaV0FvZHFsczdjWVowVkRJYkh3dC1UZjRubEVOcFhwZS1n?oc=5",
    "pubDate": "2026-11-21T18:48:07.000Z"
+  },
+  {
+   "cur": "JPY",
+   "title": "歐元/日圓價格預測：在174.50上方擴大漲幅，但仍處於100日移動均線下方看跌",
+   "source": "FXStreet",
+   "link": "https://news.google.com/rss/articles/CBMi6wFBVV95cUxPaDl2cXFpY2VqUDU1TVpxZ1Z6YlFuZnBSejVINms3TkV6SXM3TXZnX19UUU9KZmVweWgyRTNRQXpnNHJOeGh1N0I4cmxCYzFtQXlRdV92VGxEUlRTa281X0ZfYXdkbUVtSWdUcUpFQk5DUnNZV1lfWXpGaUFIQXY2clhwRDNFUjRwdHJnVTZ3bGt3OXVWWjFadF85eGVNV0sxWW42THpFN0hCNEEtb2o1UEdSR0U2NVpTNTJqdVpSaVpoaHFpN1BwdU8zVUwyLUg4dEZPSWVTYUl2Zm9lM3QxektSa045SFdEcW9B?oc=5",
+   "pubDate": "2026-11-23T04:41:22.000Z"
   },
   {
    "cur": "EUR",
@@ -115,6 +122,20 @@
   },
   {
    "cur": "EUR",
+   "title": "歐元/美元價格預測：在超賣狀況下小幅走高至1.0900上方，但仍看跌",
+   "source": "FXStreet",
+   "link": "https://news.google.com/rss/articles/CBMi6gFBVV95cUxPQkNvZXc0Zmt3WTZJTXpBdXlrMHFzNURGYk4ybmd3NVJKTkZPbmVJNFJmWFV3cVZ6VzRLNjNmckZZanpkMWJ6Ums0eE5NdHgtb09YMTVwejBfbjk3ak9VYnhNVzhGRzFCQmU3UFNIQnRxeHJXLTk1MnNrWDA4YUVfa1hPY3ctdE9ZT0ZoOV9lVVNhSkRRdHhJWjFMeXo1cjVNeEkwanJfa2hNVjAtTWJ6LU5pY3h1SHBLQnd3MG1aZzFnVF9qQ0lwNXVLNlc0aHpDWTFpakpSNFlHWEZiZ0UybnJtN3N0eXhHOUE?oc=5",
+   "pubDate": "2026-11-24T05:05:08.000Z"
+  },
+  {
+   "cur": "EUR",
+   "title": "歐元：相對美元的弱勢持續，面臨超賣風險– 大華銀行",
+   "source": "FXStreet",
+   "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNSWMydTZkNWhTLVNEcXhLaFlUVXVGRzBDQUpRbU51Qjl1bUVfUUdNOS1jaDNqd0pOLW1sNnM0WDdxYy1ua1RSVk9mZ0ZFRUMwSWplRFZfUGJzaUtnSHJ1eHN5LUs4M1NaM2czWW4tQldsMjh0bHR3SU1Najg3VF9YM2V1ekprUldCczNNdWhGZFIyVkxEOVYxS2VtUHJSTGxEYUpmWk9leXdiOGdaZGxsUWIwQkdjVVg0WXE4QkV3?oc=5",
+   "pubDate": "2026-11-24T06:26:16.000Z"
+  },
+  {
+   "cur": "EUR",
    "title": "匈牙利福林：預計兌歐元逐步走弱 – 德國商業銀行",
    "source": "FXStreet",
    "link": "https://news.google.com/rss/articles/CBMiugFBVV95cUxNSHFrTE51VVdqYlczQWtwVTRNV0FtV3kyVjZkYU00ZGtacXpLWk1nTkFqS1lPMjczaFNIV0VheXM1M05zaUlYSHkyMzZzZmFsUnFUc2FyUXBZeDNvU2JJb0Q3Q3lWV19JZEprN3llbzFUTGstZmtuaE80MTczTjBYSlJjSFE2Q0dEU09ISGc0U0dFN19GLWNMd3l0el9fQlhUalJUS0x1SlNjYi1LbmFWODVYZ3pGVTJjMFE?oc=5",
@@ -122,45 +143,17 @@
   },
   {
    "cur": "EUR",
-   "title": "歐元/日圓價格預測：在174.50上方擴大漲幅，但仍處於100日移動均線下方看跌",
-   "source": "FXStreet",
-   "link": "https://news.google.com/rss/articles/CBMi6wFBVV95cUxPaDl2cXFpY2VqUDU1TVpxZ1Z6YlFuZnBSejVINms3TkV6SXM3TXZnX19UUU9KZmVweWgyRTNRQXpnNHJOeGh1N0I4cmxCYzFtQXlRdV92VGxEUlRTa281X0ZfYXdkbUVtSWdUcUpFQk5DUnNZV1lfWXpGaUFIQXY2clhwRDNFUjRwdHJnVTZ3bGt3OXVWWjFadF85eGVNV0sxWW42THpFN0hCNEEtb2o1UEdSR0U2NVpTNTJqdVpSaVpoaHFpN1BwdU8zVUwyLUg4dEZPSWVTYUl2Zm9lM3QxektSa045SFdEcW9B?oc=5",
-   "pubDate": "2026-11-23T04:41:22.000Z"
-  },
-  {
-   "cur": "EUR",
    "title": "匈牙利福林：預料兌歐元將逐步走貶 – 德國商業銀行",
    "source": "www.tmgm.com",
-   "link": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxQMndZMGRlaXJEejdEUlR0UFdYVWtwNGdjTVpRM2hlenRsRUg4UzkyelFmaWJPd2VjTGFGVVUwRmlUaXVLb2p4QzRUMldXeUgwY29ZSEd6WlIydFJBaVVqWC1TNUZjNVBOSTJiRlFuWFE4Rkl3N09XamJ1NGtwa1oyUWcxS1B1M1RTNHBVc1IxcFJoeXRGamZXQ3dIR1BHRXkxaDkwdUdWbE8tLWNrSS16UWwzTG5yMDlOcFhSNU9Sa05oakNxNnpRcS16Yl9CLXZL?oc=5",
-   "pubDate": "2026-11-23T14:45:56.000Z"
+   "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxNN013RDAySzVKbjlVTmlIOGxpeGYybHljTUM0eE5WcEdKTThQSnByX2twbjUtNlpER3kyYlA1dG93NllBcUlTRWp0bXF6NHZqclU4TWFEby1iclhFSWVzeVBlZGFSVUsxcDBQcUJydl8xUzhzVldEeEtXOGV0eW1lUTZhSVYydHlvV1VaM1gtYnpMalZmNTFONGJwSUNCb2dOdVVTUlBoNUdJLTRaNzRCcFZROVFTTzN3YUtXdUZpSURaaFMwNFY1RzFQSQ?oc=5",
+   "pubDate": "2026-11-23T14:27:56.000Z"
   },
   {
    "cur": "EUR",
-   "title": "歐元：兌日圓仍難見反彈 - 法國興業銀行",
-   "source": "www.tmgm.com",
-   "link": "https://news.google.com/rss/articles/CBMizwFBVV95cUxQd05qWnFrUWN0dkIxN3ZZWjZFb2xVQlhYZUdnaTBlVTBGd1AzUUN2cFFtX2xYZi1KakJSQUpYV2JXX2hzUTd2bFJuN0pRejg0Tml6ZGF5eE9VdnJsNWppNkFPZjJvcTVaUUdZRTRiZ1Q4TXpXMXh0RkVCb19WOGRzYXExdW1kUHozWnlYRlZCN2lsUi1EQURGM2RyMFhfMUZsT0NCbjhfQ3pyU3RObEVGTHpiY00wS3VtV3dLZkVFbXJDNU9iTmNvMkdSREFnbjg?oc=5",
-   "pubDate": "2026-11-21T06:10:08.000Z"
-  },
-  {
-   "cur": "EUR",
-   "title": "歐元兌英鎊維持漲勢，市場聚焦商業活動數據",
-   "source": "www.tmgm.com",
-   "link": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxQaF9OV2NIdGJlSkl0M01HWHBjbGs0ak5ZcWZvczJUalYwVGlsRzZ4N0hhN0xJTWFYVlJ6WDZPbUJxWHphUmVsNy0yVWlXTkZFR204WG11Y29MSFBHMEJnbnpXbWFWVWZVU0VLemlrcDE4MzQ3NHluV3lEV25WTnA2SkladXJZb3hlaFN1eUZMV1lNQzlDQ2ZSTlptZnVtREhNYUtsTlN2b1JvUHFXTkktZGg4V0ZlLVFfQ1pjdTZVTlJwV2l4Z3NFR0NKSXRDMGo4VGxQYzlyVzU2OURnTXNn?oc=5",
-   "pubDate": "2026-11-23T08:32:31.000Z"
-  },
-  {
-   "cur": "EUR",
-   "title": "歐元在風險偏好情緒中守住1.0900上方的漲幅",
-   "source": "FXStreet",
-   "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNS182QzQxYnR3VlY0YXhLZ210d0IxSHZxSTB2WGQ2R3JOdVVrQWUzVXBsM3FrVkxYdUdRLW9XWS1scWtTa2dmT1RoNmVfNHhkRUN5MjdoNkZEcldIdTJ5MzktNk5Gd3EzOExPMUl4cTNMdmoxME80WDRvV082WjdyTk9zeUVWWm5XbXdNRXBKUTBMMll3djdjTUxlQllaLVpXdDc4V1dVN3c5MzY0VUgtSVZsbG9zM3lIMnhJQUwwNTU?oc=5",
-   "pubDate": "2026-11-24T00:48:28.000Z"
-  },
-  {
-   "cur": "EUR",
-   "title": "在交易員關注初值採購經理人指數（PMI）之際，歐元兌美元持穩於1.1000下方",
-   "source": "FXStreet",
-   "link": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxQNTdnbWtNT2s3b2RNQ0w3MFlEdlRwU2dza2xvb21naUVibTgtU3V0bGdzX1RVT0k4TlF2XzRERlJ4SUpnM2RtNjFRYXBUdHZzVkhSVy1jcEU0Q2FMV0NFblNveXVOS1JubUlreGxWTmNhU29HaGRUM0FrcmhMekF5UXJWbWNvUHdxc3lnNHVyaXBSWjFFVEJxYU1ObGhsejJ0aTZuS0lZR0N3U2ZWZzA0cHBxaDQ3QnZ4eW12cWg1OXFlNlprcmtHckxoV1E2bWZhTnpsY04xU2prWlptUmc5NzRtN3REY1J1RmUxVQ?oc=5",
-   "pubDate": "2026-11-23T01:13:37.000Z"
+   "title": "美元指數11月漲近2%逼近104！歐元、澳幣重挫，未來走勢如何？",
+   "source": "HK MoneyClub",
+   "link": "https://news.google.com/rss/articles/CBMi1gJBVV95cUxQMEpVS0o2Qk9SSFNEcjVBOEdScFNaRWYwMkZ1bUFuWXFMMkxwRXpSeFBWcW1PdTk4dWlub3QzQWpoUWZSSXJ6LThGQjkyVWU1WWx2VURPVF9rbnM1dGNlRDk2MTJtY2k4VjhDYzlPYzdEbUs3OFh6YnVkTmNqN2FQbVczMzdNVF9vQmxiODVJVjk4V20yT1VoR3loZFlkUl95WGNHTVI5SmQ3ZjhJY0VldUFraGdWeVA1XzBGSUdoRFU5RXpWYzlyRS15azhfdnplNXVFUmpWb3BNbnZYbWppODZUQ3dwSUFFV1lzYWU4Q1NFb01hcE0wR1A4Ynp3dFVfdDFPdldBSjN3YnltQm9zcmRYOGxjbm0yaldRZVMyR2ZLdTRPSTJrVEFlZHNXT1Z5eFJuWGE5UFJFSS1aY2ktSDJXem9xSFJ0cmk0WXI3eXJQVTBWM2c?oc=5",
+   "pubDate": "2026-11-21T10:01:55.000Z"
   },
   {
    "cur": "CNY",
@@ -185,17 +178,17 @@
   },
   {
    "cur": "CNY",
+   "title": "瑞銀：明年底人民幣兌美元料升至6.25",
+   "source": "on.cc東網",
+   "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOVDZHelJfLS1LRGJMQ0lBLVdJVm5qQURVZURIWEpGQXAtVFo4RGdKM3dod0dhNGFPcXRBaGYzY3g0bHpCSmtzU3NOUWZlaGtSdDhGUFhRcXlab3N0TlBiZVBISTZRTXlaRmxuMzkwdE1kR01SczRTdmw4VmxjYi04MllHTlZiWTQ0QmpqV0lwZw?oc=5",
+   "pubDate": "2026-11-24T04:30:30.000Z"
+  },
+  {
+   "cur": "CNY",
    "title": "企業結匯需求持續釋放 人民幣走勢保持穩定",
    "source": "經濟日報",
    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE83Si1oUHBaWDI3ZTlVQkN1eGcxZG0yQWpvZDJCR3RzekEycUVfVDN5Z2tVUVpKUy1nOUJlcC1VdlhlaEVrX0FqOUl2UHBmU25yYl9YbXpwZW1sd9IBX0FVX3lxTE15RDllMl91MVpiTXlQQlkwb0g0Z1lrMTVmdEI2VnI1cUFMbjFhTGw5ZjNRdWRDWlpsenJyRzZDOTBJalJpT3BDUWRPRTc4azROT2FUemZQa3E5emtEMUpn?oc=5",
    "pubDate": "2026-11-21T15:04:32.000Z"
-  },
-  {
-   "cur": "CNY",
-   "title": "中國匯市：外匯交易中心人民幣匯率指數上周均上行，CFETS指數漲至104.98",
-   "source": "TradingView",
-   "link": "https://news.google.com/rss/articles/CBMid0FVX3lxTFBkNnk1Mm5mV3pKS0ltaEFBXzNvcENkNDYxX3pncmFPbzBEYkNjeV9ORElQdU5jV19xWERkcTE1YVQ0Vk5VaEJ6MVd6bmE5RGlENlFXWkFVQllTOUxZaHJ6SEVZNjV6c1JzSDc2Zk80b1FZTVhLd2JZ?oc=5",
-   "pubDate": "2026-11-23T00:44:00.000Z"
   },
   {
    "cur": "CNY",
@@ -206,31 +199,24 @@
   },
   {
    "cur": "CNY",
-   "title": "《大陸金融》人民幣升值0.11分 中間價6.7120元",
-   "source": "富聯網",
-   "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxOR05hc2p4d1J2NW1RdVNmSDlvaEZHclNaM1R0dWcyS1czLWdyOTlFQ0drbXJ5RHkyN2NSeEZRcDRzUHozLVF3S0xHTlVQMFNEN0RhLVpYc0c4OV8tb25feG1MelVIeDNuWGc1OXNweHRaU3g0aGo0RjJJUE5MN1RYSGl5aDBveEJj?oc=5",
-   "pubDate": "2026-11-23T01:21:00.000Z"
+   "title": "中國匯市：外匯交易中心人民幣匯率指數上周均上行，CFETS指數漲至104.98",
+   "source": "TradingView",
+   "link": "https://news.google.com/rss/articles/CBMid0FVX3lxTE1QNlZ3WG1qTFNYRlpncFZyM1hWUnZIWHpsQlFTNXg5X2ZqcDh4aEYwRlpJR1NOZmtQQkM4UENxT25QX050NE5ad1diWW9FT29GRVZUWTJ6TTROY2F6ZUl6OVhHajZ3a1lPbnl4V2hDSUR6S0xJeTB3?oc=5",
+   "pubDate": "2026-11-23T00:51:51.000Z"
   },
   {
    "cur": "CNY",
-   "title": "在岸人民幣兌美元升至3星期最高位",
-   "source": "www.5news.com.hk",
-   "link": "https://news.google.com/rss/articles/CBMic0FVX3lxTE0tU3NLRmpQSG1FTDVKRnBuV2lHNWVPN1gxM0lGNHVBcnkxMkRrTFEwRHdodFRHVmwyNEF3dDF2RTd0bXJKbHphZkdqNXh3aGFSMG51MXVTOTlvb1BIVnM3UWhxUmkySk1BakZWUHVnUmNxSjQ?oc=5",
-   "pubDate": "2026-11-24T02:32:47.000Z"
-  },
-  {
-   "cur": "AUD",
-   "title": "美元指數11月漲近2%逼近104！歐元、澳幣重挫，未來走勢如何？",
-   "source": "HK MoneyClub",
-   "link": "https://news.google.com/rss/articles/CBMi1gJBVV95cUxQMEpVS0o2Qk9SSFNEcjVBOEdScFNaRWYwMkZ1bUFuWXFMMkxwRXpSeFBWcW1PdTk4dWlub3QzQWpoUWZSSXJ6LThGQjkyVWU1WWx2VURPVF9rbnM1dGNlRDk2MTJtY2k4VjhDYzlPYzdEbUs3OFh6YnVkTmNqN2FQbVczMzdNVF9vQmxiODVJVjk4V20yT1VoR3loZFlkUl95WGNHTVI5SmQ3ZjhJY0VldUFraGdWeVA1XzBGSUdoRFU5RXpWYzlyRS15azhfdnplNXVFUmpWb3BNbnZYbWppODZUQ3dwSUFFV1lzYWU4Q1NFb01hcE0wR1A4Ynp3dFVfdDFPdldBSjN3YnltQm9zcmRYOGxjbm0yaldRZVMyR2ZLdTRPSTJrVEFlZHNXT1Z5eFJuWGE5UFJFSS1aY2ktSDJXem9xSFJ0cmk0WXI3eXJQVTBWM2c?oc=5",
-   "pubDate": "2026-11-21T10:01:55.000Z"
+   "title": "大陸匯市：潘功勝會晤ECB官員籲加強政策協調，人民幣早盤連三升、逼近6.66",
+   "source": "富聯網",
+   "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxQeFVEYk1MTlpza1VVSlRIUnduWXF5ZU4tQmZUWGdzRFVkQ3gwa1phRnpkU1VCOVk1dkppX2hWcHFJM183OHJWeTlYOGNjSzkwRnpPN1NZd0U4ZmtodTAybzExckZPcDB4ZHVnSHpjT0tvVWVBQ05adms1SkFCZDNnQlU4Tk56WDNV?oc=5",
+   "pubDate": "2026-11-24T02:30:00.000Z"
   },
   {
    "cur": "GBP",
-   "title": "英鎊跌至19個月低點，英國央行格林將成為下一個關注點",
-   "source": "FXStreet",
-   "link": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxQV1hPbUhWcTVjZlh2MV95aWY1Y2N0amRrNUFiSkZjdkt5ckRwQ0VmTG52cTNLRncwZmJHM2d2YkZaT05oVVNnbnZKRkFlekVFZHJjb0ZYYkFvamRKVUdKWERRMUt2bnJKRXl2Nlp2TFNrZ1loNlBOMDY0T2NrbWQ5eW15eWszbXdxbXJ4UjA4VGFnMk1idGMzeGlzMUlPam94TXZqM0N2YVZwRkEzTUVKbDdRVTRMVXJnUkhWUHRzSFJzYmF2NzBJQk1QQXVrMUg0Nnc?oc=5",
-   "pubDate": "2026-11-23T23:50:27.000Z"
+   "title": "歐元兌英鎊維持漲勢，市場聚焦商業活動數據",
+   "source": "www.tmgm.com",
+   "link": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxQaF9OV2NIdGJlSkl0M01HWHBjbGs0ak5ZcWZvczJUalYwVGlsRzZ4N0hhN0xJTWFYVlJ6WDZPbUJxWHphUmVsNy0yVWlXTkZFR204WG11Y29MSFBHMEJnbnpXbWFWVWZVU0VLemlrcDE4MzQ3NHluV3lEV25WTnA2SkladXJZb3hlaFN1eUZMV1lNQzlDQ2ZSTlptZnVtREhNYUtsTlN2b1JvUHFXTkktZGg4V0ZlLVFfQ1pjdTZVTlJwV2l4Z3NFR0NKSXRDMGo4VGxQYzlyVzU2OURnTXNn?oc=5",
+   "pubDate": "2026-11-23T08:32:31.000Z"
   },
   {
    "cur": "GBP",
@@ -255,17 +241,24 @@
   },
   {
    "cur": "GBP",
+   "title": "美國人工智能股復甦之際，英鎊兌美元脆弱交投",
+   "source": "FXStreet",
+   "link": "https://news.google.com/rss/articles/CBMixgFBVV95cUxNNFJuT2V1bWJJOXZMUWMxQXhxNHNBamZyUjFxUE9zR1JnSmd5UTM1Sk5hTy1nWXd0R2pPcjllbnkza1Rlano0Mm54QW1lQ2ZOczFaMERoLUJEaFNTTUJtV1hod0VKbUpteUczY1Vuc3FnMDcwNnRFWFZYNERQLUxpR0txNEZQNGNGbkRDNmhpTkY0cGpHaVZXVzF4NGRCa05HbkRwR1VlZTdwOFdpdG9nMjdVV2hNdG91TG9OQkU2eVBQQzlIZlE?oc=5",
+   "pubDate": "2026-11-24T04:56:00.000Z"
+  },
+  {
+   "cur": "GBP",
+   "title": "英鎊跌至19個月低點，英國央行格林將成為下一個關注點",
+   "source": "FXStreet",
+   "link": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxQV1hPbUhWcTVjZlh2MV95aWY1Y2N0amRrNUFiSkZjdkt5ckRwQ0VmTG52cTNLRncwZmJHM2d2YkZaT05oVVNnbnZKRkFlekVFZHJjb0ZYYkFvamRKVUdKWERRMUt2bnJKRXl2Nlp2TFNrZ1loNlBOMDY0T2NrbWQ5eW15eWszbXdxbXJ4UjA4VGFnMk1idGMzeGlzMUlPam94TXZqM0N2YVZwRkEzTUVKbDdRVTRMVXJnUkhWUHRzSFJzYmF2NzBJQk1QQXVrMUg0Nnc?oc=5",
+   "pubDate": "2026-11-23T23:50:27.000Z"
+  },
+  {
+   "cur": "GBP",
    "title": "交易員削減對美聯儲加息的押注，英鎊小幅上漲至1.3100上方",
    "source": "FXStreet",
    "link": "https://news.google.com/rss/articles/CBMi7wFBVV95cUxQNVNSYjc5bHlzTVNZeUpwNF9ubXQ5bUU0N1RYVDVnREhuQ0dXV0YxYWtQR2xVeV9NQjBoVHlHZFhrY1FqTV9zTmU3RG5lemhzMmF3dEVDSG5aZmpqRk93ZGJqZi1Kb2ZaTVlOZ0NicG9UZGV0T0RQcXpGMWVUdFJ1a1diNzRBMjlNQy00dUJQazgxb3htb1BIbmFuek1KdUQ2SUtLbU83Q1NfakFxUkZrNXI1U3hNMHd0ZXhBZFNzRnV5R1VZY0JxZHRtS1kzUFhWeThRSHJ2b00tSGY2TjM1X2pUTmhadU0zYU4zVXk2VQ?oc=5",
    "pubDate": "2026-11-23T06:30:29.000Z"
-  },
-  {
-   "cur": "GBP",
-   "title": "匯市觀察／英鎊持續承壓",
-   "source": "經濟日報",
-   "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPTjczZU9kR2dveTVkbjgtVTF6UE83S0k3bVlBQi1WRFVlSXdFVEJoNEt1UldQTlRMMjNCbkxTa1d0WlRCTkY0TkE1eVROZTd5ZVZrVHBrQ0FjYnA5cXdRa3BFOEpRR3dsSGExakJ0ZFB0YkFCT29FRkxZdzVzUjZ3Q9IBX0FVX3lxTE1MWkR0QmIwbGlmMHN2V3plZ2pjYTJ1VGpDaHdXUnRhUEwyeWJKSE1id21yNFV5alFzSzZpY01QU2hFeVYyMVpvY0JacUN4ckFhQjM3S09wdGM2S2dqWnFR?oc=5",
-   "pubDate": "2026-11-21T15:02:09.000Z"
   }
  ]
 }
